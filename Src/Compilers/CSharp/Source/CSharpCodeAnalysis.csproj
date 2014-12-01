@@ -1,0 +1,291 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) Microsoft Open Technologies, Inc.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information. -->
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="Settings">
+    <Import Project="..\..\..\Tools\Microsoft.CodeAnalysis.Toolset.Open\Targets\VSL.Settings.targets" />
+    <Import Project="..\..\..\packages\Microsoft.Net.ToolsetCompilers.0.7.4032713-beta\build\Microsoft.Net.ToolsetCompilers.props" Condition="Exists('..\..\..\packages\Microsoft.Net.ToolsetCompilers.0.7.4032713-beta\build\Microsoft.Net.ToolsetCompilers.props')" />
+  </ImportGroup>
+  <PropertyGroup>
+    <Configuration Condition="'$(Configuration)' == ''">Debug</Configuration>
+    <Platform Condition="'$(Platform)' == ''">AnyCPU</Platform>
+    <ProjectGuid>{B501A547-C911-4A05-AC6E-274A50DFF30E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Microsoft.CodeAnalysis.CSharp</RootNamespace>
+    <AssemblyName>Microsoft.CodeAnalysis.CSharp</AssemblyName>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <StyleCopEnabled>false</StyleCopEnabled>
+    <SolutionDir Condition="'$(SolutionDir)' == '' OR '$(SolutionDir)' == '*Undefined*'">..\..\..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <OutDir>..\..\..\..\Binaries\$(Configuration)\</OutDir>
+    <CSharpSyntaxGeneratorToolPath>..\..\..\..\Binaries\$(Configuration)\CSharpSyntaxGenerator.exe</CSharpSyntaxGeneratorToolPath>
+    <BoundTreeGeneratorToolPath>..\..\..\..\Binaries\$(Configuration)\BoundTreeGenerator.exe</BoundTreeGeneratorToolPath>
+    <CSharpErrorFactsGeneratorToolPath>..\..\..\..\Binaries\$(Configuration)\CSharpErrorFactsGenerator.exe</CSharpErrorFactsGeneratorToolPath>
+  </PropertyGroup>
+  <ItemGroup Label="Project References">
+    <ProjectReference Include="..\..\Core\Source\CodeAnalysis.csproj">
+      <Project>{1EE8CAD3-55F9-4D91-96B2-084641DA9A6C}</Project>
+      <Name>CodeAnalysis</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Tools\Source\CompilerGeneratorTools\Source\CSharpSyntaxGenerator\CSharpSyntaxGenerator.csproj">
+      <Project>{288089C5-8721-458E-BE3E-78990DAB5E2D}</Project>
+      <Name>CSharpSyntaxGenerator</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Tools\Source\CompilerGeneratorTools\Source\BoundTreeGenerator\CompilersBoundTreeGenerator.csproj">
+      <Project>{02459936-CD2C-4F61-B671-5C518F2A3DDC}</Project>
+      <Name>CompilersBoundTreeGenerator</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Tools\Source\CompilerGeneratorTools\Source\CSharpErrorFactsGenerator\CSharpErrorFactsGenerator.csproj">
+      <Project>{288089C5-8721-458E-BE3E-78990DAB5E2E}</Project>
+      <Name>CSharpErrorFactsGenerator</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup Label="File References">
+    <Reference Include="System.Reflection.Metadata">
+      <HintPath>..\..\..\packages\Microsoft.Bcl.Metadata.1.0.9-alpha\lib\portable-net45+win8\System.Reflection.Metadata.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Collections.Immutable">
+      <HintPath>..\..\..\packages\Microsoft.Bcl.Immutable.1.1.20-beta\lib\portable-net45+win8\System.Collections.Immutable.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|ARM' ">
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <PlatformTarget>ARM</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|ARM' ">
+    <PlatformTarget>ARM</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime" />
+    <Reference Include="System.XML" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CSharpCompilationOptions.cs" />
+    <Compile Include="CSharpExtensions.cs" />
+    <Compile Include="CSharpParseOptions.cs" />
+    <Compile Include="CSharpResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CSharpResources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="CSDiagnostic.cs" />
+    <Compile Include="CSharpDiagnosticFormatter.cs" />
+    <Compile Include="ErrorFacts.cs" />
+    <Compile Include="MessageID.cs" />
+    <Compile Include="MessageProvider.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SyntaxDiagnosticInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Syntax\InternalSyntax\LanguageParser.Parse.Implements.cs" />
+    <Compile Include="Syntax\InternalSyntax\LanguageParser.Parse.Class.cs" />
+    <Compile Include="Syntax\InternalSyntax\LanguageParser.Parse.AnnotationDefine.cs" />
+    <Compile Include="Syntax\InternalSyntax\LanguageParser.Parse.ArgumentList.cs" />
+    <Compile Include="Syntax\InternalSyntax\LanguageParser.Parse.TypeParameter.cs" />
+    <Compile Include="Syntax\InternalSyntax\LanguageParser.Parse.ParameterList.cs" />
+    <Compile Include="Syntax\InternalSyntax\LanguageParser.Parse.MemberDeclaration.cs" />
+    <Compile Include="Syntax\InternalSyntax\LanguageParser.Parse.Extends.cs" />
+    <Compile Include="Syntax\InternalSyntax\LanguageParser.Parse.Type.cs" />
+    <Compile Include="Syntax\InternalSyntax\LanguageParser.Parse.SimpleName.cs" />
+    <Compile Include="Syntax\InternalSyntax\LanguageParser.Parse.Enum.cs" />
+    <Compile Include="Syntax\InternalSyntax\LanguageParser.Parse.Interface.cs" />
+    <Compile Include="Syntax\InternalSyntax\LanguageParser.Parse.Dummy.cs" />
+    <Compile Include="Syntax\InternalSyntax\LanguageParser.Parse.CompilationUnit.cs" />
+    <Compile Include="Syntax\InternalSyntax\LanguageParser.Parse.Annotation.cs" />
+    <Compile Include="Syntax\InternalSyntax\LanguageParser.Parse.Statement.cs" />
+    <Compile Include="Syntax\InternalSyntax\LanguageParser.Parse.Expression.cs" />
+    <Compile Include="XmlParseErrorCode.cs" />
+    <Compile Include="XmlSyntaxDiagnosticInfo.cs" />
+    <Compile Include="LanguageVersion.cs" />
+    <Compile Include="obj\Debug\GeneratedInternalsVisibleTo.cs" />
+    <Compile Include="SymbolDisplay\ObjectDisplay.cs" />
+    <Compile Include="SymbolDisplay\SymbolDisplay.cs" />
+    <Compile Include="SymbolDisplay\SymbolDisplayVisitor.cs" />
+    <Compile Include="SymbolDisplay\SymbolDisplayVisitor_Constants.cs" />
+    <Compile Include="SymbolDisplay\SymbolDisplayVisitor_Minimal.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Syntax\ArrayRankSpecifierSyntax.cs" />
+    <Compile Include="Syntax\AnnotationSyntax.cs" />
+    <Compile Include="Syntax\BaseMethodDeclarationSyntax.cs" />
+    <Compile Include="Syntax\BaseSyntaxNodeExtensions.cs" />
+    <Compile Include="Syntax\ClassDeclarationSyntax.cs" />
+    <Compile Include="Syntax\CSharpSyntaxNode.cs" />
+    <Compile Include="Syntax\CSharpSyntaxRewriter.cs" />
+    <Compile Include="Syntax\CSharpSyntaxTree.cs" />
+    <Compile Include="Syntax\CSharpSyntaxTree.ParsedSyntaxTree.cs" />
+    <Compile Include="Syntax\CSharpSyntaxVisitor.cs" />
+    <Compile Include="Syntax\CSharpSyntaxWalker.cs" />
+    <Compile Include="Syntax\DeclarationStatementSyntax.cs" />
+    <Compile Include="Syntax\ExpressionStatementSyntax.cs" />
+    <Compile Include="Syntax\GenericNameSyntax.cs" />
+    <Compile Include="Syntax\InternalSyntax\Lexer.ScanIdentifier.cs" />
+    <Compile Include="Syntax\InternalSyntax\Lexer.Xml.cs" />
+    <Compile Include="Syntax\InternalSyntax\Lexer.TokenInfo.cs" />
+    <Compile Include="Syntax\InternalSyntax\LexerBase.cs" />
+    <Compile Include="Syntax\InternalSyntax\BlendedNode.cs" />
+    <Compile Include="Syntax\InternalSyntax\ChildSyntaxList.cs" />
+    <Compile Include="Syntax\InternalSyntax\ChildSyntaxList.Enumerator.cs" />
+    <Compile Include="Syntax\InternalSyntax\ChildSyntaxList.Reversed.cs" />
+    <Compile Include="Syntax\InternalSyntax\ChildSyntaxList.Reversed.Enumerator.cs" />
+    <Compile Include="Syntax\InternalSyntax\CSharpSyntaxVisitor.cs" />
+    <Compile Include="Syntax\InternalSyntax\IdentifierNameSyntax.cs" />
+    <Compile Include="Syntax\InternalSyntax\Blender.cs" />
+    <Compile Include="Syntax\InternalSyntax\Blender.Cursor.cs" />
+    <Compile Include="Syntax\InternalSyntax\Blender.Reader.cs" />
+    <Compile Include="Syntax\InternalSyntax\DocumentationCommentParser.cs" />
+    <Compile Include="Syntax\InternalSyntax\DocumentationCommentXmlTokens.cs" />
+    <Compile Include="Syntax\InternalSyntax\LanguageParser.Skip.cs" />
+    <Compile Include="Syntax\InternalSyntax\LanguageParser.Scan.cs" />
+    <Compile Include="Syntax\InternalSyntax\LanguageParser.IsPossible.cs" />
+    <Compile Include="Syntax\InternalSyntax\LanguageParser.Parse.cs" />
+    <Compile Include="Syntax\InternalSyntax\LanguageParser.ResetPoint.cs" />
+    <Compile Include="Syntax\InternalSyntax\LanguageParser.Parse.CompilationUnitBodyBuilder.cs" />
+    <Compile Include="Syntax\InternalSyntax\LanguageParser.TerminatorState.cs" />
+    <Compile Include="Syntax\InternalSyntax\LanguageParser.Dummy.cs" />
+    <Compile Include="Syntax\InternalSyntax\LanguageParser.cs" />
+    <Compile Include="Syntax\InternalSyntax\Lexer.cs" />
+    <Compile Include="Syntax\InternalSyntax\LexerCache.cs" />
+    <Compile Include="Syntax\InternalSyntax\Lexer.QuickScanner.cs" />
+    <Compile Include="Syntax\InternalSyntax\SlidingTextWindow.cs" />
+    <Compile Include="Syntax\InternalSyntax\SyntaxFactoryContext.cs" />
+    <Compile Include="Syntax\InternalSyntax\SyntaxListPool.cs" />
+    <Compile Include="Syntax\InternalSyntax\SyntaxParser.cs" />
+    <Compile Include="Syntax\InternalSyntax\SyntaxParser.ResetPoint.cs" />
+    <Compile Include="Syntax\InternalSyntax\SeparatedSyntaxList.cs" />
+    <Compile Include="Syntax\InternalSyntax\SeparatedSyntaxListBuilder.cs" />
+    <Compile Include="Syntax\InternalSyntax\StructuredTriviaSyntax.cs" />
+    <Compile Include="Syntax\InternalSyntax\SyntaxFactory.cs" />
+    <Compile Include="Syntax\InternalSyntax\SyntaxDiagnosticInfoList.cs" />
+    <Compile Include="Syntax\InternalSyntax\SyntaxLastTokenReplacer.cs" />
+    <Compile Include="Syntax\InternalSyntax\SyntaxList.cs" />
+    <Compile Include="Syntax\InternalSyntax\SyntaxList.WithLotsOfChildren.cs" />
+    <Compile Include="Syntax\InternalSyntax\SyntaxList.WithManyChildren.cs" />
+    <Compile Include="Syntax\InternalSyntax\SyntaxList.WithThreeChildren.cs" />
+    <Compile Include="Syntax\InternalSyntax\SyntaxList.WithTwoChildren.cs" />
+    <Compile Include="Syntax\InternalSyntax\SyntaxList`.Enumerator.cs" />
+    <Compile Include="Syntax\InternalSyntax\SyntaxList`1.cs" />
+    <Compile Include="Syntax\InternalSyntax\SyntaxListBuilder.cs" />
+    <Compile Include="Syntax\InternalSyntax\SyntaxListBuilder`1.cs" />
+    <Compile Include="Syntax\InternalSyntax\SyntaxListBuilderExtensions.cs" />
+    <Compile Include="Syntax\InternalSyntax\CSharpSyntaxNode.cs" />
+    <Compile Include="Syntax\InternalSyntax\SyntaxNodeCache.cs" />
+    <Compile Include="Syntax\InternalSyntax\CSharpSyntaxRewriter.cs" />
+    <Compile Include="Syntax\InternalSyntax\SyntaxToken.cs" />
+    <Compile Include="Syntax\InternalSyntax\SyntaxToken.MissingTokenWithTrivia.cs" />
+    <Compile Include="Syntax\InternalSyntax\SyntaxToken.SyntaxIdentifier.cs" />
+    <Compile Include="Syntax\InternalSyntax\SyntaxToken.SyntaxIdentifierExtended.cs" />
+    <Compile Include="Syntax\InternalSyntax\SyntaxToken.SyntaxIdentifierWithTrailingTrivia.cs" />
+    <Compile Include="Syntax\InternalSyntax\SyntaxToken.SyntaxIdentifierWithTrivia.cs" />
+    <Compile Include="Syntax\InternalSyntax\SyntaxToken.SyntaxLiteral.cs" />
+    <Compile Include="Syntax\InternalSyntax\SyntaxToken.SyntaxLiteralWithTrivia.cs" />
+    <Compile Include="Syntax\InternalSyntax\SyntaxToken.SyntaxTokenWithTrivia.cs" />
+    <Compile Include="Syntax\InternalSyntax\SyntaxTokenReplacer.cs" />
+    <Compile Include="Syntax\InternalSyntax\SyntaxTrivia.cs" />
+    <Compile Include="Syntax\MethodDeclarationSyntax.cs" />
+    <Compile Include="Syntax\NameSyntax.cs" />
+    <Compile Include="Syntax\ParameterSyntax.cs" />
+    <Compile Include="Syntax\QualifiedNameSyntax.cs" />
+    <Compile Include="Syntax\SeparatedSyntaxListBuilder.cs" />
+    <Compile Include="Syntax\SimpleNameSyntax.cs" />
+    <Compile Include="Syntax\SimpleSyntaxReference.cs" />
+    <Compile Include="Syntax\StructuredTriviaSyntax.cs" />
+    <Compile Include="Syntax\SyntaxEquivalence.cs" />
+    <Compile Include="Syntax\SyntaxExtensions.cs" />
+    <Compile Include="Syntax\SyntaxFactory.cs" />
+    <Compile Include="Syntax\SyntaxFormatter.cs" />
+    <Compile Include="Syntax\SyntaxKind.cs" />
+    <Compile Include="Syntax\SyntaxKindFacts.cs" />
+    <Compile Include="Syntax\SyntaxList.cs" />
+    <Compile Include="Syntax\SyntaxList.SeparatedWithManyChildren.cs" />
+    <Compile Include="Syntax\SyntaxList.WithManyChildren.cs" />
+    <Compile Include="Syntax\SyntaxList.WithManyWeakChildren.cs" />
+    <Compile Include="Syntax\SyntaxList.WithThreeChildren.cs" />
+    <Compile Include="Syntax\SyntaxList.WithTwoChildren.cs" />
+    <Compile Include="Syntax\SyntaxListBuilder.cs" />
+    <Compile Include="Syntax\SyntaxListBuilder`1.cs" />
+    <Compile Include="Syntax\SyntaxListBuilderExtensions.cs" />
+    <Compile Include="Syntax\SyntaxNavigator.cs" />
+    <Compile Include="Syntax\SyntaxNodeExtensions.cs" />
+    <Compile Include="Syntax\SyntaxNodeFacts.cs" />
+    <Compile Include="Syntax\SyntaxNodeOrTokenListBuilder.cs" />
+    <Compile Include="Syntax\SyntaxNodeRemover.cs" />
+    <Compile Include="Syntax\SyntaxReplacer.cs" />
+    <Compile Include="Syntax\SyntaxTokenListBuilder.cs" />
+    <Compile Include="Syntax\SyntaxTreeDiagnosticEnumerator.cs" />
+    <Compile Include="Syntax\SyntaxTriviaFunctions.cs" />
+    <Compile Include="Syntax\SyntaxTriviaListBuilder.cs" />
+    <Compile Include="Syntax\TranslationalSyntaxReference.cs" />
+    <Compile Include="Syntax\TypeSyntax.cs" />
+    <Compile Include="Syntax\XmlNameAttributeElementKind.cs" />
+    <Compile Include="Utilities\EnumExtensions.cs" />
+    <Compile Include="Utilities\FirstAmongEqualsSet.cs" />
+    <Compile Include="Utilities\FunctionExtensions.cs" />
+    <Compile Include="Utilities\LookupPosition.cs" />
+    <Compile Include="Utilities\StringExtensions.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Syntax\CSharpSyntaxTree.Dummy.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(IntermediateOutputPath)ErrorFacts.Generated.cs" />
+    <Compile Include="$(IntermediateOutputPath)Syntax.xml.Generated.cs" />
+    <Compile Include="ErrorCode.cs" />
+    <EmbeddedResource Include="CSharpResources.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>CSharpResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <ErrorCode Include="ErrorCode.cs" />
+    <SyntaxDefinition Include="Syntax\Syntax.xml">
+      <SubType>Designer</SubType>
+    </SyntaxDefinition>
+  </ItemGroup>
+  <ItemGroup>
+    <InternalsVisibleTo Include="Microsoft.CodeAnalysis.CSharp.ExpressionCompiler" />
+    <InternalsVisibleTo Include="rcsc" />
+    <InternalsVisibleTo Include="rcsi" />
+    <InternalsVisibleTo Include="Roslyn.Scripting.CSharp" />
+    <InternalsVisibleTo Include="VBCSCompiler" />
+    <InternalsVisibleTo Include="Microsoft.CodeAnalysis.CSharp.Workspaces" />
+    <InternalsVisibleToTest Include="Roslyn.Compilers.CSharp.CommandLine.UnitTests" />
+    <InternalsVisibleToTest Include="Roslyn.Compilers.CSharp.Emit.UnitTests" />
+    <InternalsVisibleToTest Include="Roslyn.Compilers.CSharp.EnC.UnitTests" />
+    <InternalsVisibleToTest Include="Roslyn.Compilers.CSharp.ExpressionCompiler.UnitTests" />
+    <InternalsVisibleToTest Include="Roslyn.Compilers.CSharp.Semantic.UnitTests" />
+    <InternalsVisibleToTest Include="Roslyn.Compilers.CSharp.Symbol.UnitTests" />
+    <InternalsVisibleToTest Include="Roslyn.Compilers.CSharp.Syntax.UnitTests" />
+    <InternalsVisibleToTest Include="Roslyn.Compilers.CSharp.Test.Utilities" />
+    <InternalsVisibleToTest Include="Roslyn.Scripting.Common.UnitTests" />
+    <InternalsVisibleToTest Include="Roslyn.Scripting.CSharp.UnitTests" />
+    <InternalsVisibleToTest Include="Roslyn.Services.Editor.CSharp.UnitTests" />
+  </ItemGroup>
+  <ItemGroup />
+  <ImportGroup Label="Targets">
+    <Import Project="..\..\..\Tools\Microsoft.CodeAnalysis.Toolset.Open\Targets\VSL.Imports.targets" />
+    <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+    <Import Project="..\..\..\packages\StyleCop.MSBuild.4.7.48.2\build\StyleCop.MSBuild.Targets" Condition="Exists('..\..\..\packages\StyleCop.MSBuild.4.7.48.2\build\StyleCop.MSBuild.Targets')" />
+  </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+</Project>
