@@ -178,7 +178,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 				|| this.IsPossibleExpression();
 		}
 
-		private bool IsPossibleEnumMemberDeclaration()
+		private bool IsPossibleJavaEnumConstant()
 		{
 			return this.CurrentToken.Kind == SyntaxKind.AtToken || this.IsTrueIdentifier();
 		}
@@ -604,11 +604,71 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
 
 
+		private bool IsPossibleIdentifierDotSuffix(SyntaxKind kind)
+		{
+			var tk = this.CurrentToken.Kind;
+			if (tk == SyntaxKind.IdentifierName 
+				&& this.PeekToken(1).Kind == SyntaxKind.DotToken 
+				&& this.PeekToken(2).Kind == kind)
+			{
+				return true;
+			}
+
+			var resetPoint = this.GetResetPoint();
+			try
+			{
+				SyntaxToken lastTokenOfType;
+				ScanTypeFlags st = this.ScanType(out lastTokenOfType);
+
+				if (st == ScanTypeFlags.ClassKeywordSuffix)
+				{
+					return true;
+				}
+				return false;
+			}
+			finally
+			{
+				this.Reset(ref resetPoint);
+				this.Release(ref resetPoint);
+			}
+		}
+
 
 		private bool IsPossibleClassLiteralExpression(bool contextRequiresVariable)
 		{
 			var tk = this.CurrentToken.Kind;
-			if (tk == SyntaxKind.IdentifierName && this.PeekToken(1).Kind == SyntaxKind.DotToken && this.PeekToken(1).Kind == SyntaxKind.ClassKeyword)
+			if (tk == SyntaxKind.IdentifierName 
+				&& this.PeekToken(1).Kind == SyntaxKind.DotToken 
+				&& this.PeekToken(2).Kind == SyntaxKind.ClassKeyword)
+			{
+				return true;
+			}
+
+			var resetPoint = this.GetResetPoint();
+			try
+			{
+				SyntaxToken lastTokenOfType;
+				ScanTypeFlags st = this.ScanType(out lastTokenOfType);
+
+				if (st == ScanTypeFlags.ClassKeywordSuffix)
+				{
+					return true;
+				}
+				return false;
+			}
+			finally
+			{
+				this.Reset(ref resetPoint);
+				this.Release(ref resetPoint);
+			}
+		}
+
+		private bool IsPossibleQualifiedThisExpression(bool contextRequiresVariable)
+		{
+			var tk = this.CurrentToken.Kind;
+			if (tk == SyntaxKind.IdentifierName 
+				&& this.PeekToken(1).Kind == SyntaxKind.DotToken 
+				&& this.PeekToken(1).Kind == SyntaxKind.ClassKeyword)
 			{
 				return true;
 			}
@@ -791,7 +851,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 		{
 			switch (this.CurrentToken.Kind)
 			{
-				case SyntaxKind.OpenBracketToken: // _annotation
+				case SyntaxKind.AtToken: // _annotation
 				case SyntaxKind.ParamsKeyword:
 				case SyntaxKind.ArgListKeyword:
 					return true;

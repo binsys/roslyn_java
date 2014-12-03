@@ -12,8 +12,6 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 {
 	internal partial class LanguageParser : SyntaxParser
 	{
-		#region TypeParameter
-
 		private TypeParameterListSyntax ParseTypeParameterList()
 		{
 			if (this.CurrentToken.Kind != SyntaxKind.LessThanToken)
@@ -59,7 +57,6 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 				this._termState = saveTerm;
 			}
 		}
-
 
 
 		private TypeParameterSyntax ParseTypeParameter()
@@ -120,7 +117,5 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 				this._pool.Free(additionalBound);
 			}
 		}
-
-		#endregion
 	}
 }

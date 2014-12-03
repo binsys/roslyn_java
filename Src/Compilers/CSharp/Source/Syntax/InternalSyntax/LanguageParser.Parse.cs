@@ -74,9 +74,6 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 		}
 
 
-
-
-
 		private TypeSyntax ParseDeclarationType(bool isConstraint, bool parentIsParameter)
 		{
 			var type = this.ParseType(parentIsParameter);
@@ -169,170 +166,6 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 				this._pool.Free(list);
 			}
 		}
-
-		// If "isMethodBody" is true, then this is the immediate body of a method/accessor.
-		// In this case, we create a many-child list if the body is not a small single statement.
-		// This then allows a "with many weak children" red node when the red node is created.
-		// If "isAccessorBody" is true, then we produce a special diagnostic if the open brace is
-		// missing.  Also, "isMethodBody" must be true.
-		private BlockSyntax ParseBlock(bool isMethodBody = false, bool isAccessorBody = false)
-		{
-			// This makes logical sense, but isn't actually required.
-			Debug.Assert(!isAccessorBody || isMethodBody, "An accessor body is a method body.");
-
-			// Check again for incremental re-use, since ParseBlock is called from a bunch of places
-			// other than ParseStatement()
-			if (this.IsIncrementalAndFactoryContextMatches && this.CurrentNodeKind == SyntaxKind.Block)
-			{
-				return (BlockSyntax)this.EatNode();
-			}
-
-			// There's a special error code for a missing token after an accessor keyword
-			var openBrace = isAccessorBody && this.CurrentToken.Kind != SyntaxKind.OpenBraceToken
-				? this.AddError(SyntaxFactory.MissingToken(SyntaxKind.OpenBraceToken), ErrorCode.ERR_SemiOrLBraceExpected)
-				: this.EatToken(SyntaxKind.OpenBraceToken);
-
-			var statements = this._pool.Allocate<StatementSyntax>();
-			try
-			{
-				CSharpSyntaxNode tmp = openBrace;
-				this.ParseStatements(ref tmp, statements, stopOnSwitchSections: false);
-				openBrace = (SyntaxToken)tmp;
-				var closeBrace = this.EatToken(SyntaxKind.CloseBraceToken);
-
-				SyntaxList<StatementSyntax> statementList;
-				if (isMethodBody && IsLargeEnoughNonEmptyStatementList(statements))
-				{
-					// Force creation a many-children list, even if only 1, 2, or 3 elements in the statement list.
-					statementList = new SyntaxList<StatementSyntax>(SyntaxList.List(((SyntaxListBuilder)statements).ToArray()));
-				}
-				else
-				{
-					statementList = statements;
-				}
-
-				return _syntaxFactory.Block(openBrace, statementList, closeBrace);
-			}
-			finally
-			{
-				this._pool.Free(statements);
-			}
-		}
-
-		private ConstructorDeclarationSyntax ParseConstructorDeclaration(string typeName, SyntaxListBuilder<AnnotationSyntax> attributes, SyntaxListBuilder modifiers)
-		{
-			var name = this.ParseIdentifierToken();
-			Debug.Assert(name.ValueText == typeName);
-
-			var saveTerm = this._termState;
-			this._termState |= TerminatorState.IsEndOfMethodSignature;
-			try
-			{
-				var paramList = this.ParseParenthesizedParameterList(allowThisKeyword: false, allowDefaults: true, allowAttributes: true, allowFieldModifiers: false);
-
-				ConstructorInitializerSyntax initializer = null;
-				if (this.CurrentToken.Kind == SyntaxKind.ColonToken)
-				{
-					bool isStatic = modifiers != null && modifiers.Any(SyntaxKind.StaticKeyword);
-					initializer = this.ParseConstructorInitializer(name.ValueText, isStatic);
-				}
-
-				BlockSyntax body;
-				SyntaxToken semicolon;
-				this.ParseBodyOrSemicolon(out body, out semicolon);
-
-				return _syntaxFactory.ConstructorDeclaration(attributes, modifiers.ToTokenList(), name, paramList, initializer, body, semicolon);
-			}
-			finally
-			{
-				this._termState = saveTerm;
-			}
-		}
-
-		private ConstructorInitializerSyntax ParseConstructorInitializer(string name, bool isStatic)
-		{
-			var colon = this.EatToken(SyntaxKind.ColonToken);
-
-			var reportError = true;
-			var kind = this.CurrentToken.Kind == SyntaxKind.SuperKeyword
-				? SyntaxKind.BaseConstructorInitializer
-				: SyntaxKind.ThisConstructorInitializer;
-
-			SyntaxToken token;
-			if (this.CurrentToken.Kind == SyntaxKind.SuperKeyword || this.CurrentToken.Kind == SyntaxKind.ThisKeyword)
-			{
-				token = this.EatToken();
-			}
-			else
-			{
-				token = this.EatToken(SyntaxKind.ThisKeyword, ErrorCode.ERR_ThisOrBaseExpected);
-
-				// No need to report further errors at this point:
-				reportError = false;
-			}
-
-			ArgumentListSyntax argumentList;
-			if (this.CurrentToken.Kind == SyntaxKind.OpenParenToken)
-			{
-				argumentList = this.ParseParenthesizedArgumentList();
-			}
-			else
-			{
-				var openToken = this.EatToken(SyntaxKind.OpenParenToken, reportError);
-				var closeToken = this.EatToken(SyntaxKind.CloseParenToken, reportError);
-				argumentList = _syntaxFactory.ArgumentList(openToken, default(SeparatedSyntaxList<ArgumentSyntax>), closeToken);
-			}
-
-			if (isStatic)
-			{
-				// Static constructor can't have any base call
-				token = this.AddError(token, ErrorCode.ERR_StaticConstructorWithExplicitConstructorCall, name);
-			}
-
-			return _syntaxFactory.ConstructorInitializer(kind, colon, token, argumentList);
-		}
-
-		private DestructorDeclarationSyntax ParseDestructorDeclaration(string typeName, SyntaxListBuilder<AnnotationSyntax> attributes, SyntaxListBuilder modifiers)
-		{
-			Debug.Assert(this.CurrentToken.Kind == SyntaxKind.TildeToken);
-			var tilde = this.EatToken(SyntaxKind.TildeToken);
-
-			var name = this.ParseIdentifierToken();
-			if (name.ValueText != typeName)
-			{
-				name = this.AddError(name, ErrorCode.ERR_BadDestructorName);
-			}
-
-			var openParen = this.EatToken(SyntaxKind.OpenParenToken);
-			var closeParen = this.EatToken(SyntaxKind.CloseParenToken);
-
-			BlockSyntax body;
-			SyntaxToken semicolon;
-			this.ParseBodyOrSemicolon(out body, out semicolon);
-
-			var parameterList = _syntaxFactory.ParameterList(openParen, default(SeparatedSyntaxList<ParameterSyntax>), closeParen);
-			return _syntaxFactory.DestructorDeclaration(attributes, modifiers.ToTokenList(), tilde, name, parameterList, body, semicolon);
-		}
-
-		private void ParseBodyOrSemicolon(out BlockSyntax body, out SyntaxToken semicolon)
-		{
-			if (this.CurrentToken.Kind == SyntaxKind.OpenBraceToken)
-			{
-				body = this.ParseBlock(isMethodBody: true);
-
-				semicolon = null;
-				if (this.CurrentToken.Kind == SyntaxKind.SemicolonToken)
-				{
-					semicolon = this.EatTokenWithPrejudice(ErrorCode.ERR_UnexpectedSemicolon);
-				}
-			}
-			else
-			{
-				semicolon = this.EatToken(SyntaxKind.SemicolonToken);
-				body = null;
-			}
-		}
-
 
 
 		private NameEqualsSyntax ParseNameEquals(bool warnOnGlobal = false)
@@ -544,14 +377,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 			return _syntaxFactory.VariableDeclarator(name, argumentList, initializer);
 		}
 
-
-
 		// This is public and parses open types. You probably don't want to use it.
 		public NameSyntax ParseName()
 		{
 			return this.ParseQualifiedName();
 		}
-
 
 		private IdentifierNameSyntax ParseIdentifierName()
 		{
@@ -592,8 +422,5 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 				return name;
 			}
 		}
-
-
-
 	}
 }

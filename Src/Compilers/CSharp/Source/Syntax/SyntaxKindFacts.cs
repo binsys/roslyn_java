@@ -509,8 +509,9 @@ namespace Microsoft.CodeAnalysis.CSharp
 			switch (kind)
 			{
 				case SyntaxKind.EnumDeclaration:
-				case SyntaxKind.ClassDeclaration:
-				case SyntaxKind.InterfaceDeclaration:
+				case SyntaxKind.JavaNormalClassDeclaration:
+				case SyntaxKind.JavaNormalInterfaceDeclaration:
+				case SyntaxKind.JavaAnnotationTypeDeclaration:
 					return true;
 
 				default:
@@ -536,10 +537,10 @@ namespace Microsoft.CodeAnalysis.CSharp
 		{
 			switch (kind)
 			{
-				case SyntaxKind.ClassDeclaration:
-				case SyntaxKind.InterfaceDeclaration:
+				case SyntaxKind.JavaNormalClassDeclaration:
+				case SyntaxKind.JavaNormalInterfaceDeclaration:
 				case SyntaxKind.EnumDeclaration:
-				case SyntaxKind.AnnotationDeclaration:
+				case SyntaxKind.JavaAnnotationTypeDeclaration:
 					return true;
 				default:
 					return false;
@@ -885,9 +886,9 @@ namespace Microsoft.CodeAnalysis.CSharp
 			switch (kind)
 			{
 				case SyntaxKind.ClassKeyword:
-					return SyntaxKind.ClassDeclaration;
+					return SyntaxKind.JavaNormalClassDeclaration;
 				case SyntaxKind.InterfaceKeyword:
-					return SyntaxKind.InterfaceDeclaration;
+					return SyntaxKind.JavaNormalInterfaceDeclaration;
 				default:
 					return SyntaxKind.None;
 			}

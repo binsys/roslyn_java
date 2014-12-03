@@ -12,10 +12,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 {
 	internal partial class LanguageParser : SyntaxParser
 	{
-
-
-
-		private JavaNormalClassDeclarationSyntax ParseClassDeclaration(SyntaxListBuilder<AnnotationSyntax> attributes, SyntaxListBuilder modifiers)
+		private JavaNormalClassDeclarationSyntax ParseJavaNormalClassDeclaration(SyntaxListBuilder<AnnotationSyntax> attributes, SyntaxListBuilder modifiers)
 		{
 			Debug.Assert(this.CurrentToken.Kind == SyntaxKind.ClassKeyword);
 
@@ -48,42 +45,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 				if (parseMembers)
 				{
 					members = this._pool.Allocate<MemberDeclarationSyntax>();
-
-					while (true)
-					{
-						SyntaxKind kind = this.CurrentToken.Kind;
-
-						if (CanStartMember(kind))
-						{
-							// This token can start a member -- go parse it
-							var saveTerm2 = this._termState;
-							this._termState |= TerminatorState.IsPossibleMemberStartOrStop;
-
-							var memberOrStatement = this.ParseMemberDeclaration(kind, name.ValueText);
-							if (memberOrStatement != null)
-							{
-								// statements are accepted here, a semantic error will be reported later
-								members.Add(memberOrStatement);
-							}
-							else
-							{
-								// we get here if we couldn't parse the lookahead as a statement or a declaration (we haven't consumed any tokens):
-								this.SkipBadMemberListTokens(ref openBrace, members);
-							}
-
-							this._termState = saveTerm2;
-						}
-						else if (kind == SyntaxKind.CloseBraceToken || kind == SyntaxKind.EndOfFileToken || this.IsTerminator())
-						{
-							// This marks the end of members of this class
-							break;
-						}
-						else
-						{
-							// Error -- try to sync up with intended reality
-							this.SkipBadMemberListTokens(ref openBrace, members);
-						}
-					}
+					this.ParseClassMembers(ref members, ref openBrace, name);
 				}
 
 				var closeBrace = this.EatToken(SyntaxKind.CloseBraceToken);
@@ -92,7 +54,6 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 				{
 					semicolon = this.EatToken();
 				}
-
 
 				return _syntaxFactory.JavaNormalClassDeclaration(
 					this.CreateJavaMemberModifierSyntax(attributes, modifiers),
@@ -119,6 +80,47 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 		}
 
 
+		public void ParseClassMembers(ref SyntaxListBuilder<MemberDeclarationSyntax> members, ref SyntaxToken openBrace, SyntaxToken name)
+		{
+			while (true)
+			{
+				SyntaxKind kind = this.CurrentToken.Kind;
+
+				if (CanStartMember(kind))
+				{
+					// This token can start a member -- go parse it
+					var saveTerm2 = this._termState;
+					this._termState |= TerminatorState.IsPossibleMemberStartOrStop;
+
+					var memberOrStatement = this.ParseMemberDeclaration(kind, name == null ? null : name.ValueText);
+					if (memberOrStatement != null)
+					{
+						// statements are accepted here, a semantic error will be reported later
+						members.Add(memberOrStatement);
+					}
+					else
+					{
+						// we get here if we couldn't parse the lookahead as a statement or a declaration (we haven't consumed any tokens):
+						this.SkipBadMemberListTokens(ref openBrace, members);
+					}
+
+					this._termState = saveTerm2;
+				}
+				else if (kind == SyntaxKind.CloseBraceToken || kind == SyntaxKind.EndOfFileToken || this.IsTerminator())
+				{
+					// This marks the end of members of this class
+					break;
+				}
+				else
+				{
+					// Error -- try to sync up with intended reality
+					this.SkipBadMemberListTokens(ref openBrace, members);
+				}
+			}
+		}
+
+
+
 		public JavaMemberModifierSyntax CreateJavaMemberModifierSyntax(SyntaxListBuilder<AnnotationSyntax> attributes,
 			SyntaxListBuilder modifiers)
 		{
@@ -131,6 +133,43 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 			}
 
 			return modifier;
+		}
+
+
+		private JavaAnonymousClassInitializerExpressionSyntax ParseJavaAnonymousClassBody()
+		{
+			bool parseMembers = true;
+			SyntaxListBuilder<MemberDeclarationSyntax> members = default(SyntaxListBuilder<MemberDeclarationSyntax>);
+			try
+			{
+				var openBrace = this.EatToken(SyntaxKind.OpenBraceToken);
+
+				// ignore members if missing type name or missing open curly
+				if (openBrace.IsMissing)
+				{
+					parseMembers = false;
+				}
+
+				// even if we saw a { or think we should parse members bail out early since
+				// we know namespaces can't be nested inside types
+				if (parseMembers)
+				{
+					members = this._pool.Allocate<MemberDeclarationSyntax>();
+					this.ParseClassMembers(ref members, ref openBrace, null);
+				}
+
+				var closeBrace = this.EatToken(SyntaxKind.CloseBraceToken);
+				return _syntaxFactory.JavaAnonymousClassInitializerExpression(openBrace, members.ToList(), closeBrace);
+
+			}
+			finally
+			{
+				if (!members.IsNull)
+				{
+					this._pool.Free(members);
+				}
+
+			}
 		}
 	}
 }

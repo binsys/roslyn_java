@@ -290,10 +290,10 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 		}
 
 
-		private PostSkipAction SkipBadEnumMemberListTokens(ref SyntaxToken openBrace, SeparatedSyntaxListBuilder<EnumMemberDeclarationSyntax> list, SyntaxKind expected)
+		private PostSkipAction SkipBadJavaEnumConstantListTokens(ref SyntaxToken openBrace, SeparatedSyntaxListBuilder<JavaEnumConstantSyntax> list, SyntaxKind expected)
 		{
 			return this.SkipBadSeparatedListTokensWithExpectedKind(ref openBrace, list,
-				p => p.CurrentToken.Kind != SyntaxKind.CommaToken && p.CurrentToken.Kind != SyntaxKind.SemicolonToken && !p.IsPossibleEnumMemberDeclaration(),
+				p => p.CurrentToken.Kind != SyntaxKind.CommaToken && p.CurrentToken.Kind != SyntaxKind.SemicolonToken && !p.IsPossibleJavaEnumConstant(),
 				p => p.CurrentToken.Kind == SyntaxKind.CloseBraceToken || p.IsTerminator(),
 				expected);
 		}

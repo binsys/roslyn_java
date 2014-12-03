@@ -12,7 +12,6 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 {
 	internal partial class LanguageParser : SyntaxParser
 	{
-		#region Annotations
 		private void ParseAnnotationDeclarations(SyntaxListBuilder list, bool allowAttributes = true)
 		{
 			var saveTerm = this._termState;
@@ -148,21 +147,10 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 			return _syntaxFactory.AnnotationArgument(nameEquals, nameColon, expr);
 		}
 
-		private ExpressionSyntax ParseAnnotationExpression()
+		private AnnotationCreationExpressionSyntax ParseAnnotationCreationExpression()
 		{
-			//var keyword = this.EatToken();
-			//var openParen = this.EatToken(SyntaxKind.OpenParenToken);
-			//var type = this.ParseTypeOrVoid();
-			//var closeParen = this.EatToken(SyntaxKind.CloseParenToken);
-
-			//return syntaxFactory.TypeOfExpression(keyword, openParen, type, closeParen);
 			var anno = this.ParseAnnotationDeclaration();
-
-
 			return _syntaxFactory.AnnotationCreationExpression(anno);
-			//return null;
 		}
-
-		#endregion
 	}
 }

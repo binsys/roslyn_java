@@ -12,7 +12,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 {
 	internal partial class LanguageParser : SyntaxParser
 	{
-		private JavaNormalInterfaceDeclarationSyntax ParseInterfaceDeclaration(SyntaxListBuilder<AnnotationSyntax> attributes, SyntaxListBuilder modifiers)
+		private JavaNormalInterfaceDeclarationSyntax ParseJavaNormalInterfaceDeclaration(SyntaxListBuilder<AnnotationSyntax> attributes, SyntaxListBuilder modifiers)
 		{
 			Debug.Assert(this.CurrentToken.Kind == SyntaxKind.InterfaceKeyword);
 

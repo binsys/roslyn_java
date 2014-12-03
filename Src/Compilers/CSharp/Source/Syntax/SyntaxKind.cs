@@ -235,7 +235,7 @@ namespace Microsoft.CodeAnalysis.CSharp
 		AnnotationCreationExpression,
 		AnonymousObjectCreationExpression,
 		ArrayCreationExpression,
-		ImplicitArrayCreationExpression,
+		//ImplicitArrayCreationExpression,
 		ImplicitElementAccess,
 		StackAllocArrayCreationExpression,
 		OmittedArraySizeExpression,
@@ -655,10 +655,14 @@ namespace Microsoft.CodeAnalysis.CSharp
 		JavaNormalInterfaceDeclaration,
 		JavaAnnotationTypeDeclaration,
 
-		JavaEnumConstant,
-		JavaEnumClassBody,
+		JavaInitializerMethodDeclaration,
+		JavaAnonymousClassInitializerExpression,
+		JavaThrowsListClause,
 
-		//ExternAliasDirective,
+		JavaEnumConstant,
+		JavaEnumBodyDeclarations,
+		JavaEnumBody,
+		JavaMemberModifier,
 
 		// ×¢½â Annotation
 		Annotation,
@@ -666,12 +670,9 @@ namespace Microsoft.CodeAnalysis.CSharp
 		AnnotationArgument,
 		NameEquals,
 
-		JavaMemberModifier,
+		
 
 		// type declarations
-		ClassDeclaration,
-		InterfaceDeclaration,
-		AnnotationDeclaration,
 		EnumDeclaration,
 
 		//BaseList,

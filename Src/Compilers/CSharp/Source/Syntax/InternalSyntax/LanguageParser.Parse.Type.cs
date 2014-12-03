@@ -19,7 +19,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 			return ParseTypeCore(parentIsParameter, isOrAs: false, expectSizes: false, isArrayCreation: false);
 		}
 
-		#region ParseTypeCore
+
 		private TypeSyntax ParseTypeCore(
 			bool parentIsParameter,
 			bool isOrAs,
@@ -103,6 +103,5 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 				return this.AddError(name, ErrorCode.ERR_TypeExpected);
 			}
 		}
-		#endregion
 	}
 }

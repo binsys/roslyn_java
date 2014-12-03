@@ -1,0 +1,2167 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.SkippedTokensTriviaSyntax" Collapsed="true">
+    <Position X="121" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIUAAAAAAIgAAAAAACAAAAQAAAAAABAgAAAAAAABAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.DocumentationCommentTriviaSyntax" Collapsed="true">
+    <Position X="126.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQCAAAAAogACAAAACgAAAQAAAAAABAgAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.AnnotationSyntax" Collapsed="true">
+    <Position X="119.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gIQAAIAAAIgAAAAAACAAAAQAAACEABAggAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.AnnotationArgumentListSyntax" Collapsed="true">
+    <Position X="112.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAQAIgAEAAAACAAAAQAAAAgABAgIAAAEAAAABA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.AnnotationArgumentSyntax" Collapsed="true">
+    <Position X="117.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAQAEAIkAAAAAACAAAAQAABAAABAwAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.CompilationUnitSyntax" Collapsed="true">
+    <Position X="128" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAIgAAhQAACAUAAQAAAAAABQgAAAEAAACAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.PackageDeclarationSyntax" Collapsed="true">
+    <Position X="114" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AoQAAAAAAIgQAAAAECAAAAQAAAAEABAgCAAAAAoAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.JavaModifierSyntax" Collapsed="true">
+    <Position X="37.5" Y="33.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.JavaTypeParameterModifierSyntax" Collapsed="true">
+    <Position X="35.5" Y="35" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAIgAAABAACAAQAQAAAAAABAgAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.JavaMemberModifierSyntax" Collapsed="true">
+    <Position X="39" Y="35" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAIgAAABAACCAQAQAgAAAABAgAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.ImportDeclarationSyntax" Collapsed="true">
+    <Position X="114" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAIgACAAAACAAAAQAAAAEHBAgCBAAAAgAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.ImportOnDemandSuffixSyntax" Collapsed="true">
+    <Position X="117.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAgAAAIoAAAAAACAAAAQAAAIAABAgAAAAAAAAAAI=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.MemberDeclarationSyntax" Collapsed="true">
+    <Position X="23.75" Y="20.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.JavaTypeDeclarationSyntax" Collapsed="true">
+    <Position X="37.75" Y="22" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAAAAAAAAAAAAAAASAACAAEQAgAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.JavaClassDeclarationSyntax" Collapsed="true">
+    <Position X="34" Y="23.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.JavaNormalClassDeclarationSyntax" Collapsed="true">
+    <Position X="33.5" Y="24.75" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AIQABAAIAIiACBAAgCAQAAQBIAAAATRgCAAEQAgAAAQ=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.JavaInterfaceDeclarationSyntax" Collapsed="true">
+    <Position X="39.25" Y="23.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.JavaNormalInterfaceDeclarationSyntax" Collapsed="true">
+    <Position X="40.75" Y="24.75" Width="3" />
+    <TypeIdentifier>
+      <HashCode>BIQARAAAAIiAAAAAgCAAAAQBIAAAATRgCAAEQAgAAAQ=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.JavaAnnotationTypeDeclarationSyntax" Collapsed="true">
+    <Position X="37" Y="24.75" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AIQABAAAAIgAAAAAACAAAAQBIACAATRgiAAEQAgAAAQ=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.BaseTypeDeclarationSyntax" Collapsed="true">
+    <Position X="2.5" Y="22" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAABAAAAAAAAAAAAAAACAACAAAQAgAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.EnumDeclarationSyntax" Collapsed="true">
+    <Position X="2.5" Y="23.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AIQABAAAAIgAABAAACAQAAQAIAAgADRgKAAEQAgAAAQ=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.JavaEnumDeclarationSyntax" Collapsed="true">
+    <Position X="5.25" Y="22" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AIQABAAAAIgAAAAAACgAAAQJAAAAARBgAAAAQgAAAAY=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.EnumMemberDeclarationSyntax" Collapsed="true">
+    <Position X="11.5" Y="22" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.JavaEnumBodySyntax" Collapsed="true">
+    <Position X="8.25" Y="23.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AIQAAEAAAMgAAAAAACAAAAQAIAAAADAkCAAAAAwAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.JavaEnumConstantSyntax" Collapsed="true">
+    <Position X="11.25" Y="23.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>gIQAAIAAAIgAAAAAACIAAAQCAAAAABBgAAAAQAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.JavaEnumBodyDeclarationsSyntax" Collapsed="true">
+    <Position X="14.25" Y="23.25" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAIgAAAAAACAAEAQAAAAAABAgCAAAABgAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.BaseFieldDeclarationSyntax" Collapsed="true">
+    <Position X="17.75" Y="22" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAQAAAAAAAAAAAAAAAAAAAAAAACAIAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.FieldDeclarationSyntax" Collapsed="true">
+    <Position X="17.75" Y="23.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AIRABAAAQIgAAAAAACIAAAQAAAAAABAgCAIAAAgAAAQ=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.JavaBaseMethodDeclarationSyntax" Collapsed="true">
+    <Position X="23.5" Y="22" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.JavaInitializerMethodDeclarationSyntax" Collapsed="true">
+    <Position X="29.75" Y="22" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAIgAAAAAACABAAQAAQAAEBAgABAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.BaseMethodDeclarationSyntax" Collapsed="true">
+    <Position X="23.75" Y="23.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAAAAAAAACAAAAAAAAACQIAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.MethodDeclarationSyntax" Collapsed="true">
+    <Position X="20.5" Y="24.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AIQABAAAAIiEBAAAhCIBAASAAQAAABBgCQIAQAmEAAQ=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.ConstructorDeclarationSyntax" Collapsed="true">
+    <Position X="23.5" Y="24.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AIQABAAAAIgAAAAAACIBAASAAQAAABBgCQIEQAmABAQ=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.DestructorDeclarationSyntax" Collapsed="true">
+    <Position X="26.75" Y="24.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AIQABAAAAIgAAAAAACIBAASAAQAEABBgDQIAQAmAAAQ=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.IncompleteMemberSyntax" Collapsed="true">
+    <Position X="44.5" Y="22" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AIQABAAAAIgAAAAAACIAAAQAAAABABAgAQIAAAAAAAQ=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.ImplementsListClauseSyntax" Collapsed="true">
+    <Position X="128" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AoQAAAAAAIgAAAAAACAAABQAABAAABAgAAAAAAIAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.JavaThrowsListClauseSyntax" Collapsed="true">
+    <Position X="121" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AoQAAAAAAIgAAAAAACQAAAQAAAAAABAgAAAAAAIAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.ExtendsListClauseSyntax" Collapsed="true">
+    <Position X="122.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AoQAAAAAAIgAAAAAACAAABQAABAAABAgAAAAAAIAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.ExtendsClauseSyntax" Collapsed="true">
+    <Position X="119.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAQAIgAEAAAACAAAAQAAAABABAgAQAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.TypeArgumentListSyntax" Collapsed="true">
+    <Position X="119.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAIgAAAAAACggAAQAAAAgABAgIAACAAAAAgA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.ArrayRankSpecifierSyntax" Collapsed="true">
+    <Position X="114" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAQAABIgABAQAACAAAAQAAAAAABAgAABAAAAAAAE=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.ExpressionSyntax" Collapsed="true">
+    <Position X="57.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.TypeSyntax" Collapsed="true">
+    <Position X="56" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.PredefinedTypeSyntax" Collapsed="true">
+    <Position X="46" Y="10.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAIgAAAAAACAAAAQBAAAAARAgAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.ArrayTypeSyntax" Collapsed="true">
+    <Position X="48.75" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQABAAAAIwAAAAAACAAAAQAAAAAABAgAAAIAAAACAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.NullableTypeSyntax" Collapsed="true">
+    <Position X="51" Y="10.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AIQABAAAAIwAAAAAACAAAAQABAAAABQgAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.BaseClassWithArgumentsSyntax" Collapsed="true">
+    <Position X="53.5" Y="10.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>gIQAAoAAAIoAAAAAACAAAAQAAAAAABAgAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.OmittedTypeArgumentSyntax" Collapsed="true">
+    <Position X="56.75" Y="10.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAIgAAAAAACAAAAUAAAABABAgAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.NameSyntax" Collapsed="true">
+    <Position X="63" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.SimpleNameSyntax" Collapsed="true">
+    <Position X="61.5" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.IdentifierNameSyntax" Collapsed="true">
+    <Position X="60" Y="13.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAIgAAAAEACAAAAQAAAAAABBgAAAAQAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.GenericNameSyntax" Collapsed="true">
+    <Position X="62.75" Y="13.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAIgAAAAAACAAAAQAAAAAABBgAAAAQIAAAAI=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.QualifiedNameSyntax" Collapsed="true">
+    <Position X="65.25" Y="11.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAIoAAAAAACAAAAQAAAIIABAgCACAAAAAgAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.ParenthesizedExpressionSyntax" Collapsed="true">
+    <Position X="105" Y="9" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAQAIgAEAAAACAAAAQAABAAABAwAAAAEAAAABA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.PrefixUnaryExpressionSyntax" Collapsed="true">
+    <Position X="5.5" Y="9" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AYQAAAAAAIgAAAAAACAAAAQAAAAAABAgAACAAAEAgAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.PostfixUnaryExpressionSyntax" Collapsed="true">
+    <Position X="11.75" Y="9" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AYQAAAAAAIgAAAAAACAAAAQAAAAAABAgAACAAAEAgAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.MemberAccessExpressionSyntax" Collapsed="true">
+    <Position X="19.25" Y="9" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAIgAAAAAACAAAAQAABAEABAwAACAAAAAgAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.ClassLiteralExpressionSyntax" Collapsed="true">
+    <Position X="25.75" Y="9" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>BIQAAAAAAIoAAAAAACAAAAQAABIAABAwAAAAAAQAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.ImplicitElementAccessSyntax" Collapsed="true">
+    <Position X="32.5" Y="9" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>gIQAAIAAAIgAAAAAACAAAAQAAAAAABAgAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.BinaryExpressionSyntax" Collapsed="true">
+    <Position X="40" Y="9" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAIgAAAAAACAAAAQAAAAIABAgCACAAAAAgAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.ConditionalExpressionSyntax" Collapsed="true">
+    <Position X="68" Y="9" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAIAAAIiAIAAAACEAAAQBBAAACBQgAAgAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.InstanceExpressionSyntax" Collapsed="true">
+    <Position X="76.25" Y="9" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.ThisExpressionSyntax" Collapsed="true">
+    <Position X="74.75" Y="10.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AIUAAAAAAIgAAAAAACAAAAQAAAAAABAgAAAAAAABAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.BaseExpressionSyntax" Collapsed="true">
+    <Position X="77.5" Y="10.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AIUAAAAAAIgAAAAAACAAAAQAAAAAABAgAAAAAAABAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.LiteralExpressionSyntax" Collapsed="true">
+    <Position X="83.5" Y="9" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AIUAAAAAAIgAAAAAACAAAAQAAAAAABAgAAAAAAABAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.DefaultExpressionSyntax" Collapsed="true">
+    <Position X="86.25" Y="9" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAQAIgAEAAAACAAAAQBAAABARAgAQAAEAAAABA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.InvocationExpressionSyntax" Collapsed="true">
+    <Position X="89" Y="9" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>gIQAAIAAAIgAAAAAACAAAAQAABAAABAwAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.ElementAccessExpressionSyntax" Collapsed="true">
+    <Position X="92" Y="9" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>gIQAAIAAAIgAAAAAACAAAAQAABAAABAwAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.CastExpressionSyntax" Collapsed="true">
+    <Position X="95.25" Y="9" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAQAIgAEAAAACAAAAQAABABABAwAQAAEAAAABA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.AnonymousMethodExpressionSyntax" Collapsed="true">
+    <Position X="98" Y="9" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AIQEAAAAAIgAAAAAACAAAASAAAAAABAgAAAAAACABAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.SimpleLambdaExpressionSyntax" Collapsed="true">
+    <Position X="101.75" Y="9" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAIgAAAAAACABgAQAAYAQABAgEAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.ParenthesizedLambdaExpressionSyntax" Collapsed="true">
+    <Position X="108.25" Y="9" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAIgAAAAAACABgASAAYAAABAgAAAAAACAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.InitializerExpressionSyntax" Collapsed="true">
+    <Position X="8.75" Y="9" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAIgAAAAAACAAAAQAIAAAADAgAAAAAggAAAI=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.JavaAnonymousClassInitializerExpressionSyntax" Collapsed="true">
+    <Position X="15" Y="9" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAIgAAAAAACAAAAQAIAAAADQgAAAEAAgAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.ObjectCreationExpressionSyntax" Collapsed="true">
+    <Position X="22.5" Y="9" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>gIQAAKAAAIgAAAAAACAAAAQAAAABABAgIQAEAAAABAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.AnnotationCreationExpressionSyntax" Collapsed="true">
+    <Position X="28.75" Y="9" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAIgCAAAAAiAAAAQAAAAAABAgAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.AnonymousObjectCreationExpressionSyntax" Collapsed="true">
+    <Position X="35.75" Y="9" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAACAAAIgAAAAAACAAAAQAIAAAADAgIAAEAAgABAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.ArrayCreationExpressionSyntax" Collapsed="true">
+    <Position X="42.75" Y="9" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAACAAAIgAAAAAACAAAAQAAAABABAgIQAEAAAABAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.OmittedArraySizeExpressionSyntax" Collapsed="true">
+    <Position X="71.25" Y="9" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAIgAAAAAACAAAAQAAAAAAJAgAACAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.DeclarationExpressionSyntax" Collapsed="true">
+    <Position X="80.25" Y="9" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAIgAAAAAACAAAAQAAAABABAgAQQAAAAEAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.BaseArgumentListSyntax" Collapsed="true">
+    <Position X="23" Y="35.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.ArgumentListSyntax" Collapsed="true">
+    <Position X="21.5" Y="37" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAQAIgAEAAAACAAAAQAAAAgABAgIAAAEAAAABA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.BracketedArgumentListSyntax" Collapsed="true">
+    <Position X="24" Y="37" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAQAAAIgABAAAACAAAAQAAAAgABAgIABAAAAAAAE=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.ArgumentSyntax" Collapsed="true">
+    <Position X="128" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAEAIgAAAAAACAAAAQAABAAABAwAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.NameColonSyntax" Collapsed="true">
+    <Position X="124.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAIgAIAAAACAAAAQAAAAEABAgAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.AnonymousObjectMemberDeclaratorSyntax" Collapsed="true">
+    <Position X="124.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAQAAAIkAAAAAACAAAAQAABAAABAwAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.StatementSyntax" Collapsed="true">
+    <Position X="24.75" Y="11.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.BlockSyntax" Collapsed="true">
+    <Position X="40.25" Y="13" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAIgAAAAAACAAAAQEIAAABDAgAAAAAAgAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.LocalDeclarationStatementSyntax" Collapsed="true">
+    <Position X="42.5" Y="13" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AIRABAAAQIgAAAAAACAAAAQAAAAAABAgCAAAAAgAAAQ=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.ExpressionStatementSyntax" Collapsed="true">
+    <Position X="46" Y="13" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAIgAAAAAACAAAAQAABAAABAwCAAAAAgAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.EmptyStatementSyntax" Collapsed="true">
+    <Position X="2.5" Y="13" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAIgAAAAAACAAAAQAAAAAABAgCAAAAAgAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.LabeledStatementSyntax" Collapsed="true">
+    <Position X="5.25" Y="13" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAIgAIAAAACIAAAQCAAAAABBgAAAAQAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.GotoStatementSyntax" Collapsed="true">
+    <Position X="8" Y="13" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAABAIgAAAAAACAAAAQBABABABAwCQAAAAgAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.BreakStatementSyntax" Collapsed="true">
+    <Position X="10.75" Y="13" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAIgAAAAAACAAAAQAAAACABAgCgAAAAgAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.ContinueStatementSyntax" Collapsed="true">
+    <Position X="13.5" Y="13" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAIgAAAAAACAAAARAAAAAQBAgCAAAAAgAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.ReturnStatementSyntax" Collapsed="true">
+    <Position X="16.5" Y="13" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAIgAAAAAAGAAAAQAABAAABAwCEAAAAgAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.ThrowStatementSyntax" Collapsed="true">
+    <Position X="19.25" Y="13" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AISAAAAAAIgAAAAAACAAAAQAABAAABAwCAAAAAgAgAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.WhileStatementSyntax" Collapsed="true">
+    <Position X="22" Y="13" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AIQAAIAQAIiIEAAACCIAAAQCAAAAABAgAAAAEAAAABA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.DoStatementSyntax" Collapsed="true">
+    <Position X="24.75" Y="13" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AIQBAIAQAIiIEAAACCIAAAQCAAAAABAgCAAAEAgAARA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.ForStatementSyntax" Collapsed="true">
+    <Position X="27.25" Y="13" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AKRAAIAQQIiAEAAAACIAEARCABAAQBAgAAAEGAAgBBA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.UsingStatementSyntax" Collapsed="true">
+    <Position X="29.75" Y="13" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AIRAAAAQQIgAGAAAACIAAAQCABAACBAwAAAAEAAAABA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.IfStatementSyntax" Collapsed="true">
+    <Position X="32.5" Y="13" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AIQAAIBQAIiAEAAAACIAAAQCAAAAQBAgAEAAEAAAABA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.SwitchStatementSyntax" Collapsed="true">
+    <Position X="35" Y="13" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAQAIgAEAAAACAAgAQAIJAAQDAwAEAAEAgAABA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.TryStatementSyntax" Collapsed="true">
+    <Position X="37.75" Y="13" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AIQEAABAAIggAAAAQCAAAARAAAAAQBAgQAAAAAAABAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.VariableDeclarationSyntax" Collapsed="true">
+    <Position X="114" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAIgAAAAAACAAAAQAAAABABAgAQQAAAAEAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.VariableDeclaratorSyntax" Collapsed="true">
+    <Position X="119.25" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gIQAAIAAAIgAAAAAACAAAAQAAAAAABBgAAAEQAAABAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.EqualsValueClauseSyntax" Collapsed="true">
+    <Position X="115.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AKQAAAAAAIgAAAAAACAAAAQAAAAAADAgAAAgAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.ElseClauseSyntax" Collapsed="true">
+    <Position X="128" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAKgAAAAgACIAAAQCAAAAABAgAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.SwitchSectionSyntax" Collapsed="true">
+    <Position X="128" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAEIgAABAAACAAAAQEAAAABBAgAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.SwitchLabelSyntax" Collapsed="true">
+    <Position X="124.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAABAIgAIAAAACAAAAQBAAAAADAgAAAgAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.CatchClauseSyntax" Collapsed="true">
+    <Position X="115.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIREAAAARIgAAAQAACAAEAQAABAAABAgAAAAAAAABAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.CatchDeclarationSyntax" Collapsed="true">
+    <Position X="119.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAQAIgAEAAAACAAAAQAAAABABBgAQAAUAAAABA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.CatchFilterClauseSyntax" Collapsed="true">
+    <Position X="122.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAQAIgAEAAAACAAAAQAAAAAQBAgAEAAEAAAABA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.FinallyClauseSyntax" Collapsed="true">
+    <Position X="126.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQEAQAAAIkAAAAAACAAAAQAAAAAABAgAAAAAAAABAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.NameEqualsSyntax" Collapsed="true">
+    <Position X="128" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AKQAAAAAAIgAAAAAACAAAAQAAAAEABAgAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.TypeParameterListSyntax" Collapsed="true">
+    <Position X="126.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAIgAAAAAACggAAQAAAAAABAgAIACAACAAgA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.TypeParameterSyntax" Collapsed="true">
+    <Position X="112.25" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQABAAAAIgAAAAAACAAAAQAAAAAABBgAAACQAAAAgQ=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.TypeBoundSyntax" Collapsed="true">
+    <Position X="122.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAABQAIkAUAABACAAAAQAAAAAABAgAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.TypeParameterConstraintSyntax" Collapsed="true">
+    <Position X="16.25" Y="35.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.TypeConstraintSyntax" Collapsed="true">
+    <Position X="14.5" Y="37" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAIgAAAAAACAAAAQAAAABABAgAQAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.AdditionalTypeConstraintSyntax" Collapsed="true">
+    <Position X="17.5" Y="37" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>QIQAAAAAAIgAAAAAACAAAAQAAABBABAgAQAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.ConstructorInitializerSyntax" Collapsed="true">
+    <Position X="114" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gIwAAIAAAIgAIAAAACgAAAQAAAAAABAgAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.BaseParameterListSyntax" Collapsed="true">
+    <Position X="30" Y="33.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.ParameterListSyntax" Collapsed="true">
+    <Position X="28.5" Y="35" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAQAIgAEAAAACAAAAQAAAAAABAgAIAAEACAABA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.BracketedParameterListSyntax" Collapsed="true">
+    <Position X="31" Y="35" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAQAAAIgABAAAACAAAAQAAAAAABAgAIBAAACAAAE=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.ParameterSyntax" Collapsed="true">
+    <Position X="117.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQABAAAAIgAAAAAACIAIAQgAAABABBgAQIAQAAAAAQ=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.CrefSyntax" Collapsed="true">
+    <Position X="30.5" Y="29.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.TypeCrefSyntax" Collapsed="true">
+    <Position X="27.75" Y="31" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAIgAAAAAACAAAAQAAAABABAgAQAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.QualifiedCrefSyntax" Collapsed="true">
+    <Position X="30" Y="31" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>BIQAAAQAAIoAAAAAACAAAAQAAAIIABAgCAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.MemberCrefSyntax" Collapsed="true">
+    <Position X="32.75" Y="31" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.NameMemberCrefSyntax" Collapsed="true">
+    <Position X="32.5" Y="32.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAIgAAAAAACAAAAQAAAAEABAgAIAAAACAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.BaseCrefParameterListSyntax" Collapsed="true">
+    <Position X="9.25" Y="33.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.CrefParameterListSyntax" Collapsed="true">
+    <Position X="7.5" Y="35" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAQAIgAEAAAACAAAAQAAAAAABAgAIAAEACAABA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.CrefBracketedParameterListSyntax" Collapsed="true">
+    <Position X="10.25" Y="35" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AIQAAQAAAIgABAAAACAAAAQAAAAAABAgAIBAAACAAAE=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.CrefParameterSyntax" Collapsed="true">
+    <Position X="119.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAIgAAAAAACAAAAQAAAABABAgAQAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.XmlNodeSyntax" Collapsed="true">
+    <Position X="26" Y="26.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.XmlElementSyntax" Collapsed="true">
+    <Position X="19" Y="28" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AIQCBACAAowAAAAAACAAAAQAAAAAABAgAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.XmlEmptyElementSyntax" Collapsed="true">
+    <Position X="21.5" Y="28" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAIgABAAAACAAAAQQAAAEFBAgAAACAAAAAgA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.XmlTextSyntax" Collapsed="true">
+    <Position X="24.5" Y="28" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AMQAAAAAAIgAAAAAACAAAAQAAAAAABAgAAAAAABAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.XmlCDataSectionSyntax" Collapsed="true">
+    <Position X="26.75" Y="28" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AMQCAAAAAogAAAAAACAAAAQAAAAAABggAAAAAABAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.XmlProcessingInstructionSyntax" Collapsed="true">
+    <Position X="29.5" Y="28" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AMQAAABQAIgAAAAAACAAAARAAAAEABAgABAAAABAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.XmlCommentSyntax" Collapsed="true">
+    <Position X="32.75" Y="28" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AMSAAAAACIgAAAAAACAAAAQAAAAAABAgAAAAAABAgAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.XmlElementStartTagSyntax" Collapsed="true">
+    <Position X="124.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAIgAAAAAACggAAQQAAAEEBAgAAACAAAAAgA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.XmlElementEndTagSyntax" Collapsed="true">
+    <Position X="121" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAIgAAAAAACggAAQAAAAEABAgAAAAAEAAAAQ=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.XmlNameSyntax" Collapsed="true">
+    <Position X="128" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAIgAAAAAACAAAAUCAAABAhAgAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.XmlPrefixSyntax" Collapsed="true">
+    <Position X="114" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAIgAIAAAACAAAAQCAAAAAhAgAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.XmlAttributeSyntax" Collapsed="true">
+    <Position X="21.75" Y="29.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>ACAABAAAAAAAAAAAAAAQAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.XmlTextAttributeSyntax" Collapsed="true">
+    <Position X="18.75" Y="31" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AOQABAAAAIwAAAAAACAQAAQAEAAEABAgAAAAAABAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.XmlCrefAttributeSyntax" Collapsed="true">
+    <Position X="21.5" Y="31" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AKQABAAAAIwAAAAAACAQAAQAGAAEABggAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.XmlNameAttributeSyntax" Collapsed="true">
+    <Position X="24.25" Y="31" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AKQABAAAAIwAAAAAACAQAAQAEAAEABBgAAAAQAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.CSharpSyntaxVisitor&lt;TResult&gt;" Collapsed="true">
+    <Position X="0.75" Y="7.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>TLQAERSVYwJV/QQLE+FSDgoePgRXQDYuhRcJbwgADxM=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.CSharpSyntaxVisitor" Collapsed="true">
+    <Position X="122.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>TLQAERSVYwJV/QQLE+FSDgoePgRXQDYuhRcJbwgADxM=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.CSharpSyntaxRewriter" Collapsed="true">
+    <Position X="0.5" Y="8.75" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>TLQAERSVYwJV/UALE+FSDgoePgRXQDYuhRcJbQgADxM=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.ContextAwareSyntax" Collapsed="true">
+    <Position X="115.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>iNYmxGwE3AelB4cRMQpg3EmchhIS8iQycCFtipAFShQ=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.SyntaxFactory" Collapsed="true">
+    <Position X="114" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>jNYmzGwE/A+lB4eZMQph3E2crhIS8iSycTFt2rCFShY=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.SkippedTokensTriviaSyntax" Collapsed="true">
+    <Position X="122.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAAAAAEAAAAAAAABAAAAAAAgAAAAAAAABIAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.DocumentationCommentTriviaSyntax" Collapsed="true">
+    <Position X="124.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQCAAAAAgAAAEAABAgAACBAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.AnnotationSyntax" Collapsed="true">
+    <Position X="121" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gIQAAIAAAAAAAEAMAAAQCgRAAAIEAAAAgAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.AnnotationArgumentListSyntax" Collapsed="true">
+    <Position X="114" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAQAACAAECAAAAAAABAAQCgAAAAIAAAAAAAABA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.AnnotationArgumentSyntax" Collapsed="true">
+    <Position X="115.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAQAEAAEAAEAAABAAAABAABAAAAAQAAACAAAACAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.CompilationUnitSyntax" Collapsed="true">
+    <Position X="126.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQACAAAACCAGlQAAAAUAABAAAAAAAQBAAAEAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.PackageDeclarationSyntax" Collapsed="true">
+    <Position X="115.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AoQACAAQAgAQgEAEEAAAAARAAAAEAAAACAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.JavaModifierSyntax" Collapsed="true">
+    <Position X="2.5" Y="33.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.JavaTypeParameterModifierSyntax" Collapsed="true">
+    <Position X="0.5" Y="35" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AIQIAAAAAgAAAEBAAAAAQABAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.JavaMemberModifierSyntax" Collapsed="true">
+    <Position X="4" Y="35" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AIQIAAAAAgAAAEBAAACAQABAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.ImportDeclarationSyntax" Collapsed="true">
+    <Position X="115.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAQAAEAAEAEAAAAAARAAgAETAAACBAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.ImportOnDemandSuffixSyntax" Collapsed="true">
+    <Position X="119.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIUAAAAAAEIAAEAAAAAAAABAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.MemberDeclarationSyntax" Collapsed="true">
+    <Position X="23.75" Y="14.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.JavaTypeDeclarationSyntax" Collapsed="true">
+    <Position X="22.5" Y="16" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAAAAAAAAAAAAAAASAACAAEQAgAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.JavaClassDeclarationSyntax" Collapsed="true">
+    <Position X="18.75" Y="17.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.JavaNormalClassDeclarationSyntax" Collapsed="true">
+    <Position X="18.25" Y="18.75" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AIQABCAYACGACFAAgAEwAABAEIAAASQACFQEQIgAAAQ=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.JavaInterfaceDeclarationSyntax" Collapsed="true">
+    <Position X="24" Y="17.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.JavaNormalInterfaceDeclarationSyntax" Collapsed="true">
+    <Position X="21.75" Y="18.75" Width="3" />
+    <TypeIdentifier>
+      <HashCode>BIQARAAQACGACEAAgAEgAAhAEIAAASQACFQEQggAAAQ=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.JavaAnnotationTypeDeclarationSyntax" Collapsed="true">
+    <Position X="25.5" Y="18.75" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AIQABAAQACEACEAAAAEgAgBAEAAAASQAiFAEQAgAAAQ=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.BaseTypeDeclarationSyntax" Collapsed="true">
+    <Position X="32.25" Y="16" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAABAAAAAAAAAAAAAAACAACAAAQAgAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.EnumDeclarationSyntax" Collapsed="true">
+    <Position X="32.25" Y="17.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AIQABAAQACEACFAAAAEQAABAEAAgACQACFQEQIgAAQQ=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.JavaEnumDeclarationSyntax" Collapsed="true">
+    <Position X="35" Y="16" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AIQABAAAAAEJAEAAAAkoAARIAAAAAQAAAFAAQgAAAAY=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.EnumMemberDeclarationSyntax" Collapsed="true">
+    <Position X="41.25" Y="16" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.JavaEnumBodySyntax" Collapsed="true">
+    <Position X="41.5" Y="17.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AIQAAEAQBFAAAEAAAIAAAABAEAAAACAECAAAAAwgAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.JavaEnumConstantSyntax" Collapsed="true">
+    <Position X="44.5" Y="17.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>gIQAAIAAAAAAAEAAAAIACABCEAIAAAAAAEAAQAIAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.JavaEnumBodyDeclarationsSyntax" Collapsed="true">
+    <Position X="38" Y="17.25" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AISAAAAQAAAAAEAAAAQAEABAAAAAAAAACAAAABAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.BaseFieldDeclarationSyntax" Collapsed="true">
+    <Position X="2.5" Y="16" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAQAAAAAAAAAAAAAAAAAAAAAAACAIAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.FieldDeclarationSyntax" Collapsed="true">
+    <Position X="2.5" Y="17.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AIRIBAAQUAIAAEAAAAIAACBAAAAAAAAACAIAAAAAEAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.JavaBaseMethodDeclarationSyntax" Collapsed="true">
+    <Position X="8.25" Y="16" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.JavaInitializerMethodDeclarationSyntax" Collapsed="true">
+    <Position X="14.5" Y="16" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAgAAAEAAAAABQABAAQAAQAAAABAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.BaseMethodDeclarationSyntax" Collapsed="true">
+    <Position X="8.5" Y="17.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAABAEAAAAAAAAAAAAAAACAAAAAAAAACQIAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.MethodDeclarationSyntax" Collapsed="true">
+    <Position X="5.25" Y="18.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AIQABAAQFgKEBEAAhAIBwCDACYAAAAQACUYAQQGEEAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.ConstructorDeclarationSyntax" Collapsed="true">
+    <Position X="8.25" Y="18.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AIQABAAQEgIAAEAAAAIBwCDAAQAAAAQACUIEQAGAFAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.DestructorDeclarationSyntax" Collapsed="true">
+    <Position X="11.5" Y="18.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AIQABAAQEgMAAEAAAAIBwCDAAQAAAAQADUIAQAGAEAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.IncompleteMemberSyntax" Collapsed="true">
+    <Position X="29.25" Y="16" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AIQABAAAEAIAAEAAAAIAACBAAAABAAAAIQIAAAAAEAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.ImplementsListClauseSyntax" Collapsed="true">
+    <Position X="112.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AoQAAAAAAAAAAEAAAAAAAABAABAIAAAAIAAAAAIAEAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.JavaThrowsListClauseSyntax" Collapsed="true">
+    <Position X="122.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AoQAAAAAAAgAAEAAAAAAAABAAAAAAAAAIAAAAAIAEAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.ExtendsListClauseSyntax" Collapsed="true">
+    <Position X="121" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AoQAAAAAAAAAAEAAAAAAAABAABAIAAAAIAAAAAIAEAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.ExtendsClauseSyntax" Collapsed="true">
+    <Position X="117.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAQAAAAAEAAAAAAAABAAAABAAAAMQAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.TypeArgumentListSyntax" Collapsed="true">
+    <Position X="117.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAgAAAEAAAAgAAABAAQCgAAAIIAACAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.ArrayRankSpecifierSyntax" Collapsed="true">
+    <Position X="112.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQBAAAABAAABEQAAAAAAIBAAAAEAAIAAgAAAAAAAAE=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.ExpressionSyntax" Collapsed="true">
+    <Position X="57.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.TypeSyntax" Collapsed="true">
+    <Position X="93.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.PredefinedTypeSyntax" Collapsed="true">
+    <Position X="83.25" Y="3.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAAAAAEAAAAAgAABAAAAAAQAAAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.ArrayTypeSyntax" Collapsed="true">
+    <Position X="86" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQABAAAAAQAAEAAAAAAAABAAAEQAAAAAAAIAAQACAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.NullableTypeSyntax" Collapsed="true">
+    <Position X="88.25" Y="3.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AIQABAAAAASAAEAAAAAAAABABAEAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.BaseClassWithArgumentsSyntax" Collapsed="true">
+    <Position X="90.75" Y="3.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>gIQAAoAAAAIAAUAAAAAACABAAAIAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.OmittedTypeArgumentSyntax" Collapsed="true">
+    <Position X="94" Y="3.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAAAAAEAACAAAAABAAAABAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.NameSyntax" Collapsed="true">
+    <Position X="100.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAEIAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.SimpleNameSyntax" Collapsed="true">
+    <Position X="98.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAQAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.IdentifierNameSyntax" Collapsed="true">
+    <Position X="97.25" Y="6.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAAAAAEAAAAAAAABAAAAAAAAAAEAAQAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.GenericNameSyntax" Collapsed="true">
+    <Position X="100" Y="6.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAACAIAAEAAAAAAAABAAAAAAAAAAEAAQIAIAAI=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.QualifiedNameSyntax" Collapsed="true">
+    <Position X="102.5" Y="4.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAIEIBAEIAAAAAAABAAAAIAAAACACAAAAAgAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.ParenthesizedExpressionSyntax" Collapsed="true">
+    <Position X="35.75" Y="2" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAQAACAAECAABAAAABAABAAAAAQAAAAAAAAABA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.PrefixUnaryExpressionSyntax" Collapsed="true">
+    <Position X="42.75" Y="2" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AYwAAAAAAAAAAEAAAAAAAABAAAAAAAAAQAAAAAEAgAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.PostfixUnaryExpressionSyntax" Collapsed="true">
+    <Position X="49" Y="2" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AYwAAAAAAAAAAEAAAAAAAABAAAAAAAAAQAAAAAEAgAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.MemberAccessExpressionSyntax" Collapsed="true">
+    <Position X="56.5" Y="2" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AIwAAAAAAAAAAEAEABAAAARAABAEAAAQAAAAAAAAgAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.ClassLiteralExpressionSyntax" Collapsed="true">
+    <Position X="63" Y="2" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AIQgAAAAAEIAAEAAABAAAABAABAAAAAQAAAAAAQAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.ImplicitElementAccessSyntax" Collapsed="true">
+    <Position X="69.75" Y="2" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>gIQAAIAAAAAAAEAAAAAACABAAAIAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.BinaryExpressionSyntax" Collapsed="true">
+    <Position X="77.25" Y="2" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AIwAAAAAIAABAEAAAAAAAABAAAAIAAAACACAAAAAgAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.ConditionalExpressionSyntax" Collapsed="true">
+    <Position X="105.25" Y="2" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAIAAEACAAUAAACEAAABBBAAACAABAAgAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InstanceExpressionSyntax" Collapsed="true">
+    <Position X="7" Y="2" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.ThisExpressionSyntax" Collapsed="true">
+    <Position X="5.5" Y="3.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAAAAAEAAAAAAAABAAAAAAABAAAAAAAABAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.BaseExpressionSyntax" Collapsed="true">
+    <Position X="8.25" Y="3.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAAAAAEAAAAAAAABAAAAAAABAAAAAAAABAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.LiteralExpressionSyntax" Collapsed="true">
+    <Position X="14.25" Y="2" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAAAAAEAAAAAAAABAAAAAAABAAAAAAAABAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.DefaultExpressionSyntax" Collapsed="true">
+    <Position X="17" Y="2" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAQAACAAECAAAAgAABAAAABAQAAIQAAAAAAABA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InvocationExpressionSyntax" Collapsed="true">
+    <Position X="19.75" Y="2" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>gIQAAIAAAAAAAEAAABAACABAABIAAAAQAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.ElementAccessExpressionSyntax" Collapsed="true">
+    <Position X="22.75" Y="2" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>gIQAAIAAAAAAAEAAABAACABAABIAAAAQAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.CastExpressionSyntax" Collapsed="true">
+    <Position X="26" Y="2" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAQAACAAECAABAAAABAABABAAAQIQAAAAAAABA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.AnonymousMethodExpressionSyntax" Collapsed="true">
+    <Position X="28.75" Y="2" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AIQEAAAAAQAAAEAAAAAAgADAAAAAAAAAAAQAAACABAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.SimpleLambdaExpressionSyntax" Collapsed="true">
+    <Position X="32.5" Y="2" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>QIQAAAAAAgAAEEAAAAEBAABAAYAQAAAAEAAAAAAAAIA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.ParenthesizedLambdaExpressionSyntax" Collapsed="true">
+    <Position X="39" Y="2" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAgAAAEAAAAEBgADAAYAAAAAAAAAAAACAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.InitializerExpressionSyntax" Collapsed="true">
+    <Position X="46" Y="2" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAAAAAEAAABAAAABAEAAAACAAAAAAAggAEAI=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.JavaAnonymousClassInitializerExpressionSyntax" Collapsed="true">
+    <Position X="52.25" Y="2" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAACAACEAAAAAAAABAEAAAACQAAAAEAAgAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.ObjectCreationExpressionSyntax" Collapsed="true">
+    <Position X="59.75" Y="2" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>gIQAAIABAAAAAEAAAAAACABAAAIBAAAAIQAEBAAABAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.AnnotationCreationExpressionSyntax" Collapsed="true">
+    <Position X="66" Y="2" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AIQAACAAAAACAEAAAgAAAABAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.AnonymousObjectCreationExpressionSyntax" Collapsed="true">
+    <Position X="73" Y="2" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAABAAAAAEAAAAAAAABAEAAAACAAICAEAAgABIA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.ArrayCreationExpressionSyntax" Collapsed="true">
+    <Position X="80" Y="2" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAABAAAAAEAAAAAAAABAgAABAAAAIQAEAAAABAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.OmittedArraySizeExpressionSyntax" Collapsed="true">
+    <Position X="108.5" Y="2" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AIQAEAAAAAAAAEAAAAAAAABAAAAAAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.DeclarationExpressionSyntax" Collapsed="true">
+    <Position X="11" Y="2" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAACAAAAAAAEAAAAAAAABAAAABAAAAIQQAAAAEAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.BaseArgumentListSyntax" Collapsed="true">
+    <Position X="23" Y="32.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.ArgumentListSyntax" Collapsed="true">
+    <Position X="21.5" Y="34" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAQAACAAECAAAAAAABAAQCgAAAAIAAAAAAAABA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.BracketedArgumentListSyntax" Collapsed="true">
+    <Position X="24" Y="34" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAAAABEAAAAAAAABAAQCgAAIAIgAAAAAAAAE=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.ArgumentSyntax" Collapsed="true">
+    <Position X="126.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAEAAAAAEAAABAAAABAABAAAAAQAAAAAAAACAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.NameColonSyntax" Collapsed="true">
+    <Position X="126.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAEAAAAEAEACAAAARAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.AnonymousObjectMemberDeclaratorSyntax" Collapsed="true">
+    <Position X="122.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAQAAAAEAAEAAABAAAABAABAAAAAQAAACAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.StatementSyntax" Collapsed="true">
+    <Position X="24.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.BlockSyntax" Collapsed="true">
+    <Position X="20.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAAAAAEAAACAAAABMEAAABCAAAAAAAAgAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.LocalDeclarationStatementSyntax" Collapsed="true">
+    <Position X="23" Y="6" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AIRKBAAQQAIAAEAAAAAAACBAAAAAAAAACAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.ExpressionStatementSyntax" Collapsed="true">
+    <Position X="26.5" Y="6" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AJQAAAAQAAAAAEAAABAAAABAABAAAAAQCAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.EmptyStatementSyntax" Collapsed="true">
+    <Position X="29.5" Y="6" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAQAAAAAEAAAAAAAABAAAAAAAAACAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.LabeledStatementSyntax" Collapsed="true">
+    <Position X="32.25" Y="6" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAEAAAAEAAACIAAQBCAAAAAAAAAEAAQAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.GotoStatementSyntax" Collapsed="true">
+    <Position X="35" Y="6" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAQAAAAAGAAABAAAADBABABAAAQCAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.BreakStatementSyntax" Collapsed="true">
+    <Position X="37.75" Y="6" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAQAAAAAEAAAAAAAABAAAAAAAAACgAAAAEAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.ContinueStatementSyntax" Collapsed="true">
+    <Position X="40.5" Y="6" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAQAAAAAEAAAAAAAABAAAAARAAACAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.ReturnStatementSyntax" Collapsed="true">
+    <Position X="43.5" Y="6" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAQAAAAAEAAAFAAAABAABAAAAAQCAAAAAAAQAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.ThrowStatementSyntax" Collapsed="true">
+    <Position X="46.25" Y="6" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AISAAAAQAAAAAEAAABAAAABAABAAAAAQCAAAAAAAAIA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.WhileStatementSyntax" Collapsed="true">
+    <Position X="2.5" Y="6" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AIQAAIAQAACIAECAAAIAAQBCAAAAAAARAAAAAAAAABA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.DoStatementSyntax" Collapsed="true">
+    <Position X="5.25" Y="6" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AIQAAIAQEACIAECAAAIAAQBCAAAAAAARCAAAAAAAARA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.ForStatementSyntax" Collapsed="true">
+    <Position X="7.75" Y="6" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AIRAAIAQQCCQAECAAAIAEQBCABAAQAAhACAMCAAgBJA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.UsingStatementSyntax" Collapsed="true">
+    <Position X="10.25" Y="6" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AIRAAAAQQACAAECAABIAAQBCAhAACAAQAAAAAAAAABA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.IfStatementSyntax" Collapsed="true">
+    <Position X="13" Y="6" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AIQAAIBQAACAAECAAAIAAQBCAAAAAAABAEAIACAAABA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.SwitchStatementSyntax" Collapsed="true">
+    <Position X="15.5" Y="6" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AIQCAAAQAACAAECAABACAABAELAAQCAQAEAAAAgAABA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.TryStatementSyntax" Collapsed="true">
+    <Position X="18.25" Y="6" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AIQEAABAAQAgAEABAEAAAABAAAAAQAAAQAQAAEIABAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.VariableDeclarationSyntax" Collapsed="true">
+    <Position X="115.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAAAAAFAAAAAgAABAAAABAAAAIQQAAAAEAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.VariableDeclaratorSyntax" Collapsed="true">
+    <Position X="117.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gIQAAIAAAAAAAEAAAAAACABAAAIAAAAAAUAEQAAABAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.EqualsValueClauseSyntax" Collapsed="true">
+    <Position X="114" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AKQAAAAAAAAAAEAAABAAAAJAAAAAACAAAAAgAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.ElseClauseSyntax" Collapsed="true">
+    <Position X="112.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQABAAAAAAAAEAgAAIAAQBCAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.SwitchSectionSyntax" Collapsed="true">
+    <Position X="112.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAEAAAAFAAECAAAABMgAAABAAAAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.SwitchLabelSyntax" Collapsed="true">
+    <Position X="126.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAEAAAAGAAACAAAAJBAAAAACAAAAAgAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.CatchClauseSyntax" Collapsed="true">
+    <Position X="117.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIREAAAQRQAAAEAAAAAAEABAABAAAAAAQAQAAAAQBAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.CatchDeclarationSyntax" Collapsed="true">
+    <Position X="121" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAQAACAAECAAAAAAABAAAABAAAAIUAAQAAAABA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.CatchFilterClauseSyntax" Collapsed="true">
+    <Position X="124.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQQAAAQAACAAECAAAAAAABAAAAAQAAAAEAIAAAAABA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.FinallyClauseSyntax" Collapsed="true">
+    <Position X="124.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQEAQAAAQAAAEAAAAAAAABAAAAAAAAAAAQAAAAABgA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.NameEqualsSyntax" Collapsed="true">
+    <Position X="112.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AKQAAAAAAAAAAEAEABAAAARAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.TypeParameterListSyntax" Collapsed="true">
+    <Position X="124.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAgAAAEAAAAgAAAJAAAAAAAAIAIACBACAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.TypeParameterSyntax" Collapsed="true">
+    <Position X="128" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQABAAAAAAAAEAAAAEAAABCAAAAAAAAAFACQAAAAgQ=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.TypeBoundSyntax" Collapsed="true">
+    <Position X="121" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gIQAAABQAAEAQkABAAAAAABAAAAAAAAAEAAAAAACAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.TypeParameterConstraintSyntax" Collapsed="true">
+    <Position X="16.25" Y="32.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.TypeConstraintSyntax" Collapsed="true">
+    <Position X="14.5" Y="34" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAAAAAEAAAAAAAABAAAABAAAAIQAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.AdditionalTypeConstraintSyntax" Collapsed="true">
+    <Position X="17.5" Y="34" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAAAAAEAAAAAAAABAAABBAAAAIQAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.ConstructorInitializerSyntax" Collapsed="true">
+    <Position X="112.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gIQAAIAAEAAAAEAAACgACABAAAIAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.BaseParameterListSyntax" Collapsed="true">
+    <Position X="9" Y="30.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.ParameterListSyntax" Collapsed="true">
+    <Position X="7.5" Y="32" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAQAACAAECAAAAAAAJAAAAAAAAAAIAABACAABA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.BracketedParameterListSyntax" Collapsed="true">
+    <Position X="10" Y="32" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAAAABEAAAAAAAAJAAAAAAAIAAoAABACAAAE=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.ParameterSyntax" Collapsed="true">
+    <Position X="119.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQABAAAEAIAAEAAAgIAICBgAAABAAAAIUIAQAIAEAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.CrefSyntax" Collapsed="true">
+    <Position X="12.5" Y="27.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.TypeCrefSyntax" Collapsed="true">
+    <Position X="9.75" Y="29" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAAAAAEAAAAAAAABAAAABAAAAIQAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.QualifiedCrefSyntax" Collapsed="true">
+    <Position X="12" Y="29" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>BIQQAAQAAEIAAEAAAAAAAABAAAEIAAAACAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.MemberCrefSyntax" Collapsed="true">
+    <Position X="14.75" Y="29" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.NameMemberCrefSyntax" Collapsed="true">
+    <Position X="14.5" Y="30.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAAAAAEAEAAAAAAZACAAEAAAAAIAAAACAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.BaseCrefParameterListSyntax" Collapsed="true">
+    <Position X="2.25" Y="30.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.CrefParameterListSyntax" Collapsed="true">
+    <Position X="4" Y="32" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAQAACAAECAAAAAAAJAAAAAAAAAAIAABACAABA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.CrefBracketedParameterListSyntax" Collapsed="true">
+    <Position X="0.5" Y="32" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAAAABEAAAAAAAAJAAAAAAAIAAoAABACAAAE=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.CrefParameterSyntax" Collapsed="true">
+    <Position X="117.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAAAAAEAAAAAAAABAAAABAAAAIQAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.XmlNodeSyntax" Collapsed="true">
+    <Position X="8" Y="24.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.XmlElementSyntax" Collapsed="true">
+    <Position X="1" Y="26" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AIxCBACAAgQAAEAABAAAACBAAAAAAAAAAABAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.XmlEmptyElementSyntax" Collapsed="true">
+    <Position X="3.5" Y="26" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AIQABAAAAgAAAEAEAAAAAARUAAIEFAAAAAACAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.XmlTextSyntax" Collapsed="true">
+    <Position X="6.5" Y="26" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AMQAAAAAAAAAAEAAAAAAAABAAAIAAAAAAAAAACAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.XmlCDataSectionSyntax" Collapsed="true">
+    <Position X="8.75" Y="26" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AMQAAAAAAgAAAkAAACAAAABAAAIAAAAAEAAAACAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.XmlProcessingInstructionSyntax" Collapsed="true">
+    <Position X="11.5" Y="26" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AMQCAABQAgAAAEAEAAAAAARAAAIEAAAAAAAAACAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.XmlCommentSyntax" Collapsed="true">
+    <Position X="14.75" Y="26" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AMQAAAAACIAAAEAAAAAAAABAAAIAAAAAAEAAACAAgAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.XmlElementStartTagSyntax" Collapsed="true">
+    <Position X="126.25" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQABAAAAgAAAEAEAAgAAARQAAIEEAAIAAACAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.XmlElementEndTagSyntax" Collapsed="true">
+    <Position X="122.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAAAAAEAEAAgAAARAAAAEAAIIAAAAAEAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.XmlNameSyntax" Collapsed="true">
+    <Position X="112.25" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAAAAQEAAAAAAAABCAAABAoAAAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.XmlPrefixSyntax" Collapsed="true">
+    <Position X="115.75" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAEAAAAEAAACAAAABCAAAAAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.XmlAttributeSyntax" Collapsed="true">
+    <Position X="3.75" Y="27.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>ACAABAAAAAAAAAAAAAAQAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.XmlTextAttributeSyntax" Collapsed="true">
+    <Position X="0.75" Y="29" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AOQAhAAAAAAAAEgEABAQAARAAAIEAAAAAAAAACAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.XmlCrefAttributeSyntax" Collapsed="true">
+    <Position X="3.5" Y="29" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AKQAhAAAAAAAAEgEABAQAARACAAEAAgAAAAAAAAAEAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.Syntax.XmlNameAttributeSyntax" Collapsed="true">
+    <Position X="6.25" Y="29" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AKQAhAAAAAAAAEgEABAQAARAAAAEAABAAEAAQAAAAAA=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.CSharpSyntaxVisitor&lt;TResult&gt;" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>TLQAERSVYwJV/QQLE+FSDgoePgBXQDYuhRcJbwgADxM=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.CSharpSyntaxVisitor" Collapsed="true">
+    <Position X="121" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>TLQAERSVYwJV/QQLE+FSDgoePgBXQDYuhRcJbwgADxM=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.CSharpSyntaxRewriter" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>TLQAERSVYwJV/UALE/FSDgoePkRXQDYuhRcJbYgADxM=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.CodeAnalysis.CSharp.SyntaxFactory" Collapsed="true">
+    <Position X="115.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>itc2zG4E/Y+nB4eZMU5x3k2cphpS9i4yeTNt2rSFyjY=</HashCode>
+      <FileName>obj\Debug\Syntax.xml.Generated.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Microsoft YaHei UI" Size="9" />
+</ClassDiagram>

@@ -41,20 +41,6 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 			{
 				this.ParseAnnotationDeclarations(annotations);
 
-				//
-				// Check for the following cases to disambiguate between member declarations and expressions.
-				// Doing this before parsing modifiers simplifies further analysis since some of these keywords can act as modifiers as well.
-				//
-				// unsafe { ... }
-				// fixed (...) { ... } 
-				// delegate (...) { ... }
-				// delegate { ... }
-				// new { ... }
-				// new[] { ... }
-				// new T (...)
-				// new T [...]
-				//
-
 				// All modifiers that might start an expression are processed above.
 				this.ParseModifiers(modifiers);
 
@@ -82,15 +68,18 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 					var identifier = this.EatToken();
 
 					return this.ParseMethodDeclaration(annotations, modifiers, voidType, identifier: identifier, typeParameterList: null);
-
 				}
-
-				// Check for destructor form
-				// TODO: better error messages for script
-				if (this.CurrentToken.Kind == SyntaxKind.TildeToken)
+				else if (this.CurrentToken.Kind == SyntaxKind.OpenBraceToken && annotations.Count == 0)
 				{
-					return this.ParseDestructorDeclaration(typeName, annotations, modifiers);
+					return this.ParseJavaInitializerMethodDeclaration(modifiers);
 				}
+
+				//// Check for destructor form
+				//// TODO: better error messages for script
+				//if (this.CurrentToken.Kind == SyntaxKind.TildeToken)
+				//{
+				//	return this.ParseDestructorDeclaration(typeName, annotations, modifiers);
+				//}
 
 				// Check for constant (prefers const field over const local variable decl)
 				if (this.CurrentToken.Kind == SyntaxKind.ConstKeyword)
@@ -192,19 +181,18 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
 		private MemberDeclarationSyntax ParseTypeDeclaration(SyntaxListBuilder<AnnotationSyntax> attributes, SyntaxListBuilder modifiers)
 		{
-
 			CancellationToken.ThrowIfCancellationRequested();
 
 			switch (this.CurrentToken.Kind)
 			{
 				case SyntaxKind.ClassKeyword:
-					return this.ParseClassDeclaration(attributes, modifiers);
+					return this.ParseJavaNormalClassDeclaration(attributes, modifiers);
 				case SyntaxKind.EnumKeyword:
-					return this.ParseEnumDeclaration(attributes, modifiers);
+					return this.ParseJavaEnumDeclaration(attributes, modifiers);
 				case SyntaxKind.InterfaceKeyword:
-					return this.ParseInterfaceDeclaration(attributes, modifiers);
+					return this.ParseJavaNormalInterfaceDeclaration(attributes, modifiers);
 				case SyntaxKind.AtToken:
-					return this.ParseAnnotationDeclaration(attributes, modifiers);
+					return this.ParseJavaAnnotationTypeDeclaration(attributes, modifiers);
 				default:
 					throw ExceptionUtilities.UnexpectedValue(this.CurrentToken.Kind);
 			}
@@ -234,67 +222,6 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 		}
 
 
-		private MethodDeclarationSyntax ParseMethodDeclaration(
-			SyntaxListBuilder<AnnotationSyntax> attributes,
-			SyntaxListBuilder modifiers,
-			TypeSyntax type,
-			SyntaxToken identifier,
-			TypeParameterListSyntax typeParameterList)
-		{
-			// Parse the name (it could be qualified)
-			var saveTerm = this._termState;
-			this._termState |= TerminatorState.IsEndOfMethodSignature;
-
-			var paramList = this.ParseParenthesizedParameterList(allowThisKeyword: true, allowDefaults: true, allowAttributes: true, allowFieldModifiers: false);
-
-			var constraints = default(SyntaxListBuilder<TypeBoundSyntax>);
-			try
-			{
-				if (this.CurrentToken.Kind == SyntaxKind.ColonToken)
-				{
-					// Use else if, rather than if, because if we see both a constructor initializer and a constraint clause, we're too lost to recover.
-					var colonToken = this.CurrentToken;
-					// Set isStatic to false because pretending we're in a static constructor will just result in more errors.
-					ConstructorInitializerSyntax initializer = this.ParseConstructorInitializer(identifier.ValueText, isStatic: false);
-					initializer = this.AddErrorToFirstToken(initializer, ErrorCode.ERR_UnexpectedCharacter, colonToken.Text); //CONSIDER: better error code?
-					paramList = AddTrailingSkippedSyntax(paramList, initializer);
-
-					// CONSIDER: Parsing an invalid constructor initializer could, conceivably, get us way
-					// off track.  If this becomes a problem, an alternative approach would be to generalize
-					// EatTokenWithPrejudice in such a way that we can just skip everything until we recognize
-					// our context again (perhaps an open brace).
-				}
-
-
-				this._termState = saveTerm;
-
-				BlockSyntax body;
-				SyntaxToken semicolon;
-
-
-
-				this.ParseBodyOrSemicolon(out body, out semicolon);
-
-
-				return _syntaxFactory.MethodDeclaration(
-					attributes,
-					modifiers.ToTokenList(),
-					type,
-					identifier,
-					typeParameterList,
-					paramList,
-					constraints,
-					body,
-					semicolon);
-			}
-			finally
-			{
-				if (!constraints.IsNull)
-				{
-					this._pool.Free(constraints);
-				}
-			}
-		}
 
 
 		private TypeSyntax ParseReturnType()

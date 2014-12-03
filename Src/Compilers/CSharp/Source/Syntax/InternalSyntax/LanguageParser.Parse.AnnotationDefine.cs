@@ -12,7 +12,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 {
 	internal partial class LanguageParser : SyntaxParser
 	{
-		private JavaAnnotationTypeDeclarationSyntax ParseAnnotationDeclaration(SyntaxListBuilder<AnnotationSyntax> attributes,
+		private JavaAnnotationTypeDeclarationSyntax ParseJavaAnnotationTypeDeclaration(SyntaxListBuilder<AnnotationSyntax> attributes,
 			SyntaxListBuilder modifiers)
 		{
 
@@ -26,8 +26,6 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 			this._termState |= TerminatorState.IsPossibleAggregateClauseStartOrStop;
 			var name = this.ParseIdentifierToken();
 			this._termState = saveTerm;
-
-
 
 			// Parse class body
 			bool parseMembers = true;

@@ -12,7 +12,6 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 {
 	internal partial class LanguageParser : SyntaxParser
 	{
-		#region Expression
 		public ExpressionSyntax ParseExpression(bool allowDeclarationExpressionAtTheBeginning = true)
 		{
 			return this.ParseSubExpression(0, allowDeclarationExpressionAtTheBeginning);
@@ -170,6 +169,10 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 						{
 							expr = ParseClassLiteralExpression();
 						}
+						else if (allowDeclarationExpression && IsPossibleQualifiedThisExpression(contextRequiresVariable))
+						{
+							expr = ParseClassLiteralExpression();
+						}
 						else
 						{
 							expr = this.ParseSimpleName(NameOptions.InExpression);
@@ -208,7 +211,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 					expr = this.ParseArrayInitializer();
 					break;
 				case SyntaxKind.AtToken:
-					expr = this.ParseAnnotationExpression();
+					expr = this.ParseAnnotationCreationExpression();
 					break;
 				default:
 					// check for intrinsic type followed by '.'
@@ -394,10 +397,6 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 			{
 				return this.ParseAnonymousTypeExpression();
 			}
-			else if (this.IsImplicitlyTypedArray())
-			{
-				return this.ParseImplicitlyTypedArrayCreation();
-			}
 			else
 			{
 				// assume object creation as default case
@@ -439,10 +438,26 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 					argumentList = this.ParseParenthesizedArgumentList();
 				}
 
-				InitializerExpressionSyntax initializer = null;
+				//处理双大括号初始化 匿名类
+				//List<String> blah = new ArrayList<String>(){{add("asdfa");add("bbb");}};
+				//	List<Character> characters = new ArrayList<Character>() {
+				//		{
+				//			for (char c = 'A'; c <= 'E'; c++) add(c);
+				//		}
+				//	};
+				//JavaAnonymousClassDeclarationSyntax
+
+
+				//InitializerExpressionSyntax initializer = null;
+				//if (this.CurrentToken.Kind == SyntaxKind.OpenBraceToken)
+				//{
+				//	initializer = this.ParseObjectOrCollectionInitializer();
+				//}
+
+				JavaAnonymousClassInitializerExpressionSyntax initializer = null;
 				if (this.CurrentToken.Kind == SyntaxKind.OpenBraceToken)
 				{
-					initializer = this.ParseObjectOrCollectionInitializer();
+					initializer = this.ParseJavaAnonymousClassBody();
 				}
 
 				// we need one or the other
@@ -678,31 +693,31 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 			}
 		}
 
-		private ImplicitArrayCreationExpressionSyntax ParseImplicitlyTypedArrayCreation()
-		{
-			var @new = this.EatToken(SyntaxKind.NewKeyword);
-			@new = CheckFeatureAvailability(@new, MessageID.IDS_FeatureImplicitArray);
-			var openBracket = this.EatToken(SyntaxKind.OpenBracketToken);
+		//private ImplicitArrayCreationExpressionSyntax ParseImplicitlyTypedArrayCreation()
+		//{
+		//	var @new = this.EatToken(SyntaxKind.NewKeyword);
+		//	@new = CheckFeatureAvailability(@new, MessageID.IDS_FeatureImplicitArray);
+		//	var openBracket = this.EatToken(SyntaxKind.OpenBracketToken);
 
-			var commas = this._pool.Allocate();
-			try
-			{
-				while (this.CurrentToken.Kind == SyntaxKind.CommaToken)
-				{
-					commas.Add(this.EatToken());
-				}
+		//	var commas = this._pool.Allocate();
+		//	try
+		//	{
+		//		while (this.CurrentToken.Kind == SyntaxKind.CommaToken)
+		//		{
+		//			commas.Add(this.EatToken());
+		//		}
 
-				var closeBracket = this.EatToken(SyntaxKind.CloseBracketToken);
+		//		var closeBracket = this.EatToken(SyntaxKind.CloseBracketToken);
 
-				var initializer = this.ParseArrayInitializer();
+		//		var initializer = this.ParseArrayInitializer();
 
-				return _syntaxFactory.ImplicitArrayCreationExpression(@new, openBracket, commas.ToTokenList(), closeBracket, initializer);
-			}
-			finally
-			{
-				this._pool.Free(commas);
-			}
-		}
+		//		return _syntaxFactory.ImplicitArrayCreationExpression(@new, openBracket, commas.ToTokenList(), closeBracket, initializer);
+		//	}
+		//	finally
+		//	{
+		//		this._pool.Free(commas);
+		//	}
+		//}
 
 		private InitializerExpressionSyntax ParseArrayInitializer()
 		{
@@ -924,7 +939,6 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 		}
 
 
-		#endregion
 
 
 		private AnonymousObjectCreationExpressionSyntax ParseAnonymousTypeExpression()

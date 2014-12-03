@@ -93,6 +93,9 @@
     <Compile Include="SyntaxDiagnosticInfo.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Syntax\InternalSyntax\LanguageParser.Parse.TypeArgument.cs" />
+    <Compile Include="Syntax\InternalSyntax\LanguageParser.Parse.IsEndOf.cs" />
+    <Compile Include="Syntax\InternalSyntax\LanguageParser.Parse.Method.cs" />
     <Compile Include="Syntax\InternalSyntax\LanguageParser.Parse.Implements.cs" />
     <Compile Include="Syntax\InternalSyntax\LanguageParser.Parse.Class.cs" />
     <Compile Include="Syntax\InternalSyntax\LanguageParser.Parse.AnnotationDefine.cs" />
@@ -102,7 +105,7 @@
     <Compile Include="Syntax\InternalSyntax\LanguageParser.Parse.MemberDeclaration.cs" />
     <Compile Include="Syntax\InternalSyntax\LanguageParser.Parse.Extends.cs" />
     <Compile Include="Syntax\InternalSyntax\LanguageParser.Parse.Type.cs" />
-    <Compile Include="Syntax\InternalSyntax\LanguageParser.Parse.SimpleName.cs" />
+    <Compile Include="Syntax\InternalSyntax\LanguageParser.Parse.Name.cs" />
     <Compile Include="Syntax\InternalSyntax\LanguageParser.Parse.Enum.cs" />
     <Compile Include="Syntax\InternalSyntax\LanguageParser.Parse.Interface.cs" />
     <Compile Include="Syntax\InternalSyntax\LanguageParser.Parse.Dummy.cs" />
@@ -125,7 +128,6 @@
     <Compile Include="Syntax\AnnotationSyntax.cs" />
     <Compile Include="Syntax\BaseMethodDeclarationSyntax.cs" />
     <Compile Include="Syntax\BaseSyntaxNodeExtensions.cs" />
-    <Compile Include="Syntax\ClassDeclarationSyntax.cs" />
     <Compile Include="Syntax\CSharpSyntaxNode.cs" />
     <Compile Include="Syntax\CSharpSyntaxRewriter.cs" />
     <Compile Include="Syntax\CSharpSyntaxTree.cs" />
@@ -276,7 +278,9 @@
     <InternalsVisibleToTest Include="Roslyn.Scripting.CSharp.UnitTests" />
     <InternalsVisibleToTest Include="Roslyn.Services.Editor.CSharp.UnitTests" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
+  </ItemGroup>
   <ImportGroup Label="Targets">
     <Import Project="..\..\..\Tools\Microsoft.CodeAnalysis.Toolset.Open\Targets\VSL.Imports.targets" />
     <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

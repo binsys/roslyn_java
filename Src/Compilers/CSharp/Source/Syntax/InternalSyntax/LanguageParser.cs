@@ -132,6 +132,24 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 		private TerminatorState _termState; // Resettable
 		private bool _isInTry; // Resettable
 
+
+		private const int LambdaPrecedence = 1;
+
+		private bool IsIncrementalAndFactoryContextMatches
+		{
+			get
+			{
+				if (!base.IsIncremental)
+				{
+					return false;
+				}
+
+				CSharp.CSharpSyntaxNode current = this.CurrentNode;
+				return current != null;
+			}
+		}
+
+
 		// NOTE: If you add new state, you should probably add it to ResetPoint as well.
 
 		internal LanguageParser(
@@ -203,11 +221,6 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 				this.AddSkippedNamespaceText(ref body, ref initialBadNodes, incompleteMembers[i]);
 			}
 			incompleteMembers.Clear();
-		}
-
-		public bool IsEndOfNamespace()
-		{
-			return this.CurrentToken.Kind == SyntaxKind.CloseBraceToken;
 		}
 
 		private bool IsNamespaceMemberStartOrStop()
@@ -312,8 +325,9 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 				// on reuse valid type declaration (not bad namespace members)
 				switch (member.Kind)
 				{
-					case SyntaxKind.ClassDeclaration:
-					case SyntaxKind.InterfaceDeclaration:
+					case SyntaxKind.JavaNormalClassDeclaration:
+					case SyntaxKind.JavaNormalInterfaceDeclaration:
+					case SyntaxKind.JavaAnnotationTypeDeclaration:
 					case SyntaxKind.EnumDeclaration:
 						return true;
 				}
@@ -327,30 +341,37 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 			switch (kind)
 			{
 				case SyntaxKind.AbstractKeyword:
-				case SyntaxKind.BooleanKeyword:
-				case SyntaxKind.ByteKeyword:
-				case SyntaxKind.CharKeyword:
-				case SyntaxKind.ClassKeyword:
-				case SyntaxKind.ConstKeyword:
-				case SyntaxKind.DoubleKeyword:
-				case SyntaxKind.EnumKeyword:
 				case SyntaxKind.NativeKeyword:
-				case SyntaxKind.FloatKeyword:
-				case SyntaxKind.IntKeyword:
-				case SyntaxKind.InterfaceKeyword:
-				case SyntaxKind.LongKeyword:
-				case SyntaxKind.NewKeyword:
+				case SyntaxKind.StaticKeyword:
+				case SyntaxKind.VolatileKeyword:
+				case SyntaxKind.FinalKeyword:
+
+
 				case SyntaxKind.PrivateKeyword:
 				case SyntaxKind.ProtectedKeyword:
 				case SyntaxKind.PublicKeyword:
+
+				case SyntaxKind.BooleanKeyword:
+				case SyntaxKind.ByteKeyword:
 				case SyntaxKind.ShortKeyword:
-				case SyntaxKind.StaticKeyword:
+				case SyntaxKind.IntKeyword:
+				case SyntaxKind.LongKeyword:
+				case SyntaxKind.FloatKeyword:
+				case SyntaxKind.DoubleKeyword:
+				case SyntaxKind.CharKeyword:
+
 				case SyntaxKind.VoidKeyword:
-				case SyntaxKind.VolatileKeyword:
+
+				case SyntaxKind.ClassKeyword:
+				case SyntaxKind.EnumKeyword:
+				case SyntaxKind.InterfaceKeyword:
+				case SyntaxKind.AtToken: //注解声明与注解实例
+
+				case SyntaxKind.NewKeyword:
 				case SyntaxKind.IdentifierToken:
-				case SyntaxKind.TildeToken:
-				case SyntaxKind.OpenBracketToken:
-				case SyntaxKind.AtToken:
+				case SyntaxKind.OpenBracketToken:// [
+				case SyntaxKind.OpenBraceToken: // { 实例初始化
+				
 					return true;
 				default:
 					return false;
@@ -378,15 +399,16 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 			{
 				switch (member.Kind)
 				{
-					case SyntaxKind.ClassDeclaration:
-					case SyntaxKind.InterfaceDeclaration:
+					case SyntaxKind.JavaNormalClassDeclaration:
+					case SyntaxKind.JavaNormalInterfaceDeclaration:
+					case SyntaxKind.JavaAnnotationTypeDeclaration:
 					case SyntaxKind.EnumDeclaration:
 					case SyntaxKind.FieldDeclaration:
 						return true;
 				}
 
 				var parent = GetOldParent(member);
-				var originalTypeDeclaration = parent as CSharp.Syntax.TypeDeclarationSyntax;
+				var originalTypeDeclaration = parent as CSharp.Syntax.JavaTypeDeclarationSyntax;
 
 				// originalTypeDeclaration can be null in the case of script code.  In that case
 				// the member declaration can be a child of a namespace/copmilation-unit instead of
@@ -737,9 +759,10 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 						return ((CSharp.Syntax.ConstructorDeclarationSyntax)decl).Modifiers;
 					case SyntaxKind.DestructorDeclaration:
 						return ((CSharp.Syntax.DestructorDeclarationSyntax)decl).Modifiers;
-					case SyntaxKind.ClassDeclaration:
-					case SyntaxKind.InterfaceDeclaration:
-						return ((CSharp.Syntax.TypeDeclarationSyntax)decl).Modifier.JavaModifiers;
+					case SyntaxKind.JavaNormalClassDeclaration:
+						return ((CSharp.Syntax.JavaNormalClassDeclarationSyntax)decl).Modifier.JavaModifiers;
+					case SyntaxKind.JavaNormalInterfaceDeclaration:
+						return ((CSharp.Syntax.JavaNormalInterfaceDeclarationSyntax)decl).Modifier.JavaModifiers;
 				}
 			}
 
@@ -843,7 +866,6 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 			return istype || IsPossibilityAnnotationTypeDefine();
 		}
 
-
 		private TypeArgumentListSyntax TypeArgumentFromTypeParameters(TypeParameterListSyntax typeParameterList)
 		{
 			var types = this._pool.AllocateSeparated<TypeSyntax>();
@@ -878,96 +900,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 			return result;
 		}
 
-
-		private bool IsFieldDeclaration(bool isEvent)
-		{
-			if (this.CurrentToken.Kind != SyntaxKind.IdentifierToken)
-			{
-				return false;
-			}
-
-			// Treat this as a field, unless we have anything following that
-			// makes us:
-			//   a) explicit
-			//   b) generic
-			//   c) a property
-			//   d) a method (unless we already know we're parsing an event)
-			var kind = this.PeekToken(1).Kind;
-			switch (kind)
-			{
-				case SyntaxKind.DotToken:           // Foo.     explicit
-				case SyntaxKind.ColonColonToken:    // Foo::    explicit
-				case SyntaxKind.LessThanToken:      // Foo<     explicit or generic method
-				case SyntaxKind.OpenBraceToken:     // Foo {    property
-					return false;
-				case SyntaxKind.OpenParenToken:     // Foo(     method
-					return isEvent;
-				default:
-					return true;
-			}
-		}
-
-
-		private bool IsEndOfTypeParameterList()
-		{
-			if (this.CurrentToken.Kind == SyntaxKind.OpenParenToken)
-			{
-				// void Foo<T (
-				return true;
-			}
-
-			if (this.CurrentToken.Kind == SyntaxKind.ColonToken)
-			{
-				// class C<T :
-				return true;
-			}
-
-			if (this.CurrentToken.Kind == SyntaxKind.OpenBraceToken)
-			{
-				// class C<T {
-				return true;
-			}
-
-			if (IsPossibleTypeParameterConstraintClauseStart())
-			{
-				// class C<T where T :
-				return true;
-			}
-
-			return false;
-		}
-
-		private bool IsEndOfMethodSignature()
-		{
-			return this.CurrentToken.Kind == SyntaxKind.SemicolonToken || this.CurrentToken.Kind == SyntaxKind.OpenBraceToken;
-		}
-
-		private bool IsEndOfNameInExplicitInterface()
-		{
-			return this.CurrentToken.Kind == SyntaxKind.DotToken || this.CurrentToken.Kind == SyntaxKind.ColonColonToken;
-		}
-
-		private bool IsEndOfReturnType()
-		{
-			switch (this.CurrentToken.Kind)
-			{
-				case SyntaxKind.OpenParenToken:
-				case SyntaxKind.OpenBraceToken:
-				case SyntaxKind.SemicolonToken:
-					return true;
-				default:
-					return false;
-			}
-		}
-
-
-
-		private bool IsEndOfParameterList()
-		{
-			return this.CurrentToken.Kind == SyntaxKind.CloseParenToken
-				|| this.CurrentToken.Kind == SyntaxKind.CloseBracketToken;
-		}
-
+		
 
 
 		private TNode EatUnexpectedTrailingSemicolon<TNode>(TNode decl) where TNode : CSharpSyntaxNode
@@ -982,18 +915,6 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
 			return decl;
 		}
-
-		private bool IsEndOfFieldDeclaration()
-		{
-			return this.CurrentToken.Kind == SyntaxKind.SemicolonToken;
-		}
-
-
-
-
-
-
-
 
 		private bool IsDotOrColonColon()
 		{
@@ -1027,10 +948,6 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 		}
 
 
-		private bool IsEndOfTypeArgumentList()
-		{
-			return this.CurrentToken.Kind == SyntaxKind.GreaterThanToken;
-		}
 
 		private bool IsOpenName()
 		{
@@ -1056,8 +973,6 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 			newToken = AddTrailingSkippedSyntax(newToken, token);
 			return newToken;
 		}
-
-
 
 
 		private bool IsTerm()
@@ -1108,49 +1023,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 			}
 		}
 
-		private bool IsEndOfTryBlock()
-		{
-			return this.CurrentToken.Kind == SyntaxKind.CloseBraceToken
-				|| this.CurrentToken.Kind == SyntaxKind.CatchKeyword
-				|| this.CurrentToken.Kind == SyntaxKind.FinallyKeyword;
-		}
-
-		private bool IsEndOfCatchClause()
-		{
-			return this.CurrentToken.Kind == SyntaxKind.CloseParenToken
-				|| this.CurrentToken.Kind == SyntaxKind.OpenBraceToken
-				|| this.CurrentToken.Kind == SyntaxKind.CloseBraceToken
-				|| this.CurrentToken.Kind == SyntaxKind.CatchKeyword
-				|| this.CurrentToken.Kind == SyntaxKind.FinallyKeyword;
-		}
-
-		private bool IsEndOfFilterClause()
-		{
-			return this.CurrentToken.Kind == SyntaxKind.CloseParenToken
-				|| this.CurrentToken.Kind == SyntaxKind.OpenBraceToken
-				|| this.CurrentToken.Kind == SyntaxKind.CloseBraceToken
-				|| this.CurrentToken.Kind == SyntaxKind.CatchKeyword
-				|| this.CurrentToken.Kind == SyntaxKind.FinallyKeyword;
-		}
-		private bool IsEndOfCatchBlock()
-		{
-			return this.CurrentToken.Kind == SyntaxKind.CloseBraceToken
-				|| this.CurrentToken.Kind == SyntaxKind.CatchKeyword
-				|| this.CurrentToken.Kind == SyntaxKind.FinallyKeyword;
-		}
-
-		private bool IsEndOfDoWhileExpression()
-		{
-			return this.CurrentToken.Kind == SyntaxKind.CloseParenToken
-				|| this.CurrentToken.Kind == SyntaxKind.SemicolonToken;
-		}
-
-		private bool IsEndOfForStatementArgument()
-		{
-			return this.CurrentToken.Kind == SyntaxKind.SemicolonToken
-				|| this.CurrentToken.Kind == SyntaxKind.CloseParenToken
-				|| this.CurrentToken.Kind == SyntaxKind.OpenBraceToken;
-		}
+		
 
 
 		private bool IsUsingStatementVariableDeclaration(ScanTypeFlags st)
@@ -1162,30 +1035,6 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 			return condition1 || (condition2 && condition3);
 		}
 
-		private bool IsEndOfDeclarationClause()
-		{
-			switch (this.CurrentToken.Kind)
-			{
-				case SyntaxKind.SemicolonToken:
-				case SyntaxKind.CloseParenToken:
-				case SyntaxKind.ColonToken:
-					return true;
-				default:
-					return false;
-			}
-		}
-
-
-
-		private bool IsEndOfArgumentList()
-		{
-			return this.CurrentToken.Kind == SyntaxKind.CloseParenToken
-				|| this.CurrentToken.Kind == SyntaxKind.CloseBracketToken;
-		}
-
-
-
-
 
 
 
@@ -1193,6 +1042,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 		{
 			return st == ScanTypeFlags.GenericTypeOrExpression || st == ScanTypeFlags.NonGenericTypeOrExpression;
 		}
+
 
 		private static bool CanFollowCast(SyntaxKind kind)
 		{
@@ -1255,8 +1105,6 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 			return this.CurrentToken.Kind == SyntaxKind.NewKeyword && this.PeekToken(1).Kind == SyntaxKind.OpenBraceToken;
 		}
 
-
-
 		private bool IsAnonymousTypeMemberExpression(ExpressionSyntax expr)
 		{
 			if (expr.Kind == SyntaxKind.QualifiedName)
@@ -1280,7 +1128,6 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 			return this.CurrentToken.Kind == SyntaxKind.OpenBraceToken;
 		}
 
-
 		private bool IsDictionaryInitializer()
 		{
 			return this.CurrentToken.Kind == SyntaxKind.OpenBracketToken;
@@ -1290,8 +1137,6 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 		{
 			return IsTrueIdentifier() && this.PeekToken(1).Kind == SyntaxKind.EqualsToken;
 		}
-
-
 
 		private static int GetNumberOfNonOmittedArraySizes(ArrayRankSpecifierSyntax rankSpec)
 		{
@@ -1307,46 +1152,6 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 			return result;
 		}
 
-
-
-
-		private bool IsImplicitlyTypedArray()
-		{
-			return this.CurrentToken.Kind == SyntaxKind.NewKeyword && this.PeekToken(1).Kind == SyntaxKind.OpenBracketToken;
-		}
-
-
-		private const int LambdaPrecedence = 1;
-
-
-
-
-		private bool IsIncrementalAndFactoryContextMatches
-		{
-			get
-			{
-				if (!base.IsIncremental)
-				{
-					return false;
-				}
-
-				CSharp.CSharpSyntaxNode current = this.CurrentNode;
-				return current != null;
-			}
-		}
-
-
-		//private bool IsInAsync
-		//{
-		//	get
-		//	{
-		//		return _syntaxFactoryContext.IsInAsync;
-		//	}
-		//	set
-		//	{
-		//		_syntaxFactoryContext.IsInAsync = value;
-		//	}
-		//}
 
 
 

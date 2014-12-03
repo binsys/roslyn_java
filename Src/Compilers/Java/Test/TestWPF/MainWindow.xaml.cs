@@ -1,4 +1,5 @@
-﻿using ICSharpCode.AvalonEdit.Editing;
+﻿using ICSharpCode.AvalonEdit.Document;
+using ICSharpCode.AvalonEdit.Editing;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using System;
@@ -20,13 +21,13 @@ using Microsoft.CodeAnalysis.Text;
 namespace TestWPF
 {
 
-    internal static class HelperExtensionMethods
-    {
-        //internal static SnapshotSpan ToSnapshotSpan(this TextSpan textSpan, ITextSnapshot snapshot)
-        //{
-        //    return new SnapshotSpan(snapshot, new Span(textSpan.get_Start(), textSpan.get_Length()));
-        //}
-    }
+	internal static class HelperExtensionMethods
+	{
+		//internal static SnapshotSpan ToSnapshotSpan(this TextSpan textSpan, ITextSnapshot snapshot)
+		//{
+		//    return new SnapshotSpan(snapshot, new Span(textSpan.get_Start(), textSpan.get_Length()));
+		//}
+	}
 	/// <summary>
 	/// MainWindow.xaml 的交互逻辑
 	/// </summary>
@@ -36,40 +37,46 @@ namespace TestWPF
 		{
 			InitializeComponent();
 
-		    var linm = new LineNumberMargin();
-            
-            this.txt2.TextArea.LeftMargins.Add(linm);
+			var linm = new LineNumberMargin();
+
+			this.txt2.TextArea.LeftMargins.Add(linm);
 
 
 
-            
 
-            this.syntaxVisualizer.SyntaxNodeNavigationToSourceRequested += delegate(SyntaxNode node)
-            {
-                this.NavigateToSource(node.Span);
-            };
-            this.syntaxVisualizer.SyntaxTokenNavigationToSourceRequested += delegate(SyntaxToken token)
-            {
-                this.NavigateToSource(token.Span);
-            };
-            this.syntaxVisualizer.SyntaxTriviaNavigationToSourceRequested += delegate(SyntaxTrivia trivia)
-            {
-                this.NavigateToSource(trivia.Span);
-            };
+
+			this.syntaxVisualizer.SyntaxNodeNavigationToSourceRequested += delegate(SyntaxNode node)
+			{
+				this.NavigateToSource(node.Span);
+			};
+			this.syntaxVisualizer.SyntaxTokenNavigationToSourceRequested += delegate(SyntaxToken token)
+			{
+				this.NavigateToSource(token.Span);
+			};
+			this.syntaxVisualizer.SyntaxTriviaNavigationToSourceRequested += delegate(SyntaxTrivia trivia)
+			{
+				this.NavigateToSource(trivia.Span);
+			};
 		}
 
-        private void NavigateToSource(TextSpan span)
-        {
+		private void NavigateToSource(TextSpan span)
+		{
 
 
-            this.txt2.Select(span.Start, span.Length);
-            //if (base.IsVisible && this.activeWpfTextView != null)
-            //{
-            //    SnapshotSpan snapshotSpan = span.ToSnapshotSpan(this.activeWpfTextView.get_TextBuffer().get_CurrentSnapshot());
-            //    this.activeWpfTextView.get_Selection().Select(snapshotSpan, false);
-            //    this.activeWpfTextView.get_ViewScroller().EnsureSpanVisible(snapshotSpan);
-            //}
-        }
+			this.txt2.Select(span.Start, span.Length);
+
+			//this.txt2.SelectionStart
+			//DocumentLine line = this.txt2.Document.GetLineByOffset(this.txt2.CaretOffset);
+			//this.txt2.Select(line.Offset, line.Length);
+			var line = this.txt2.Document.GetLineByOffset(this.txt2.SelectionStart);
+			this.txt2.ScrollToLine(line.LineNumber);
+			//if (base.IsVisible && this.activeWpfTextView != null)
+			//{
+			//    SnapshotSpan snapshotSpan = span.ToSnapshotSpan(this.activeWpfTextView.get_TextBuffer().get_CurrentSnapshot());
+			//    this.activeWpfTextView.get_Selection().Select(snapshotSpan, false);
+			//    this.activeWpfTextView.get_ViewScroller().EnsureSpanVisible(snapshotSpan);
+			//}
+		}
 
 
 		private void btnShow_Click(object sender, RoutedEventArgs e)
@@ -90,27 +97,53 @@ namespace TestWPF
 			//	treeItem.IsExpanded = true;
 			//}
 
-            //this.syntaxVisualizer.treeView.
+			//this.syntaxVisualizer.treeView.
 		}
 
-        private void ExpandAll(ItemsControl items, bool expand)
-        {
-            foreach (object obj in items.Items)
-            {
-                ItemsControl childControl = items.ItemContainerGenerator.ContainerFromItem(obj) as ItemsControl;
-                if (childControl != null)
-                {
-                    ExpandAll(childControl, expand);
-                }
-                TreeViewItem item = childControl as TreeViewItem;
-                if (item != null)
-                    item.IsExpanded = true;
-            }
-        }
+		private void ExpandAll(ItemsControl items, bool expand)
+		{
+			foreach (object obj in items.Items)
+			{
+				ItemsControl childControl = items.ItemContainerGenerator.ContainerFromItem(obj) as ItemsControl;
+				if (childControl != null)
+				{
+					ExpandAll(childControl, expand);
+				}
+				TreeViewItem item = childControl as TreeViewItem;
+				if (item != null)
+					item.IsExpanded = true;
+			}
+		}
 
 
 		private void Window_Loaded(object sender, RoutedEventArgs e)
 		{
+
+
+			this.txt2.Text = @"
+class 
+";
+			this.txt2.Text = @"
+public class DexBackedDexFile 
+	extends BaseDexBuffer 
+	implements DexFile 
+{
+	public Set<? extends DexBackedClassDef> getClasses() 
+	{
+		return new FixedSizeSet<DexBackedClassDef>() 
+			{
+				@Nonnull
+				@Override
+				public DexBackedClassDef readItem(int index) 
+				{
+					return new DexBackedClassDef(DexBackedDexFile.this, getClassDefItemOffset(index));
+				}
+			};
+	}
+}
+";
+			return;
+
 			this.txt2.Text = @"/*
  * Copyright 2012, Google Inc.
  * All rights reserved.

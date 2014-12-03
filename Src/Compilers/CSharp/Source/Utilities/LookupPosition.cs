@@ -56,11 +56,11 @@ namespace Microsoft.CodeAnalysis.CSharp
 		//    return IsBetweenTokens(position, startToken, endToken);
 		//}
 
-		internal static bool IsInTypeParameterList(int position, TypeDeclarationSyntax typeDecl)
-		{
-			var typeParameterListOpt = typeDecl.TypeParameterList;
-			return typeParameterListOpt != null && IsBeforeToken(position, typeParameterListOpt, typeParameterListOpt.GreaterThanToken);
-		}
+		//internal static bool IsInTypeParameterList(int position, TypeDeclarationSyntax typeDecl)
+		//{
+		//	var typeParameterListOpt = typeDecl.TypeParameterList;
+		//	return typeParameterListOpt != null && IsBeforeToken(position, typeParameterListOpt, typeParameterListOpt.GreaterThanToken);
+		//}
 
 		internal static bool IsInParameterList(int position, BaseMethodDeclarationSyntax methodDecl)
 		{

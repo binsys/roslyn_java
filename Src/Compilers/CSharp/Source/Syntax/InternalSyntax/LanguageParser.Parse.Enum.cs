@@ -12,32 +12,42 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 {
 	internal partial class LanguageParser : SyntaxParser
 	{
-		private EnumDeclarationSyntax ParseEnumDeclaration(SyntaxListBuilder<AnnotationSyntax> attributes, SyntaxListBuilder modifiers)
+		private JavaEnumDeclarationSyntax ParseJavaEnumDeclaration(SyntaxListBuilder<AnnotationSyntax> attributes,
+			SyntaxListBuilder modifiers)
 		{
 			Debug.Assert(this.CurrentToken.Kind == SyntaxKind.EnumKeyword);
 
 			var enumToken = this.EatToken(SyntaxKind.EnumKeyword);
 			var name = this.ParseIdentifierToken();
-
-
 			var implementsClauseList = this.ParseImplementsListClause(false);
+			var body = this.ParseJavaEnumBody(name);
+			return _syntaxFactory.JavaEnumDeclaration(this.CreateJavaMemberModifierSyntax(attributes, modifiers),
+				enumToken,
+				name,
+				implementsClauseList, body);
+		}
 
-
-			var members = default(SeparatedSyntaxList<EnumMemberDeclarationSyntax>);
+		private JavaEnumBodySyntax ParseJavaEnumBody(SyntaxToken name)
+		{
 			var openBrace = this.EatToken(SyntaxKind.OpenBraceToken);
 
-			if ( !openBrace.IsMissing)
+			var consts = default(SeparatedSyntaxList<JavaEnumConstantSyntax>);
+			var bodyDecl = default(JavaEnumBodyDeclarationsSyntax);
+
+			if (!openBrace.IsMissing)
 			{
-				var builder = this._pool.AllocateSeparated<EnumMemberDeclarationSyntax>();
+				var constsBuilder = this._pool.AllocateSeparated<JavaEnumConstantSyntax>();
 				try
 				{
-					this.ParseEnumMemberDeclarations(ref openBrace, builder,name);
-					members = builder.ToList();
+					this.ParseJavaEnumConstants(ref openBrace, constsBuilder, name);
+					consts = constsBuilder.ToList();
 				}
 				finally
 				{
-					this._pool.Free(builder);
+					this._pool.Free(constsBuilder);
 				}
+
+				bodyDecl = this.ParseJavaEnumBodyDeclarations(ref openBrace, name);
 			}
 
 			var closeBrace = this.EatToken(SyntaxKind.CloseBraceToken);
@@ -48,27 +58,20 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 				semicolon = this.EatToken();
 			}
 
-			return _syntaxFactory.EnumDeclaration(
-				this.CreateJavaMemberModifierSyntax(attributes, modifiers),
-				enumToken,
-				name,
-				implementsClauseList,
-				openBrace,
-				members,
-				closeBrace,
-				semicolon);
+
+			return _syntaxFactory.JavaEnumBody(openBrace, consts, bodyDecl, closeBrace, semicolon);
 		}
 
 
-		private void ParseEnumMemberDeclarations(
+		private void ParseJavaEnumConstants(
 			ref SyntaxToken openBrace,
-			SeparatedSyntaxListBuilder<EnumMemberDeclarationSyntax> members,SyntaxToken name)
+			SeparatedSyntaxListBuilder<JavaEnumConstantSyntax> members, SyntaxToken name)
 		{
 			if (this.CurrentToken.Kind != SyntaxKind.SemicolonToken && this.CurrentToken.Kind != SyntaxKind.CloseBraceToken)
 			{
 			tryAgain:
 
-				if (this.IsPossibleEnumMemberDeclaration() 
+				if (this.IsPossibleJavaEnumConstant() 
 					|| this.CurrentToken.Kind == SyntaxKind.CommaToken 
 					|| this.CurrentToken.Kind == SyntaxKind.SemicolonToken
 					)
@@ -83,7 +86,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 						{
 							break;
 						}
-						else if (this.CurrentToken.Kind == SyntaxKind.CommaToken || this.CurrentToken.Kind == SyntaxKind.SemicolonToken || this.IsPossibleEnumMemberDeclaration())
+						else if (this.CurrentToken.Kind == SyntaxKind.CommaToken || this.CurrentToken.Kind == SyntaxKind.SemicolonToken || this.IsPossibleJavaEnumConstant())
 						{
 							if (this.CurrentToken.Kind == SyntaxKind.SemicolonToken)
 							{
@@ -104,7 +107,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 							{
 								break;
 							}
-							else if (!this.IsPossibleEnumMemberDeclaration())
+							else if (!this.IsPossibleJavaEnumConstant())
 							{
 								goto tryAgain;
 							}
@@ -112,82 +115,19 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 							members.Add(this.ParseJavaEnumConstant());
 							continue;
 						}
-						else if (this.SkipBadEnumMemberListTokens(ref openBrace, members, SyntaxKind.CommaToken) == PostSkipAction.Abort)
+						else if (this.SkipBadJavaEnumConstantListTokens(ref openBrace, members, SyntaxKind.CommaToken) == PostSkipAction.Abort)
 						{
 							break;
 						}
 					}
 				}
-				else if (this.SkipBadEnumMemberListTokens(ref openBrace, members, SyntaxKind.IdentifierToken) == PostSkipAction.Continue)
+				else if (this.SkipBadJavaEnumConstantListTokens(ref openBrace, members, SyntaxKind.IdentifierToken) == PostSkipAction.Continue)
 				{
 					goto tryAgain;
 				}
 			}
 
 
-			if (this.CurrentToken.Kind == SyntaxKind.SemicolonToken)
-			{
-				var semToken = this.EatToken(SyntaxKind.SemicolonToken);
-
-				SyntaxListBuilder<MemberDeclarationSyntax> classBodyMembers = default(SyntaxListBuilder<MemberDeclarationSyntax>);
-				try
-				{
-					classBodyMembers = this._pool.Allocate<MemberDeclarationSyntax>();
-
-					while (true)
-					{
-						SyntaxKind kind = this.CurrentToken.Kind;
-
-						if (CanStartMember(kind))
-						{
-							// This token can start a member -- go parse it
-							var saveTerm2 = this._termState;
-							this._termState |= TerminatorState.IsPossibleMemberStartOrStop;
-
-							var memberOrStatement = this.ParseMemberDeclaration(kind, name.ValueText);
-							if (memberOrStatement != null)
-							{
-								// statements are accepted here, a semantic error will be reported later
-								classBodyMembers.Add(memberOrStatement);
-							}
-							else
-							{
-								// we get here if we couldn't parse the lookahead as a statement or a declaration (we haven't consumed any tokens):
-								this.SkipBadMemberListTokens(ref openBrace, classBodyMembers);
-							}
-
-							this._termState = saveTerm2;
-						}
-						else if (kind == SyntaxKind.CloseBraceToken || kind == SyntaxKind.EndOfFileToken || this.IsTerminator())
-						{
-							// This marks the end of members of this class
-							break;
-						}
-						else
-						{
-							// Error -- try to sync up with intended reality
-							this.SkipBadMemberListTokens(ref openBrace, classBodyMembers);
-						}
-					}
-
-
-
-				}
-				finally
-				{
-
-					var enumClassBody = _syntaxFactory.JavaEnumClassBody(semToken, classBodyMembers.Count == 0 ? null : classBodyMembers.ToList());
-
-					members.Add(enumClassBody);
-
-
-					if (!classBodyMembers.IsNull)
-					{
-						this._pool.Free(classBodyMembers);
-					}
-				}
-
-			}
 		}
 
 		private JavaEnumConstantSyntax ParseJavaEnumConstant()
@@ -196,7 +136,6 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 			{
 				return (JavaEnumConstantSyntax)this.EatNode();
 			}
-
 			var memberAttrs = this._pool.Allocate<AnnotationSyntax>();
 
 			ArgumentListSyntax args = default(ArgumentListSyntax);
@@ -211,28 +150,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 					args = this.ParseParenthesizedArgumentList();
 				}
 
-				//if (this.CurrentToken.Kind == SyntaxKind.EqualsToken)
-				//{
-				//	var equals = this.EatToken(SyntaxKind.EqualsToken);
-				//	ExpressionSyntax value;
-				//	if (this.CurrentToken.Kind == SyntaxKind.CommaToken || this.CurrentToken.Kind == SyntaxKind.CloseBraceToken)
-				//	{
-				//		value = this.CreateMissingIdentifierName(); //an identifier is a valid expression
-				//		value = this.AddErrorToFirstToken(value, ErrorCode.ERR_ConstantExpected);
-				//	}
-				//	else
-				//	{
-				//		value = this.ParseExpression();
-				//	}
-
-				//	equalsValue = _syntaxFactory.EqualsValueClause(equals, value);
-				//}
-
-				//this.ParseParenthesizedArgumentList();
-
 				return _syntaxFactory.JavaEnumConstant(memberAttrs, memberName, args);
-
-				//return _syntaxFactory.EnumMemberDeclaration(memberAttrs, memberName, equalsValue);
 			}
 			finally
 			{
@@ -241,9 +159,34 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 		}
 
 
-		private void ParseClassBody()
+		private JavaEnumBodyDeclarationsSyntax ParseJavaEnumBodyDeclarations(ref SyntaxToken openBrace, SyntaxToken name)
 		{
+			if (this.IsIncrementalAndFactoryContextMatches && this.CurrentNodeKind == SyntaxKind.JavaEnumBodyDeclarations)
+			{
+				return (JavaEnumBodyDeclarationsSyntax)this.EatNode();
+			}
 
+			if (this.CurrentToken.Kind == SyntaxKind.SemicolonToken)
+			{
+				var semToken = this.EatToken(SyntaxKind.SemicolonToken);
+				SyntaxListBuilder<MemberDeclarationSyntax> classBodyMembers = default(SyntaxListBuilder<MemberDeclarationSyntax>);
+				try
+				{
+					classBodyMembers = this._pool.Allocate<MemberDeclarationSyntax>();
+					this.ParseClassMembers(ref classBodyMembers, ref openBrace, name);
+					var enumClassBody = _syntaxFactory.JavaEnumBodyDeclarations(semToken, classBodyMembers.Count == 0 ? null : classBodyMembers.ToList());
+					return enumClassBody;
+				}
+				finally
+				{
+					if (!classBodyMembers.IsNull)
+					{
+						this._pool.Free(classBodyMembers);
+					}
+				}
+
+			}
+			return null;
 		}
 	}
 }
