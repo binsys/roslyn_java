@@ -41,7 +41,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
 		internal bool TryGetKeywordKind(string key, out SyntaxKind kind)
 		{
-			if (key.Length > 10)
+			if (key.Length > 12)
 			{
 				kind = SyntaxKind.None;
 				return false;

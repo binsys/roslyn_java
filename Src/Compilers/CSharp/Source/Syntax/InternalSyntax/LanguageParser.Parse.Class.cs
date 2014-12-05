@@ -45,7 +45,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 				if (parseMembers)
 				{
 					members = this._pool.Allocate<MemberDeclarationSyntax>();
-					this.ParseClassMembers(ref members, ref openBrace, name);
+					this.ParseJavaNormalClassMembers(ref members, ref openBrace, name);
 				}
 
 				var closeBrace = this.EatToken(SyntaxKind.CloseBraceToken);
@@ -80,7 +80,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 		}
 
 
-		public void ParseClassMembers(ref SyntaxListBuilder<MemberDeclarationSyntax> members, ref SyntaxToken openBrace, SyntaxToken name)
+		public void ParseJavaNormalClassMembers(ref SyntaxListBuilder<MemberDeclarationSyntax> members, ref SyntaxToken openBrace, SyntaxToken name)
 		{
 			while (true)
 			{
@@ -155,7 +155,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 				if (parseMembers)
 				{
 					members = this._pool.Allocate<MemberDeclarationSyntax>();
-					this.ParseClassMembers(ref members, ref openBrace, null);
+					this.ParseJavaNormalClassMembers(ref members, ref openBrace, null);
 				}
 
 				var closeBrace = this.EatToken(SyntaxKind.CloseBraceToken);

@@ -1210,10 +1210,10 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 		/// <returns></returns>
 		private TypeSyntax ParseCrefTypeSuffix(TypeSyntax type)
 		{
-			if (CurrentToken.Kind == SyntaxKind.QuestionToken)
-			{
-				type = SyntaxFactory.NullableType(type, EatToken());
-			}
+			//if (CurrentToken.Kind == SyntaxKind.QuestionToken)
+			//{
+			//	type = SyntaxFactory.NullableType(type, EatToken());
+			//}
 
 
 			if (CurrentToken.Kind == SyntaxKind.OpenBracketToken)

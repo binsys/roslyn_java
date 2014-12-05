@@ -16,41 +16,41 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
 		private TypeSyntax ParseType(bool parentIsParameter)
 		{
-			return ParseTypeCore(parentIsParameter, isOrAs: false, expectSizes: false, isArrayCreation: false);
+			return ParseTypeCore(parentIsParameter, isInstanceOfOrAs: false, expectSizes: false, isArrayCreation: false);
 		}
 
 
 		private TypeSyntax ParseTypeCore(
 			bool parentIsParameter,
-			bool isOrAs,
+			bool isInstanceOfOrAs,
 			bool expectSizes,
 			bool isArrayCreation)
 		{
 			var type = this.ParseUnderlyingType(parentIsParameter);
 
-			if (this.CurrentToken.Kind == SyntaxKind.QuestionToken)
-			{
-				var resetPoint = this.GetResetPoint();
-				try
-				{
-					var question = this.EatToken();
+			//if (this.CurrentToken.Kind == SyntaxKind.QuestionToken)
+			//{
+			//	var resetPoint = this.GetResetPoint();
+			//	try
+			//	{
+			//		var question = this.EatToken();
 
-					if (isOrAs && (IsTerm() || IsPredefinedType(this.CurrentToken.Kind) || SyntaxKindFacts.IsAnyUnaryExpression(this.CurrentToken.Kind)))
-					{
-						this.Reset(ref resetPoint);
+			//		if (isInstanceOfOrAs && (IsTerm() || IsPredefinedType(this.CurrentToken.Kind) || SyntaxKindFacts.IsAnyUnaryExpression(this.CurrentToken.Kind)))
+			//		{
+			//			this.Reset(ref resetPoint);
 
-						Debug.Assert(type != null);
-						return type;
-					}
+			//			Debug.Assert(type != null);
+			//			return type;
+			//		}
 
-					question = CheckFeatureAvailability(question, MessageID.IDS_FeatureNullable);
-					type = _syntaxFactory.NullableType(type, question);
-				}
-				finally
-				{
-					this.Release(ref resetPoint);
-				}
-			}
+			//		question = CheckFeatureAvailability(question, MessageID.IDS_FeatureNullable);
+			//		type = _syntaxFactory.NullableType(type, question);
+			//	}
+			//	finally
+			//	{
+			//		this.Release(ref resetPoint);
+			//	}
+			//}
 
 
 			// Now check for arrays.
@@ -93,6 +93,10 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
 				return _syntaxFactory.PredefinedType(token);
 			}
+			else if (this.CurrentToken.Kind == SyntaxKind.QuestionToken)
+			{
+				return this.ParseJavaWildcardType();
+			}
 			else if (this.CurrentToken.Kind == SyntaxKind.IdentifierToken)
 			{
 				return this.ParseQualifiedName();
@@ -102,6 +106,22 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 				var name = this.CreateMissingIdentifierName();
 				return this.AddError(name, ErrorCode.ERR_TypeExpected);
 			}
+		}
+
+
+		private JavaWildcardTypeSyntax ParseJavaWildcardType()
+		{
+			var token = this.EatToken();
+			JavaWildcardTypeBoundSyntax typeBound = default(JavaWildcardTypeBoundSyntax);
+			if (this.CurrentToken.Kind == SyntaxKind.ExtendsKeyword || this.CurrentToken.Kind == SyntaxKind.SuperKeyword)
+			{
+				var keyword = this.EatToken();
+				var type = this.ParseType(false);
+
+				typeBound = _syntaxFactory.JavaWildcardTypeBound(keyword, type);
+
+			}
+			return _syntaxFactory.JavaWildcardType(token, typeBound);
 		}
 	}
 }

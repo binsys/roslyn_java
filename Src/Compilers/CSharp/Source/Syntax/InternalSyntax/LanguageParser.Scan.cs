@@ -157,15 +157,15 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
 		private NamedTypePart ScanNamedTypePart(out SyntaxToken lastTokenOfType)
 		{
-			if (this.CurrentToken.Kind == SyntaxKind.ClassKeyword)
-			{
-				lastTokenOfType = this.EatToken();
-				return NamedTypePart.ClassKeywordSuffix;
-			}
+			//if (this.CurrentToken.Kind == SyntaxKind.ClassKeyword)
+			//{
+			//	lastTokenOfType = this.EatToken();
+			//	return NamedTypePart.ClassKeywordSuffix;
+			//}
 
 			if (this.CurrentToken.Kind != SyntaxKind.IdentifierToken || !this.IsTrueIdentifier())
 			{
-				lastTokenOfType = null;
+				lastTokenOfType = this.EatToken();
 				return NamedTypePart.NotName;
 			}
 
@@ -217,10 +217,10 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 						return ScanTypeFlags.NotType;
 					}
 
-					if (partResult == NamedTypePart.ClassKeywordSuffix)
-					{
-						return ScanTypeFlags.ClassKeywordSuffix;
-					}
+					//if (partResult == NamedTypePart.ClassKeywordSuffix)
+					//{
+					//	return ScanTypeFlags.ClassKeywordSuffix;
+					//}
 
 					result = NamedTypePartToScanTypeFlags(partResult);
 				}
@@ -231,6 +231,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 				lastTokenOfType = this.EatToken();
 				result = ScanTypeFlags.MustBeType;
 			}
+			else if (this.CurrentToken.Kind == SyntaxKind.QuestionToken)
+			{
+				lastTokenOfType = this.EatToken();
+				result = ScanTypeFlags.JavaWildcardType;
+			}
 			else
 			{
 				// Can't be a type!
@@ -238,22 +243,22 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 				return ScanTypeFlags.NotType;
 			}
 
-			if (this.CurrentToken.Kind == SyntaxKind.QuestionToken)
-			{
-				lastTokenOfType = this.EatToken();
-				result = ScanTypeFlags.NullableType;
-			}
+			//if (this.CurrentToken.Kind == SyntaxKind.QuestionToken)
+			//{
+			//	lastTokenOfType = this.EatToken();
+			//	result = ScanTypeFlags.NullableType;
+			//}
 
 
-			// Now check for pointer type(s)
-			while (this.CurrentToken.Kind == SyntaxKind.AsteriskToken)
-			{
-				lastTokenOfType = this.EatToken();
-				if (result == ScanTypeFlags.GenericTypeOrExpression || result == ScanTypeFlags.NonGenericTypeOrExpression)
-				{
-					result = ScanTypeFlags.PointerOrMultiplication;
-				}
-			}
+			//// Now check for pointer type(s)
+			//while (this.CurrentToken.Kind == SyntaxKind.AsteriskToken)
+			//{
+			//	lastTokenOfType = this.EatToken();
+			//	if (result == ScanTypeFlags.GenericTypeOrExpression || result == ScanTypeFlags.NonGenericTypeOrExpression)
+			//	{
+			//		result = ScanTypeFlags.PointerOrMultiplication;
+			//	}
+			//}
 
 			return result;
 		}
@@ -277,7 +282,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
 			//  case 3:  ( ) =>
 			if (this.PeekToken(1).Kind == SyntaxKind.CloseParenToken
-				&& this.PeekToken(2).Kind == SyntaxKind.EqualsGreaterThanToken)
+				&& this.PeekToken(2).Kind == SyntaxKind.MinusGreaterThanToken)
 			{
 				return true;
 			}
@@ -285,10 +290,10 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 			// case 4:  ( params
 			// This case is interesting in that it is not legal; this error could be caught at parse time but we would rather
 			// recover from the error and let the semantic analyzer deal with it.
-			if (this.PeekToken(1).Kind == SyntaxKind.ParamsKeyword)
-			{
-				return true;
-			}
+			//if (this.PeekToken(1).Kind == SyntaxKind.ParamsKeyword)
+			//{
+			//	return true;
+			//}
 
 			return false;
 		}
@@ -349,7 +354,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 						switch (this.PeekToken(2).Kind)
 						{
 							case SyntaxKind.EndOfFileToken:
-							case SyntaxKind.EqualsGreaterThanToken:
+							case SyntaxKind.MinusGreaterThanToken:
 								return true;
 
 							default:

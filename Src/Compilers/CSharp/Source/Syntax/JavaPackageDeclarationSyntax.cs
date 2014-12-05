@@ -4,13 +4,14 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
 namespace Microsoft.CodeAnalysis.CSharp.Syntax
 {
-	public partial class PackageDeclarationSyntax
+
+	public partial class JavaPackageDeclarationSyntax
 	{
-		new internal Syntax.InternalSyntax.PackageDeclarationSyntax Green
+		new internal Syntax.InternalSyntax.JavaPackageDeclarationSyntax Green
 		{
 			get
 			{
-				return (Syntax.InternalSyntax.PackageDeclarationSyntax)base.Green;
+				return (Syntax.InternalSyntax.JavaPackageDeclarationSyntax)base.Green;
 			}
 		}
 	}

@@ -342,7 +342,7 @@ namespace Microsoft.CodeAnalysis.CSharp
 	{
 		public static bool IsKeywordKind(SyntaxKind kind)
 		{
-			return IsReservedKeyword(kind) || IsContextualKeyword(kind);
+			return IsReservedKeyword(kind);
 		}
 
 		public static IEnumerable<SyntaxKind> GetReservedKeywordKinds()
@@ -360,10 +360,6 @@ namespace Microsoft.CodeAnalysis.CSharp
 				yield return reserved;
 			}
 
-			foreach (var contextual in GetContextualKeywordKinds())
-			{
-				yield return contextual;
-			}
 		}
 
 		public static bool IsReservedKeyword(SyntaxKind kind)
@@ -397,11 +393,6 @@ namespace Microsoft.CodeAnalysis.CSharp
 		public static bool IsLanguagePunctuation(SyntaxKind kind)
 		{
 			return IsPunctuation(kind);
-		}
-
-		public static bool IsPreprocessorPunctuation(SyntaxKind kind)
-		{
-			return kind == SyntaxKind.HashToken;
 		}
 
 		public static IEnumerable<SyntaxKind> GetPunctuationKinds()
@@ -495,8 +486,8 @@ namespace Microsoft.CodeAnalysis.CSharp
 			switch (kind)
 			{
 				case SyntaxKind.ArrayType:
-				case SyntaxKind.PointerType:
-				case SyntaxKind.NullableType:
+				//case SyntaxKind.NullableType:
+				case SyntaxKind.JavaWildcardType:
 				case SyntaxKind.PredefinedType:
 					return true;
 				default:
@@ -508,7 +499,7 @@ namespace Microsoft.CodeAnalysis.CSharp
 		{
 			switch (kind)
 			{
-				case SyntaxKind.EnumDeclaration:
+				case SyntaxKind.JavaEnumDeclaration:
 				case SyntaxKind.JavaNormalClassDeclaration:
 				case SyntaxKind.JavaNormalInterfaceDeclaration:
 				case SyntaxKind.JavaAnnotationTypeDeclaration:
@@ -539,27 +530,12 @@ namespace Microsoft.CodeAnalysis.CSharp
 			{
 				case SyntaxKind.JavaNormalClassDeclaration:
 				case SyntaxKind.JavaNormalInterfaceDeclaration:
-				case SyntaxKind.EnumDeclaration:
+				case SyntaxKind.JavaEnumDeclaration:
 				case SyntaxKind.JavaAnnotationTypeDeclaration:
 					return true;
 				default:
 					return false;
 			}
-		}
-
-		public static bool IsAnyUnaryExpression(SyntaxKind token)
-		{
-			return IsPrefixUnaryExpression(token) || IsPostfixUnaryExpression(token);
-		}
-
-		public static bool IsPrefixUnaryExpression(SyntaxKind token)
-		{
-			return GetPrefixUnaryExpression(token) != SyntaxKind.None;
-		}
-
-		public static bool IsPrefixUnaryExpressionOperatorToken(SyntaxKind token)
-		{
-			return GetPrefixUnaryExpression(token) != SyntaxKind.None;
 		}
 
 		public static SyntaxKind GetPrefixUnaryExpression(SyntaxKind token)
@@ -578,23 +554,9 @@ namespace Microsoft.CodeAnalysis.CSharp
 					return SyntaxKind.PreIncrementExpression;
 				case SyntaxKind.MinusMinusToken:
 					return SyntaxKind.PreDecrementExpression;
-				case SyntaxKind.AmpersandToken:
-					return SyntaxKind.AddressOfExpression;
-				case SyntaxKind.AsteriskToken:
-					return SyntaxKind.PointerIndirectionExpression;
 				default:
 					return SyntaxKind.None;
 			}
-		}
-
-		public static bool IsPostfixUnaryExpression(SyntaxKind token)
-		{
-			return GetPostfixUnaryExpression(token) != SyntaxKind.None;
-		}
-
-		public static bool IsPostfixUnaryExpressionToken(SyntaxKind token)
-		{
-			return GetPostfixUnaryExpression(token) != SyntaxKind.None;
 		}
 
 		public static SyntaxKind GetPostfixUnaryExpression(SyntaxKind token)
@@ -609,6 +571,59 @@ namespace Microsoft.CodeAnalysis.CSharp
 					return SyntaxKind.None;
 			}
 		}
+
+		/// <summary>
+		/// 是任何一元操作？
+		/// </summary>
+		/// <param name="token"></param>
+		/// <returns></returns>
+		public static bool IsAnyUnaryExpression(SyntaxKind token)
+		{
+			return IsPrefixUnaryExpression(token) || IsPostfixUnaryExpression(token);
+		}
+
+		/// <summary>
+		/// 前缀一元操作表达式？
+		/// </summary>
+		/// <param name="token"></param>
+		/// <returns></returns>
+		public static bool IsPrefixUnaryExpression(SyntaxKind token)
+		{
+			return GetPrefixUnaryExpression(token) != SyntaxKind.None;
+		}
+
+		/// <summary>
+		/// 前缀一元表达式令牌
+		/// </summary>
+		/// <param name="token"></param>
+		/// <returns></returns>
+		public static bool IsPrefixUnaryExpressionOperatorToken(SyntaxKind token)
+		{
+			return GetPrefixUnaryExpression(token) != SyntaxKind.None;
+		}
+
+
+		/// <summary>
+		/// 后缀一元表达式？
+		/// </summary>
+		/// <param name="token"></param>
+		/// <returns></returns>
+		public static bool IsPostfixUnaryExpression(SyntaxKind token)
+		{
+			return GetPostfixUnaryExpression(token) != SyntaxKind.None;
+		}
+
+		/// <summary>
+		/// 后缀一元表达式？
+		/// </summary>
+		/// <param name="token"></param>
+		/// <returns></returns>
+		public static bool IsPostfixUnaryExpressionToken(SyntaxKind token)
+		{
+			return GetPostfixUnaryExpression(token) != SyntaxKind.None;
+		}
+
+
 
 		public static bool IsUnaryOperatorDeclarationToken(SyntaxKind token)
 		{
@@ -742,12 +757,8 @@ namespace Microsoft.CodeAnalysis.CSharp
 		{
 			switch (token)
 			{
-				case SyntaxKind.QuestionQuestionToken:
-					return SyntaxKind.CoalesceExpression;
 				case SyntaxKind.InstanceOfKeyword:
-					return SyntaxKind.IsExpression;
-				case SyntaxKind.AsKeyword:
-					return SyntaxKind.AsExpression;
+					return SyntaxKind.InstanceOfExpression;
 				case SyntaxKind.BarToken:
 					return SyntaxKind.BitwiseOrExpression;
 				case SyntaxKind.CaretToken:
@@ -770,6 +781,8 @@ namespace Microsoft.CodeAnalysis.CSharp
 					return SyntaxKind.LeftShiftExpression;
 				case SyntaxKind.GreaterThanGreaterThanToken:
 					return SyntaxKind.RightShiftExpression;
+				case SyntaxKind.GreaterThanGreaterThanGreaterThanToken:
+					return SyntaxKind.UnsignedRightShiftExpression;
 				case SyntaxKind.PlusToken:
 					return SyntaxKind.AddExpression;
 				case SyntaxKind.MinusToken:
@@ -794,6 +807,8 @@ namespace Microsoft.CodeAnalysis.CSharp
 					return SyntaxKind.LeftShiftAssignmentExpression;
 				case SyntaxKind.GreaterThanGreaterThanEqualsToken:
 					return SyntaxKind.RightShiftAssignmentExpression;
+				case SyntaxKind.GreaterThanGreaterThanGreaterThanEqualsToken:
+					return SyntaxKind.UnsignedRightShiftAssignmentExpression;
 				case SyntaxKind.PlusEqualsToken:
 					return SyntaxKind.AddAssignmentExpression;
 				case SyntaxKind.MinusEqualsToken:
@@ -853,15 +868,6 @@ namespace Microsoft.CodeAnalysis.CSharp
 			}
 		}
 
-		public static SyntaxKind GetCheckStatement(SyntaxKind keyword)
-		{
-			switch (keyword)
-			{
-				default:
-					return SyntaxKind.None;
-			}
-		}
-
 
 		public static SyntaxKind GetSwitchLabelKind(SyntaxKind keyword)
 		{
@@ -878,7 +884,7 @@ namespace Microsoft.CodeAnalysis.CSharp
 
 		public static SyntaxKind GetBaseTypeDeclarationKind(SyntaxKind kind)
 		{
-			return kind == SyntaxKind.EnumKeyword ? SyntaxKind.EnumDeclaration : GetTypeDeclarationKind(kind);
+			return kind == SyntaxKind.EnumKeyword ? SyntaxKind.JavaEnumDeclaration : GetTypeDeclarationKind(kind);
 		}
 
 		public static SyntaxKind GetTypeDeclarationKind(SyntaxKind kind)
@@ -974,10 +980,6 @@ namespace Microsoft.CodeAnalysis.CSharp
 					return SyntaxKind.NativeKeyword;
 				case "instanceof":
 					return SyntaxKind.InstanceOfKeyword;
-				case "as":
-					return SyntaxKind.AsKeyword;
-				case "params":
-					return SyntaxKind.ParamsKeyword;
 				case "__arglist":
 					return SyntaxKind.ArgListKeyword;
 				case "this":
@@ -1052,152 +1054,13 @@ namespace Microsoft.CodeAnalysis.CSharp
 			}
 		}
 
-		public static IEnumerable<SyntaxKind> GetContextualKeywordKinds()
-		{
-			//for (int i = (int)SyntaxKind.YieldKeyword; i <= (int)SyntaxKind.AwaitKeyword; i++)
-			//{
-			//	yield return (SyntaxKind)i;
-			//}
 
-			return new List<SyntaxKind>();
-		}
-
-		public static bool IsContextualKeyword(SyntaxKind kind)
-		{
-			return false;
-
-			//switch (kind)
-			//{
-			//	case SyntaxKind.YieldKeyword:
-			//	case SyntaxKind.PartialKeyword:
-			//	case SyntaxKind.FromKeyword:
-			//	case SyntaxKind.GroupKeyword:
-			//	case SyntaxKind.JoinKeyword:
-			//	case SyntaxKind.IntoKeyword:
-			//	case SyntaxKind.LetKeyword:
-			//	case SyntaxKind.ByKeyword:
-			//	case SyntaxKind.WhereKeyword:
-			//	case SyntaxKind.SelectKeyword:
-			//	case SyntaxKind.GetKeyword:
-			//	case SyntaxKind.SetKeyword:
-			//	case SyntaxKind.AddKeyword:
-			//	case SyntaxKind.RemoveKeyword:
-			//	case SyntaxKind.OrderByKeyword:
-			//	case SyntaxKind.AliasKeyword:
-			//	case SyntaxKind.OnKeyword:
-			//	case SyntaxKind.EqualsKeyword:
-			//	case SyntaxKind.AscendingKeyword:
-			//	case SyntaxKind.DescendingKeyword:
-			//	case SyntaxKind.AssemblyKeyword:
-			//	case SyntaxKind.ModuleKeyword:
-			//	case SyntaxKind.TypeKeyword:
-			//	case SyntaxKind.GlobalKeyword:
-			//	case SyntaxKind.FieldKeyword:
-			//	case SyntaxKind.MethodKeyword:
-			//	case SyntaxKind.ParamKeyword:
-			//	case SyntaxKind.PropertyKeyword:
-			//	case SyntaxKind.TypeVarKeyword:
-			//	case SyntaxKind.AsyncKeyword:
-			//	case SyntaxKind.AwaitKeyword:
-			//		return true;
-			//	default:
-			//		return false;
-			//}
-		}
-
-		//public static bool IsQueryContextualKeyword(SyntaxKind kind)
+		//public static bool IsContextualKeyword(SyntaxKind kind)
 		//{
-		//	switch (kind)
-		//	{
-		//		case SyntaxKind.FromKeyword:
-		//		case SyntaxKind.WhereKeyword:
-		//		case SyntaxKind.SelectKeyword:
-		//		case SyntaxKind.GroupKeyword:
-		//		case SyntaxKind.IntoKeyword:
-		//		case SyntaxKind.OrderByKeyword:
-		//		case SyntaxKind.JoinKeyword:
-		//		case SyntaxKind.LetKeyword:
-		//		case SyntaxKind.OnKeyword:
-		//		case SyntaxKind.EqualsKeyword:
-		//		case SyntaxKind.ByKeyword:
-		//		case SyntaxKind.AscendingKeyword:
-		//		case SyntaxKind.DescendingKeyword:
-		//			return true;
-		//		default:
-		//			return false;
-		//	}
+		//	return false;
 		//}
 
-		//public static SyntaxKind GetContextualKeywordKind(string text)
-		//{
-		//	switch (text)
-		//	{
-		//		//case "yield":
-		//		//	return SyntaxKind.YieldKeyword;
-		//		//case "partial":
-		//		//	return SyntaxKind.PartialKeyword;
-		//		//case "from":
-		//		//	return SyntaxKind.FromKeyword;
-		//		//case "group":
-		//		//	return SyntaxKind.GroupKeyword;
-		//		//case "join":
-		//		//	return SyntaxKind.JoinKeyword;
-		//		//case "into":
-		//		//	return SyntaxKind.IntoKeyword;
-		//		//case "let":
-		//		//	return SyntaxKind.LetKeyword;
-		//		//case "by":
-		//		//	return SyntaxKind.ByKeyword;
-		//		//case "where":
-		//		//	return SyntaxKind.WhereKeyword;
-		//		//case "select":
-		//		//	return SyntaxKind.SelectKeyword;
-		//		//case "get":
-		//		//	return SyntaxKind.GetKeyword;
-		//		//case "set":
-		//		//	return SyntaxKind.SetKeyword;
-		//		//case "add":
-		//		//	return SyntaxKind.AddKeyword;
-		//		//case "remove":
-		//		//	return SyntaxKind.RemoveKeyword;
-		//		//case "orderby":
-		//		//	return SyntaxKind.OrderByKeyword;
-		//		//case "alias":
-		//		//	return SyntaxKind.AliasKeyword;
-		//		//case "on":
-		//		//	return SyntaxKind.OnKeyword;
-		//		//case "equals":
-		//		//	return SyntaxKind.EqualsKeyword;
-		//		//case "ascending":
-		//		//	return SyntaxKind.AscendingKeyword;
-		//		//case "descending":
-		//		//	return SyntaxKind.DescendingKeyword;
-		//		//case "assembly":
-		//		//	return SyntaxKind.AssemblyKeyword;
-		//		//case "module":
-		//		//	return SyntaxKind.ModuleKeyword;
-		//		//case "type":
-		//		//	return SyntaxKind.TypeKeyword;
-		//		//case "field":
-		//		//	return SyntaxKind.FieldKeyword;
-		//		//case "method":
-		//		//	return SyntaxKind.MethodKeyword;
-		//		//case "param":
-		//		//	return SyntaxKind.ParamKeyword;
-		//		//case "property":
-		//		//	return SyntaxKind.PropertyKeyword;
-		//		//case "typevar":
-		//		//	return SyntaxKind.TypeVarKeyword;
-		//		//case "global":
-		//		//	return SyntaxKind.GlobalKeyword;
-		//		//case "async":
-		//		//	return SyntaxKind.AsyncKeyword;
-		//		//case "await":
-		//		//	return SyntaxKind.AwaitKeyword;
-		//		default:
-		//			return SyntaxKind.None;
-		//	}
-		//}
+
 
 		public static string GetText(SyntaxKind kind)
 		{
@@ -1207,8 +1070,8 @@ namespace Microsoft.CodeAnalysis.CSharp
 					return "~";
 				case SyntaxKind.ExclamationToken:
 					return "!";
-				case SyntaxKind.DollarToken:
-					return "$";
+				//case SyntaxKind.DollarToken:
+				//	return "$";
 				case SyntaxKind.AtToken:
 					return "@";
 				case SyntaxKind.PercentToken:
@@ -1239,8 +1102,6 @@ namespace Microsoft.CodeAnalysis.CSharp
 					return "]";
 				case SyntaxKind.BarToken:
 					return "|";
-				case SyntaxKind.BackslashToken:
-					return "\\";
 				case SyntaxKind.ColonToken:
 					return ":";
 				case SyntaxKind.SemicolonToken:
@@ -1259,8 +1120,6 @@ namespace Microsoft.CodeAnalysis.CSharp
 					return ".";
 				case SyntaxKind.QuestionToken:
 					return "?";
-				case SyntaxKind.HashToken:
-					return "#";
 				case SyntaxKind.SlashToken:
 					return "/";
 				case SyntaxKind.SlashGreaterThanToken:
@@ -1291,16 +1150,12 @@ namespace Microsoft.CodeAnalysis.CSharp
 					return "++";
 				case SyntaxKind.ColonColonToken:
 					return "::";
-				case SyntaxKind.QuestionQuestionToken:
-					return "??";
 				case SyntaxKind.MinusGreaterThanToken:
 					return "->";
 				case SyntaxKind.ExclamationEqualsToken:
 					return "!=";
 				case SyntaxKind.EqualsEqualsToken:
 					return "==";
-				case SyntaxKind.EqualsGreaterThanToken:
-					return "=>";
 				case SyntaxKind.LessThanEqualsToken:
 					return "<=";
 				case SyntaxKind.LessThanLessThanToken:
@@ -1327,6 +1182,12 @@ namespace Microsoft.CodeAnalysis.CSharp
 					return "-=";
 				case SyntaxKind.CaretEqualsToken:
 					return "^=";
+				case SyntaxKind.DotDotDotToken:
+					return "...";
+				case SyntaxKind.GreaterThanGreaterThanGreaterThanEqualsToken:
+					return ">>>=";
+				case SyntaxKind.GreaterThanGreaterThanGreaterThanToken:
+					return ">>>";
 				case SyntaxKind.PercentEqualsToken:
 					return "%=";
 
@@ -1407,10 +1268,6 @@ namespace Microsoft.CodeAnalysis.CSharp
 					return "native";
 				case SyntaxKind.InstanceOfKeyword:
 					return "instanceof";
-				case SyntaxKind.AsKeyword:
-					return "as";
-				case SyntaxKind.ParamsKeyword:
-					return "params";
 				case SyntaxKind.ArgListKeyword:
 					return "__arglist";
 				case SyntaxKind.ThisKeyword:
@@ -1463,28 +1320,26 @@ namespace Microsoft.CodeAnalysis.CSharp
 			//     post-decrement-expression
 			//     pre-increment-expression
 			//     pre-decrement-expression
-			//     await-expression
 
 			switch (kind)
 			{
-				case SyntaxKind.InvocationExpression:
-				case SyntaxKind.ObjectCreationExpression:
-				case SyntaxKind.SimpleAssignmentExpression:
-				case SyntaxKind.AddAssignmentExpression:
-				case SyntaxKind.SubtractAssignmentExpression:
-				case SyntaxKind.MultiplyAssignmentExpression:
-				case SyntaxKind.DivideAssignmentExpression:
-				case SyntaxKind.ModuloAssignmentExpression:
-				case SyntaxKind.AndAssignmentExpression:
-				case SyntaxKind.OrAssignmentExpression:
-				case SyntaxKind.ExclusiveOrAssignmentExpression:
-				case SyntaxKind.LeftShiftAssignmentExpression:
-				case SyntaxKind.RightShiftAssignmentExpression:
-				case SyntaxKind.PostIncrementExpression:
-				case SyntaxKind.PostDecrementExpression:
-				case SyntaxKind.PreIncrementExpression:
-				case SyntaxKind.PreDecrementExpression:
-				case SyntaxKind.AwaitExpression:
+				case SyntaxKind.InvocationExpression:           // abc.def()
+				case SyntaxKind.ObjectCreationExpression:       // a = new b
+				case SyntaxKind.SimpleAssignmentExpression:     // a = b
+				case SyntaxKind.AddAssignmentExpression:        // a += b
+				case SyntaxKind.SubtractAssignmentExpression:   // a -= b
+				case SyntaxKind.MultiplyAssignmentExpression:   // a *= b
+				case SyntaxKind.DivideAssignmentExpression:     // a /= b
+				case SyntaxKind.ModuloAssignmentExpression:     // a %= b
+				case SyntaxKind.AndAssignmentExpression:        // a&= b
+				case SyntaxKind.OrAssignmentExpression:         // a|= b
+				case SyntaxKind.ExclusiveOrAssignmentExpression:// a^= b
+				case SyntaxKind.LeftShiftAssignmentExpression:  // a<<= b
+				case SyntaxKind.RightShiftAssignmentExpression: // a>>= b
+				case SyntaxKind.PostIncrementExpression:        // a++
+				case SyntaxKind.PostDecrementExpression:        // a--
+				case SyntaxKind.PreIncrementExpression:         // ++a
+				case SyntaxKind.PreDecrementExpression:         // --a
 					return true;
 
 				// Allow missing IdentifierNames; they will show up in error cases

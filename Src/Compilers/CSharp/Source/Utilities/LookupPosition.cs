@@ -78,7 +78,7 @@ namespace Microsoft.CodeAnalysis.CSharp
 		}
 
 
-		internal static bool IsInTypeDeclaration(int position, BaseTypeDeclarationSyntax typeDecl)
+		internal static bool IsInTypeDeclaration(int position, JavaTypeDeclarationSyntax typeDecl)
 		{
 			Debug.Assert(typeDecl != null);
 
@@ -209,10 +209,10 @@ namespace Microsoft.CodeAnalysis.CSharp
 					}
 					VariableDeclarationSyntax declOpt = forSyntax.Declaration;
 					return declOpt == null ? GetFirstIncludedToken(forSyntax.Statement, inRecursiveCall: true) : declOpt.GetFirstToken();
-				case SyntaxKind.GotoDefaultStatement:
-				case SyntaxKind.GotoCaseStatement:
-				case SyntaxKind.GotoStatement:
-					return ((GotoStatementSyntax)statement).GotoKeyword;
+				//case SyntaxKind.GotoDefaultStatement:
+				//case SyntaxKind.GotoCaseStatement:
+				//case SyntaxKind.GotoStatement:
+				//	return ((GotoStatementSyntax)statement).GotoKeyword;
 				case SyntaxKind.IfStatement:
 					return ((IfStatementSyntax)statement).IfKeyword;
 				case SyntaxKind.LabeledStatement:
@@ -255,10 +255,10 @@ namespace Microsoft.CodeAnalysis.CSharp
 					return ((ExpressionStatementSyntax)statement).SemicolonToken;
 				case SyntaxKind.ForStatement:
 					return GetFirstExcludedToken(((ForStatementSyntax)statement).Statement);
-				case SyntaxKind.GotoDefaultStatement:
-				case SyntaxKind.GotoCaseStatement:
-				case SyntaxKind.GotoStatement:
-					return ((GotoStatementSyntax)statement).SemicolonToken;
+				//case SyntaxKind.GotoDefaultStatement:
+				//case SyntaxKind.GotoCaseStatement:
+				//case SyntaxKind.GotoStatement:
+				//	return ((GotoStatementSyntax)statement).SemicolonToken;
 				case SyntaxKind.IfStatement:
 					IfStatementSyntax ifStmt = (IfStatementSyntax)statement;
 					ElseClauseSyntax elseOpt = ifStmt.Else;

@@ -12,10 +12,13 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 {
 	internal partial class LanguageParser : SyntaxParser
 	{
-		#region ParameterList 形参列表
 
 
-		internal ParameterListSyntax ParseParenthesizedParameterList(bool allowThisKeyword, bool allowDefaults, bool allowAttributes, bool allowFieldModifiers)
+		internal ParameterListSyntax ParseParenthesizedParameterList(
+			bool allowThisKeyword, 
+			bool allowDefaults, 
+			bool allowAttributes, bool 
+			allowFieldModifiers)
 		{
 			if (this.IsIncrementalAndFactoryContextMatches && CanReuseParameterList(this.CurrentNode as CSharp.Syntax.ParameterListSyntax))
 			{
@@ -89,8 +92,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 				{
 				tryAgain:
 					int mustBeLastIndex = -1;
-					bool mustBeLastHadParams = false;
-					bool hasParams = false;
+	
 					bool hasArgList = false;
 
 					if (this.IsPossibleParameter(allowThisKeyword, allowFieldModifiers) || this.CurrentToken.Kind == SyntaxKind.CommaToken)
@@ -100,13 +102,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 						modifiers.Clear();
 						var parameter = this.ParseParameter(attributes, modifiers, allowThisKeyword, allowDefaults, allowAttributes, allowFieldModifiers);
 						nodes.Add(parameter);
-						hasParams = modifiers.Any(SyntaxKind.ParamsKeyword);
-						hasArgList = parameter.Identifier.Kind == SyntaxKind.ArgListKeyword;
-						bool mustBeLast = hasParams || hasArgList;
+						hasArgList = parameter.DotDotDotToken != null;
+						bool mustBeLast =  hasArgList;
 						if (mustBeLast && mustBeLastIndex == -1)
 						{
 							mustBeLastIndex = nodes.Count - 1;
-							mustBeLastHadParams = hasParams;
 						}
 
 						// additional parameters
@@ -123,13 +123,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 								modifiers.Clear();
 								parameter = this.ParseParameter(attributes, modifiers, allowThisKeyword, allowDefaults, allowAttributes, allowFieldModifiers);
 								nodes.Add(parameter);
-								hasParams = modifiers.Any(SyntaxKind.ParamsKeyword);
-								hasArgList = parameter.Identifier.Kind == SyntaxKind.ArgListKeyword;
-								mustBeLast = hasParams || hasArgList;
+								hasArgList = parameter.DotDotDotToken != null;
+								mustBeLast = hasArgList;
 								if (mustBeLast && mustBeLastIndex == -1)
 								{
 									mustBeLastIndex = nodes.Count - 1;
-									mustBeLastHadParams = hasParams;
 								}
 
 								continue;
@@ -147,7 +145,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
 					if (mustBeLastIndex >= 0 && mustBeLastIndex < nodes.Count - 1)
 					{
-						nodes[mustBeLastIndex] = this.AddError(nodes[mustBeLastIndex], mustBeLastHadParams ? ErrorCode.ERR_ParamsLast : ErrorCode.ERR_VarargsLast);
+						nodes[mustBeLastIndex] = this.AddError(nodes[mustBeLastIndex], ErrorCode.ERR_VarargsLast);
 					}
 				}
 
@@ -177,21 +175,24 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 			this.ParseAnnotationDeclarations(attributes, allowAttributes);
 			this.ParseParameterModifiers(modifiers, allowThisKeyword, allowFieldModifiers);
 
-			var hasArgList = this.CurrentToken.Kind == SyntaxKind.ArgListKeyword;
+
 
 			TypeSyntax type = null;
-			if (!hasArgList)
-			{
+
 				type = this.ParseType(true);
-			}
-			else if (this.IsPossibleType())
+
+
+			var hasArgList = this.CurrentToken.Kind == SyntaxKind.DotDotDotToken;
+
+			SyntaxToken dotdotdotTk = default(SyntaxToken);
+			if (hasArgList)
 			{
-				type = this.ParseType(true);
-				type = WithAdditionalDiagnostics(type, this.GetExpectedTokenError(SyntaxKind.CloseParenToken, SyntaxKind.IdentifierToken, 0, type.Width));
+				dotdotdotTk = this.EatToken(SyntaxKind.DotDotDotToken);
 			}
 
+
 			SyntaxToken name = null;
-			if (!hasArgList)
+			//if (!hasArgList)
 			{
 				name = this.ParseIdentifierToken();
 
@@ -204,21 +205,21 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 					name = AddTrailingSkippedSyntax(name, SyntaxList.List(open, close));
 				}
 			}
-			else if (this.IsPossibleName())
-			{
-				// Current token is an identifier token, we expected a CloseParenToken.
-				// Get the expected token error for the missing token with correct diagnostic
-				// span and then parse the identifier token.
+			//else if (this.IsPossibleName())
+			//{
+			//	// Current token is an identifier token, we expected a CloseParenToken.
+			//	// Get the expected token error for the missing token with correct diagnostic
+			//	// span and then parse the identifier token.
 
-				SyntaxDiagnosticInfo diag = this.GetExpectedTokenError(SyntaxKind.CloseParenToken, SyntaxKind.IdentifierToken);
-				name = this.ParseIdentifierToken();
-				name = WithAdditionalDiagnostics(name, diag);
-			}
-			else
-			{
-				// name is not optional on ParameterSyntax
-				name = this.EatToken(SyntaxKind.ArgListKeyword);
-			}
+			//	SyntaxDiagnosticInfo diag = this.GetExpectedTokenError(SyntaxKind.CloseParenToken, SyntaxKind.IdentifierToken);
+			//	name = this.ParseIdentifierToken();
+			//	name = WithAdditionalDiagnostics(name, diag);
+			//}
+			//else
+			//{
+			//	// name is not optional on ParameterSyntax
+			//	name = this.EatToken(SyntaxKind.ArgListKeyword);
+			//}
 
 			EqualsValueClauseSyntax def = null;
 			if (this.CurrentToken.Kind == SyntaxKind.EqualsToken)
@@ -237,7 +238,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 				}
 			}
 
-			return _syntaxFactory.Parameter(attributes, modifiers.ToTokenList(), type, name, def);
+			return _syntaxFactory.Parameter(attributes, modifiers.ToTokenList(), type,dotdotdotTk, name, def);
 		}
 
 
@@ -255,8 +256,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 				{
 					var mod = this.EatToken();
 
-					if (mod.Kind == SyntaxKind.ThisKeyword ||
-						mod.Kind == SyntaxKind.ParamsKeyword)
+					if (mod.Kind == SyntaxKind.ThisKeyword)
 					{
 						if (mod.Kind == SyntaxKind.ThisKeyword)
 						{
@@ -283,25 +283,25 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 								flags |= ParamFlags.This;
 							}
 						}
-						else if (mod.Kind == SyntaxKind.ParamsKeyword)
-						{
-							if ((flags & ParamFlags.Params) != 0)
-							{
-								mod = this.AddError(mod, ErrorCode.ERR_DupParamMod, SyntaxKindFacts.GetText(SyntaxKind.ParamsKeyword));
-							}
-							else if ((flags & ParamFlags.This) != 0)
-							{
-								mod = this.AddError(mod, ErrorCode.ERR_BadParamModThis);
-							}
-							else if ((flags & (ParamFlags.Ref | ParamFlags.Out | ParamFlags.This)) != 0)
-							{
-								mod = this.AddError(mod, ErrorCode.ERR_MultiParamMod);
-							}
-							else
-							{
-								flags |= ParamFlags.Params;
-							}
-						}
+						//else if (mod.Kind == SyntaxKind.ParamsKeyword)
+						//{
+						//	if ((flags & ParamFlags.Params) != 0)
+						//	{
+						//		mod = this.AddError(mod, ErrorCode.ERR_DupParamMod, SyntaxKindFacts.GetText(SyntaxKind.ParamsKeyword));
+						//	}
+						//	else if ((flags & ParamFlags.This) != 0)
+						//	{
+						//		mod = this.AddError(mod, ErrorCode.ERR_BadParamModThis);
+						//	}
+						//	else if ((flags & (ParamFlags.Ref | ParamFlags.Out | ParamFlags.This)) != 0)
+						//	{
+						//		mod = this.AddError(mod, ErrorCode.ERR_MultiParamMod);
+						//	}
+						//	else
+						//	{
+						//		flags |= ParamFlags.Params;
+						//	}
+						//}
 					}
 
 					modifiers.Add(mod);
@@ -362,6 +362,5 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 			}
 		}
 
-		#endregion
 	}
 }

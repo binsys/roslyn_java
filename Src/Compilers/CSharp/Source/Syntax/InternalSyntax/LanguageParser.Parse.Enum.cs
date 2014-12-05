@@ -73,7 +73,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
 				if (this.IsPossibleJavaEnumConstant() 
 					|| this.CurrentToken.Kind == SyntaxKind.CommaToken 
-					|| this.CurrentToken.Kind == SyntaxKind.SemicolonToken
+					//|| this.CurrentToken.Kind == SyntaxKind.SemicolonToken
 					)
 				{
 					// first member
@@ -86,14 +86,17 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 						{
 							break;
 						}
-						else if (this.CurrentToken.Kind == SyntaxKind.CommaToken || this.CurrentToken.Kind == SyntaxKind.SemicolonToken || this.IsPossibleJavaEnumConstant())
+						else if (this.CurrentToken.Kind == SyntaxKind.CommaToken 
+							|| this.CurrentToken.Kind == SyntaxKind.SemicolonToken 
+							|| this.IsPossibleJavaEnumConstant())
 						{
 							if (this.CurrentToken.Kind == SyntaxKind.SemicolonToken)
 							{
-								// semicolon instead of comma.. consume it with error and act as if it were a comma.
-								members.AddSeparator(this.EatTokenWithPrejudice(SyntaxKind.CommaToken));
+								//// semicolon instead of comma.. consume it with error and act as if it were a comma.
+								//members.AddSeparator(this.EatTokenWithPrejudice(SyntaxKind.CommaToken));
+								break;
 							}
-							else
+							//else
 							{
 								members.AddSeparator(this.EatToken(SyntaxKind.CommaToken));
 							}
@@ -143,7 +146,6 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 			{
 				this.ParseAnnotationDeclarations(memberAttrs);
 				var memberName = this.ParseIdentifierToken();
-				EqualsValueClauseSyntax equalsValue = null;
 
 				if (this.CurrentToken.Kind == SyntaxKind.OpenParenToken)
 				{
@@ -173,7 +175,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 				try
 				{
 					classBodyMembers = this._pool.Allocate<MemberDeclarationSyntax>();
-					this.ParseClassMembers(ref classBodyMembers, ref openBrace, name);
+					this.ParseJavaNormalClassMembers(ref classBodyMembers, ref openBrace, name);
 					var enumClassBody = _syntaxFactory.JavaEnumBodyDeclarations(semToken, classBodyMembers.Count == 0 ? null : classBodyMembers.ToList());
 					return enumClassBody;
 				}

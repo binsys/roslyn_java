@@ -295,7 +295,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 					case SyntaxKind.GreaterThanGreaterThanEqualsToken:
 						return true;
 					default:
-						return SyntaxKindFacts.IsContextualKeyword(kind);
+						return false;
 				}
 			}
 

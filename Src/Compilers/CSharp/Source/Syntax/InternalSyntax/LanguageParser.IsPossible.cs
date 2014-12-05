@@ -205,9 +205,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
 		private bool IsPossibleLocalDeclarationStatement(bool allowAnyExpression)
 		{
-			// This method decides whether to parse a statement as a
-			// declaration or as an expression statement. In the old
-			// compiler it would simple call IsLocalDeclaration.
+			// This method decides whether to parse a statement as a declaration or as an expression statement. 
+			// In the old compiler it would simple call IsLocalDeclaration.
 
 			var tk = this.CurrentToken.Kind;
 			if ((SyntaxKindFacts.IsPredefinedType(tk) && this.PeekToken(1).Kind != SyntaxKind.DotToken) || IsDeclarationModifier(tk))
@@ -358,13 +357,13 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
 			// has params modifier:
 			//   (params
-			for (int i = 0; i < parameter.Modifiers.Count; i++)
-			{
-				if (parameter.Modifiers[i].Kind == SyntaxKind.ParamsKeyword)
-				{
-					return true;
-				}
-			}
+			//for (int i = 0; i < parameter.Modifiers.Count; i++)
+			//{
+			//	if (parameter.Modifiers[i].Kind == SyntaxKind.ParamsKeyword)
+			//	{
+			//		return true;
+			//	}
+			//}
 
 			if (parameter.Type == null)
 			{
@@ -375,26 +374,26 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 					return true;
 				}
 			}
-			else if (parameter.Type.Kind == SyntaxKind.NullableType)
-			{
-				// nullable type with modifiers
-				//   (ref T?
-				//   (out T?
-				if (parameter.Modifiers.Count > 0)
-				{
-					return true;
-				}
+			//else if (parameter.Type.Kind == SyntaxKind.NullableType)
+			//{
+			//	// nullable type with modifiers
+			//	//   (ref T?
+			//	//   (out T?
+			//	if (parameter.Modifiers.Count > 0)
+			//	{
+			//		return true;
+			//	}
 
-				// nullable type, identifier, and separator or closing parent
-				//   (T ? idf,
-				//   (T ? idf)
-				if (!parameter.Identifier.IsMissing &&
-					(separatedParameters.Count >= 2 && !separatedParameters[1].IsMissing ||
-					 separatedParameters.Count == 1 && !paramList.CloseParenToken.IsMissing))
-				{
-					return true;
-				}
-			}
+			//	// nullable type, identifier, and separator or closing parent
+			//	//   (T ? idf,
+			//	//   (T ? idf)
+			//	if (!parameter.Identifier.IsMissing &&
+			//		(separatedParameters.Count >= 2 && !separatedParameters[1].IsMissing ||
+			//		 separatedParameters.Count == 1 && !paramList.CloseParenToken.IsMissing))
+			//	{
+			//		return true;
+			//	}
+			//}
 			else
 			{
 				// has a name and a non-nullable type:
@@ -535,9 +534,10 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 				case SyntaxKind.ContinueKeyword:
 				case SyntaxKind.TryKeyword:
 				case SyntaxKind.ConstKeyword:
+				case SyntaxKind.FinalKeyword:
 				case SyntaxKind.DoKeyword:
 				case SyntaxKind.ForKeyword:
-				case SyntaxKind.GotoKeyword:
+				//case SyntaxKind.GotoKeyword:
 				case SyntaxKind.IfKeyword:
 				case SyntaxKind.ReturnKeyword:
 				case SyntaxKind.SwitchKeyword:
@@ -548,6 +548,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 				case SyntaxKind.SemicolonToken:
 				case SyntaxKind.StaticKeyword:
 				case SyntaxKind.VolatileKeyword:
+				case SyntaxKind.SynchronizedKeyword:
+				case SyntaxKind.AssertKeyword:
 					return true;
 				case SyntaxKind.IdentifierToken:
 					return IsTrueIdentifier();
@@ -619,8 +621,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 			{
 				SyntaxToken lastTokenOfType;
 				ScanTypeFlags st = this.ScanType(out lastTokenOfType);
-
-				if (st == ScanTypeFlags.ClassKeywordSuffix)
+				if (st == ScanTypeFlags.NotType && lastTokenOfType != null && lastTokenOfType.Kind == kind)
 				{
 					return true;
 				}
@@ -634,63 +635,63 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 		}
 
 
-		private bool IsPossibleClassLiteralExpression(bool contextRequiresVariable)
-		{
-			var tk = this.CurrentToken.Kind;
-			if (tk == SyntaxKind.IdentifierName 
-				&& this.PeekToken(1).Kind == SyntaxKind.DotToken 
-				&& this.PeekToken(2).Kind == SyntaxKind.ClassKeyword)
-			{
-				return true;
-			}
+		//private bool IsPossibleClassLiteralExpression(bool contextRequiresVariable)
+		//{
+		//	var tk = this.CurrentToken.Kind;
+		//	if (tk == SyntaxKind.IdentifierName 
+		//		&& this.PeekToken(1).Kind == SyntaxKind.DotToken 
+		//		&& this.PeekToken(2).Kind == SyntaxKind.ClassKeyword)
+		//	{
+		//		return true;
+		//	}
 
-			var resetPoint = this.GetResetPoint();
-			try
-			{
-				SyntaxToken lastTokenOfType;
-				ScanTypeFlags st = this.ScanType(out lastTokenOfType);
+		//	var resetPoint = this.GetResetPoint();
+		//	try
+		//	{
+		//		SyntaxToken lastTokenOfType;
+		//		ScanTypeFlags st = this.ScanType(out lastTokenOfType);
 
-				if (st == ScanTypeFlags.ClassKeywordSuffix)
-				{
-					return true;
-				}
-				return false;
-			}
-			finally
-			{
-				this.Reset(ref resetPoint);
-				this.Release(ref resetPoint);
-			}
-		}
+		//		if (st == ScanTypeFlags.ClassKeywordSuffix)
+		//		{
+		//			return true;
+		//		}
+		//		return false;
+		//	}
+		//	finally
+		//	{
+		//		this.Reset(ref resetPoint);
+		//		this.Release(ref resetPoint);
+		//	}
+		//}
 
-		private bool IsPossibleQualifiedThisExpression(bool contextRequiresVariable)
-		{
-			var tk = this.CurrentToken.Kind;
-			if (tk == SyntaxKind.IdentifierName 
-				&& this.PeekToken(1).Kind == SyntaxKind.DotToken 
-				&& this.PeekToken(1).Kind == SyntaxKind.ClassKeyword)
-			{
-				return true;
-			}
+		//private bool IsPossibleQualifiedThisExpression(bool contextRequiresVariable)
+		//{
+		//	var tk = this.CurrentToken.Kind;
+		//	if (tk == SyntaxKind.IdentifierName 
+		//		&& this.PeekToken(1).Kind == SyntaxKind.DotToken 
+		//		&& this.PeekToken(1).Kind == SyntaxKind.ClassKeyword)
+		//	{
+		//		return true;
+		//	}
 
-			var resetPoint = this.GetResetPoint();
-			try
-			{
-				SyntaxToken lastTokenOfType;
-				ScanTypeFlags st = this.ScanType(out lastTokenOfType);
+		//	var resetPoint = this.GetResetPoint();
+		//	try
+		//	{
+		//		SyntaxToken lastTokenOfType;
+		//		ScanTypeFlags st = this.ScanType(out lastTokenOfType);
 
-				if (st == ScanTypeFlags.ClassKeywordSuffix)
-				{
-					return true;
-				}
-				return false;
-			}
-			finally
-			{
-				this.Reset(ref resetPoint);
-				this.Release(ref resetPoint);
-			}
-		}
+		//		if (st == ScanTypeFlags.ClassKeywordSuffix)
+		//		{
+		//			return true;
+		//		}
+		//		return false;
+		//	}
+		//	finally
+		//	{
+		//		this.Reset(ref resetPoint);
+		//		this.Release(ref resetPoint);
+		//	}
+		//}
 
 		private bool IsPossibleDeclarationExpression(bool contextRequiresVariable)
 		{
@@ -742,7 +743,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 						var resetPoint2 = this.GetResetPoint();
 						try
 						{
-							var nullCoalescingPrecedence = GetPrecedence(SyntaxKind.CoalesceExpression);
+							var nullCoalescingPrecedence = 2u;//GetPrecedence(SyntaxKind.CoalesceExpression);
 							var colonLeft = this.ParseSubExpression(nullCoalescingPrecedence - 1);
 
 							if (colonLeft.Kind != SyntaxKind.DeclarationExpression && this.CurrentToken.Kind == SyntaxKind.ColonToken)
@@ -836,10 +837,10 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 		{
 			switch (this.CurrentToken.Kind)
 			{
-				case SyntaxKind.ParamsKeyword:
-					// params is not actually legal in a lambda, but we allow it for error
-					// recovery purposes and then give an error during semantic analysis.
-					return true;
+				//case SyntaxKind.ParamsKeyword:
+				//	// params is not actually legal in a lambda, but we allow it for error
+				//	// recovery purposes and then give an error during semantic analysis.
+				//	return true;
 				case SyntaxKind.IdentifierToken:
 					return this.IsTrueIdentifier();
 				default:
@@ -852,7 +853,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 			switch (this.CurrentToken.Kind)
 			{
 				case SyntaxKind.AtToken: // _annotation
-				case SyntaxKind.ParamsKeyword:
+				//case SyntaxKind.ParamsKeyword:
 				case SyntaxKind.ArgListKeyword:
 					return true;
 				case SyntaxKind.ThisKeyword:

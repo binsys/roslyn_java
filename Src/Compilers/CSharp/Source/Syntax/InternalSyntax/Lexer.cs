@@ -339,8 +339,18 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 				case '.':
 					if (!this.ScanNumericLiteral(ref info))
 					{
-						TextWindow.AdvanceChar();
-						info.Kind = SyntaxKind.DotToken;
+						if (TextWindow.PeekChar(1) == '.' && TextWindow.PeekChar(2) == '.')
+						{
+							TextWindow.AdvanceChar();
+							TextWindow.AdvanceChar();
+							TextWindow.AdvanceChar();
+							info.Kind = SyntaxKind.DotDotDotToken;
+						}
+						else
+						{
+							TextWindow.AdvanceChar();
+							info.Kind = SyntaxKind.DotToken;
+						}
 					}
 
 					break;
@@ -395,11 +405,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 						TextWindow.AdvanceChar();
 						info.Kind = SyntaxKind.EqualsEqualsToken;
 					}
-					else if (character == '>')
-					{
-						TextWindow.AdvanceChar();
-						info.Kind = SyntaxKind.EqualsGreaterThanToken;
-					}
+					//else if (character == '>')
+					//{
+					//	TextWindow.AdvanceChar();
+					//	info.Kind = SyntaxKind.EqualsGreaterThanToken;
+					//}
 					else
 					{
 						info.Kind = SyntaxKind.EqualsToken;
@@ -453,12 +463,12 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
 				case '?':
 					TextWindow.AdvanceChar();
-					if (TextWindow.PeekChar() == '?')
-					{
-						TextWindow.AdvanceChar();
-						info.Kind = SyntaxKind.QuestionQuestionToken;
-					}
-					else
+					//if (TextWindow.PeekChar() == '?')
+					//{
+					//	TextWindow.AdvanceChar();
+					//	info.Kind = SyntaxKind.QuestionQuestionToken;
+					//}
+					//else
 					{
 						info.Kind = SyntaxKind.QuestionToken;
 					}
@@ -589,13 +599,6 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 					}
 					else if (TextWindow.PeekChar() == '<')
 					{
-						if (this.ModeIs(LexerMode.DebuggerSyntax) && TextWindow.PeekChar(1) == '>')
-						{
-							// For "GenericOf<<>f__AnonymousType>"
-							info.Kind = SyntaxKind.LessThanToken;
-							break;
-						}
-
 						TextWindow.AdvanceChar();
 						if (TextWindow.PeekChar() == '=')
 						{
@@ -655,10 +658,10 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
 					break;
 
-				case '$':
-					TextWindow.AdvanceChar();
-					info.Kind = SyntaxKind.DollarToken;
-					break;
+				//case '$':
+				//	TextWindow.AdvanceChar();
+				//	info.Kind = SyntaxKind.DollarToken;
+				//	break;
 
 				// All the 'common' identifier characters are represented directly in
 				// these switch cases for optimal perf.  Calling IsIdentifierChar() functions is relatively
@@ -1641,10 +1644,10 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 					info.Kind = SyntaxKind.EndOfDirectiveToken;
 					break;
 
-				case '#':
-					TextWindow.AdvanceChar();
-					info.Kind = SyntaxKind.HashToken;
-					break;
+				//case '#':
+				//	TextWindow.AdvanceChar();
+				//	info.Kind = SyntaxKind.HashToken;
+				//	break;
 
 				case '(':
 					TextWindow.AdvanceChar();

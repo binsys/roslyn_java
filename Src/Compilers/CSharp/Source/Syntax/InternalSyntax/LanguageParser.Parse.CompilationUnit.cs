@@ -164,11 +164,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 			}
 		}
 
-		private PackageDeclarationSyntax ParsePackageDeclaration(ref SyntaxListBuilder<AnnotationSyntax> pendingAnnotations)
+		private JavaPackageDeclarationSyntax ParsePackageDeclaration(ref SyntaxListBuilder<AnnotationSyntax> pendingAnnotations)
 		{
-			if (this.IsIncrementalAndFactoryContextMatches && this.CurrentNodeKind == SyntaxKind.PackageDeclaration)
+			if (this.IsIncrementalAndFactoryContextMatches && this.CurrentNodeKind == SyntaxKind.JavaPackageDeclaration)
 			{
-				return (PackageDeclarationSyntax)this.EatNode();
+				return (JavaPackageDeclarationSyntax)this.EatNode();
 			}
 
 			Debug.Assert(this.CurrentToken.Kind == SyntaxKind.PackageKeyword);
@@ -218,10 +218,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 				semicolon = this.EatToken(SyntaxKind.SemicolonToken);
 			}
 
-
-			//var modify = _syntaxFactory.JavaPackageModifier(pendingAnnotations);
-
-			return _syntaxFactory.PackageDeclaration(pendingAnnotations.ToList(), usingToken, name, semicolon);
+			return _syntaxFactory.JavaPackageDeclaration(pendingAnnotations.ToList(), usingToken, name, semicolon);
 		}
 
 		private ImportDeclarationSyntax ParseImportDeclaration()

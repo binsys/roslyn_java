@@ -8,36 +8,34 @@ namespace Microsoft.CodeAnalysis.CSharp
 		List = GreenNode.ListKind,
 
 		// punctuation
-		TildeToken = 8193,// ~
-		ExclamationToken, // !
-		DollarToken,      // $
-		AtToken,          // @
-		PercentToken,     // %
-		CaretToken,       // ^
-		AmpersandToken,   // &
-		AsteriskToken,    // *
-		OpenParenToken,   // (
-		CloseParenToken,  // )
-		MinusToken,       // -
-		PlusToken,        // +
-		EqualsToken,      // =
-		OpenBraceToken,   // {
-		CloseBraceToken,  // }
-		OpenBracketToken, // [
-		CloseBracketToken,// ]
-		BarToken,         // |
-		BackslashToken,   // \\
-		ColonToken,       // :
-		SemicolonToken,   // ;
+		TildeToken = 8193,// ~                 J
+		ExclamationToken, // !                 J
+		//DollarToken,      // $
+		AtToken,          // @                 J
+		PercentToken,     // %                 J
+		CaretToken,       // ^                 J
+		AmpersandToken,   // &                 J
+		AsteriskToken,    // *                 J
+		OpenParenToken,   // (                 J
+		CloseParenToken,  // )                 J
+		MinusToken,       // -                 J
+		PlusToken,        // +                 J
+		EqualsToken,      // =                 J
+		OpenBraceToken,   // {                 J
+		CloseBraceToken,  // }                 J
+		OpenBracketToken, // [                 J
+		CloseBracketToken,// ]                 J
+		BarToken,         // |                 J
+		ColonToken,       // :                 J
+		SemicolonToken,   // ;                 J
 		DoubleQuoteToken, // "
 		SingleQuoteToken, // '
-		LessThanToken,    // <
-		CommaToken,       // ,
-		GreaterThanToken, // >
-		DotToken,         // .
-		QuestionToken,    // ?
-		HashToken,        // #
-		SlashToken,       // /
+		LessThanToken,    // <                 J
+		CommaToken,       // ,                 J
+		GreaterThanToken, // >                 J
+		DotToken,         // .                 J
+		QuestionToken,    // ?                 J
+		SlashToken,       // /                 J
 
 
 		// additional xml tokens
@@ -50,31 +48,37 @@ namespace Microsoft.CodeAnalysis.CSharp
 		XmlProcessingInstructionStartToken, // <?
 		XmlProcessingInstructionEndToken,   // ?>
 
+
+
+
 		// compound punctuation
-		BarBarToken,                      // ||
-		AmpersandAmpersandToken,          // &&
-		MinusMinusToken,                  // --
-		PlusPlusToken,                    // ++
-		ColonColonToken,                  // ::
-		QuestionQuestionToken,            // ??
-		MinusGreaterThanToken,            // ->
-		ExclamationEqualsToken,           // !=
-		EqualsEqualsToken,                // ==
-		EqualsGreaterThanToken,           // =>
-		LessThanEqualsToken,              // <=
-		LessThanLessThanToken,            // <<
-		LessThanLessThanEqualsToken,      // <<=
-		GreaterThanEqualsToken,           // >=
-		GreaterThanGreaterThanToken,      // >>
-		GreaterThanGreaterThanEqualsToken,// >>=
-		SlashEqualsToken,                 // /=
-		AsteriskEqualsToken,              // *=
-		BarEqualsToken,                   // |=
-		AmpersandEqualsToken,             // &=
-		PlusEqualsToken,                  // +=
-		MinusEqualsToken,                 // -=
-		CaretEqualsToken,                 // ^=
-		PercentEqualsToken,               // %=
+		BarBarToken,                                 // ||                 J
+		AmpersandAmpersandToken,                     // &&                 J
+		MinusMinusToken,                             // --                 J
+		PlusPlusToken,                               // ++                 J
+		ColonColonToken,                             // ::                 J
+		MinusGreaterThanToken,                       // ->                 J
+		ExclamationEqualsToken,                      // !=                 J
+		EqualsEqualsToken,                           // ==                 J
+		LessThanEqualsToken,                         // <=                 J
+		LessThanLessThanToken,                       // <<                 J
+		LessThanLessThanEqualsToken,                 // <<=                J
+		GreaterThanEqualsToken,                      // >=                 J
+		GreaterThanGreaterThanToken,                 // >>                 J
+		GreaterThanGreaterThanEqualsToken,           // >>=                J
+		SlashEqualsToken,                            // /=                 J
+		AsteriskEqualsToken,                         // *=                 J
+		BarEqualsToken,                              // |=                 J
+		AmpersandEqualsToken,                        // &=                 J
+		PlusEqualsToken,                             // +=                 J
+		MinusEqualsToken,                            // -=                 J
+		CaretEqualsToken,                            // ^=                 J
+		DotDotDotToken,                              // ...                J
+		GreaterThanGreaterThanGreaterThanEqualsToken,// >>>=               J
+		GreaterThanGreaterThanGreaterThanToken,      // >>>                J
+		PercentEqualsToken,                          // %=                 J
+		
+		
 
 		// Keywords
 		BooleanKeyword,     // boolean bool         CJ
@@ -115,8 +119,6 @@ namespace Microsoft.CodeAnalysis.CSharp
 		AbstractKeyword,    // abstract             J
 		NativeKeyword,      // native extern        CJ
 		InstanceOfKeyword,  // instanceof is        CJ
-		AsKeyword,          // as                   
-		ParamsKeyword,      // params               
 		ArgListKeyword,     // __arglist            
 		ThisKeyword,        // this                 J
 		SuperKeyword,       // super base           CJ
@@ -129,21 +131,13 @@ namespace Microsoft.CodeAnalysis.CSharp
 		ExtendsKeyword,     // extends              J
 		FinalKeyword,       // final                J
 		ImplementsKeyword,  // implements           J
-		StrictFpKeyword,    // strictfp            即 strict float point (精确浮点)。可应用于类、接口或方法
-		SynchronizedKeyword,// synchronized      lock 替代 Java语言的关键字，但lock不可用于方法，可用来给对象和方法或者代码块加锁，当它锁定一个方法或者一个代码块的时候，同一时刻最多只有一个线程执行这个段代码。
-		ThrowsKeyword,      // throws            用于方法后面，指定把某些异常抛给调用方
-		TransientKeyword,   // transient         变量修饰符，如果用transient声明一个实例变量，当对象存储时，它的值不需要维持。（序列化是跳过）
+		StrictFpKeyword,    // strictfp             即 strict float point (精确浮点)。可应用于类、接口或方法
+		SynchronizedKeyword,// synchronized         lock 替代 Java语言的关键字，但lock不可用于方法，可用来给对象和方法或者代码块加锁，当它锁定一个方法或者一个代码块的时候，同一时刻最多只有一个线程执行这个段代码。
+		ThrowsKeyword,      // throws               用于方法后面，指定把某些异常抛给调用方
+		TransientKeyword,   // transient            变量修饰符，如果用transient声明一个实例变量，当对象存储时，它的值不需要维持。（序列化是跳过）
 
 		// Other
-		
-		/// <summary>
-		/// 省略的类型参数令牌
-		/// </summary>
 		OmittedTypeArgumentToken,
-
-		/// <summary>
-		/// 省略的数字大小表达式令牌
-		/// </summary>
 		OmittedArraySizeExpressionToken,
 		EndOfDirectiveToken,
 
@@ -190,7 +184,6 @@ namespace Microsoft.CodeAnalysis.CSharp
 		TypeCref,
 		QualifiedCref,
 		NameMemberCref,
-		//IndexerMemberCref,
 		CrefParameterList,
 		CrefBracketedParameterList,
 		CrefParameter,
@@ -198,8 +191,6 @@ namespace Microsoft.CodeAnalysis.CSharp
 		
 
 		// names & type-names
-
-
 		IdentifierName,
 		QualifiedName,
 		GenericName,
@@ -208,10 +199,14 @@ namespace Microsoft.CodeAnalysis.CSharp
 		PredefinedType,
 		ArrayType,
 		ArrayRankSpecifier,
-		PointerType,
-		NullableType,
+		//PointerType,
+		//NullableType,
+		JavaWildcardType,
 		OmittedTypeArgument,
 		BaseClassWithArguments,
+		JavaWildcardTypeBound,
+
+
 
 		// expressions
 		ParenthesizedExpression,
@@ -242,372 +237,81 @@ namespace Microsoft.CodeAnalysis.CSharp
 		DeclarationExpression,
 
 		// binary expressions
-
-		/// <summary>
-		/// 二元表达式 加
-		/// </summary>
-		AddExpression,
-
-		/// <summary>
-		/// 二元表达式 减
-		/// </summary>
-		SubtractExpression,
-
-		/// <summary>
-		/// 二元表达式 乘
-		/// </summary>
-		MultiplyExpression,
-
-		/// <summary>
-		/// 二元表达式 除
-		/// </summary>
-		DivideExpression,
-
-		/// <summary>
-		/// 二元表达式 求余
-		/// </summary>
-		ModuloExpression,
-
-		/// <summary>
-		/// 二元表达式 左移
-		/// </summary>
-		LeftShiftExpression,
-
-		/// <summary>
-		/// 二元表达式 右移
-		/// </summary>
-		RightShiftExpression,
-
-		/// <summary>
-		/// 二元表达式 逻辑或
-		/// </summary>
-		LogicalOrExpression,
-
-		/// <summary>
-		/// 二元表达式 逻辑与
-		/// </summary>
-		LogicalAndExpression,
-
-		/// <summary>
-		/// 二元表达式 位或
-		/// </summary>
-		BitwiseOrExpression,
-
-		/// <summary>
-		/// 二元表达式 位与
-		/// </summary>
-		BitwiseAndExpression,
-		ExclusiveOrExpression,
-
-		/// <summary>
-		/// 二元表达式 等于
-		/// </summary>
-		EqualsExpression,
-
-		/// <summary>
-		/// 二元表达式 不等于
-		/// </summary>
-		NotEqualsExpression,
-
-
-		/// <summary>
-		/// 二元表达式 小于
-		/// </summary>
-		LessThanExpression,
-
-		/// <summary>
-		/// 二元表达式 小于或等于
-		/// </summary>
-		LessThanOrEqualExpression,
-
-		/// <summary>
-		/// 二元表达式  大于
-		/// </summary>
-		GreaterThanExpression,
-
-		/// <summary>
-		/// 二元表达式 大于或等于
-		/// </summary>
-		GreaterThanOrEqualExpression,
-
-		/// <summary>
-		/// is 表达式
-		/// </summary>
-		IsExpression,
-
-		/// <summary>
-		/// as 表达式
-		/// </summary>
-		AsExpression,
-		CoalesceExpression,
-
-		/// <summary>
-		/// 简单成员访问
-		/// </summary>
-		SimpleMemberAccessExpression,  // dot .
-
-		/// <summary>
-		/// 指针成员访问
-		/// </summary>
-		PointerMemberAccessExpression,  // arrow ->
-
-		/// <summary>
-		/// 索引成员访问
-		/// </summary>
-		IndexedMemberAccessExpression,  // dot dollar   . $
-
-		// binary assignment expressions
-		/// <summary>
-		/// 二元赋值表达式 简单赋值
-		/// </summary>
-		SimpleAssignmentExpression,
-
-		/// <summary>
-		/// 二元赋值表达式 +=
-		/// </summary>
-		AddAssignmentExpression,
-
-		/// <summary>
-		/// 二元赋值表达式 -=
-		/// </summary>
-		SubtractAssignmentExpression,
-
-		/// <summary>
-		/// 二元赋值表达式 *=
-		/// </summary>
-		MultiplyAssignmentExpression,
-
-		/// <summary>
-		/// 二元赋值表达式 /=
-		/// </summary>
-		DivideAssignmentExpression,
-
-		/// <summary>
-		/// %=
-		/// </summary>
-		ModuloAssignmentExpression,
-
-		/// <summary>
-		/// <![CDATA[&=]]>
-		/// </summary>
-		AndAssignmentExpression,
-
-		/// <summary>
-		/// ^=
-		/// </summary>
-		ExclusiveOrAssignmentExpression,
-
-		/// <summary>
-		/// |=
-		/// </summary>
-		OrAssignmentExpression,
-
-		/// <summary>
-		/// <![CDATA[<<=]]>
-		/// </summary>
-		LeftShiftAssignmentExpression,
-
-		/// <summary>
-		/// >>=
-		/// </summary>
-		RightShiftAssignmentExpression,
+		AddExpression,                  // +
+		SubtractExpression,             // -
+		MultiplyExpression,             // *
+		DivideExpression,               // /
+		ModuloExpression,               // %
+		LeftShiftExpression,            // <<
+		RightShiftExpression,           // >>
+		UnsignedRightShiftExpression,   // >>>
+		LogicalOrExpression,            // ||
+		LogicalAndExpression,           // &&
+		BitwiseOrExpression,            // |
+		BitwiseAndExpression,           // &
+		ExclusiveOrExpression,          // ^
+		EqualsExpression,               // =
+		NotEqualsExpression,            // !=
+		LessThanExpression,             // <
+		LessThanOrEqualExpression,      // <=
+		GreaterThanExpression,          // >
+		GreaterThanOrEqualExpression,   // >=
+		InstanceOfExpression,                   // is
+		//AsExpression,                   // as
+		SimpleMemberAccessExpression,   // dot .
+		SimpleAssignmentExpression,     // a = b
+		AddAssignmentExpression,        // a +=b
+		SubtractAssignmentExpression,   // a-=b
+		MultiplyAssignmentExpression,   // a*= b
+		DivideAssignmentExpression,     // a/=b
+		ModuloAssignmentExpression,     // a%=b
+		AndAssignmentExpression,        // a&=b
+		ExclusiveOrAssignmentExpression,// a^=b
+		OrAssignmentExpression,         // |=
+		LeftShiftAssignmentExpression,  // a<<= b
+		RightShiftAssignmentExpression, // a>>= b
+		UnsignedRightShiftAssignmentExpression, // a >>>= b
 
 		// unary expressions
-
-		/// <summary>
-		/// 一元表达式 +
-		/// </summary>
-		UnaryPlusExpression,
-
-		/// <summary>
-		/// 一元表达式 -
-		/// </summary>
-		UnaryMinusExpression,
-
-		/// <summary>
-		/// 一元表达式 位非
-		/// </summary>
-		BitwiseNotExpression,
-
-		/// <summary>
-		/// 一元表达式 逻辑非
-		/// </summary>
-		LogicalNotExpression,
-
-		/// <summary>
-		/// 一元表达式 ++*
-		/// </summary>
-		PreIncrementExpression,
-
-		/// <summary>
-		/// 一元表达式 --*
-		/// </summary>
-		PreDecrementExpression,
-
-		/// <summary>
-		/// 一元表达式 
-		/// </summary>
-		PointerIndirectionExpression,
-
-		/// <summary>
-		/// 一元表达式 
-		/// </summary>
-		AddressOfExpression,
-
-		/// <summary>
-		/// 一元表达式 *++
-		/// </summary>
-		PostIncrementExpression,
-
-		/// <summary>
-		/// 一元表达式 *--
-		/// </summary>
-		PostDecrementExpression,
-
-		/// <summary>
-		/// 一元表达式 await
-		/// </summary>
-		AwaitExpression,
+		UnaryPlusExpression,    // +a
+		UnaryMinusExpression,   // -a
+		BitwiseNotExpression,   // !
+		LogicalNotExpression,   // !
+		PreIncrementExpression, // ++a
+		PreDecrementExpression, // --a
+		PostIncrementExpression,// a++
+		PostDecrementExpression,// a--
 
 		// primary expression
-
-		/// <summary>
-		/// this
-		/// </summary>
-		ThisExpression,
-
-		/// <summary>
-		/// base
-		/// </summary>
-		BaseExpression,
-
-		/// <summary>
-		/// ...
-		/// </summary>
+		ThisExpression,              // this
+		JavaQualifiedThisExpression, /// a.this
+		BaseExpression,              // base super
+		JavaQualifiedSuperExpression,// a.base a.super
 		ArgListExpression,
-
-		/// <summary>
-		/// 数字字面量
-		/// </summary>
-		NumericLiteralExpression,
-
-		/// <summary>
-		/// 字符串字面量
-		/// </summary>
-		StringLiteralExpression,
-
-		/// <summary>
-		/// 字符字面量
-		/// </summary>
-		CharacterLiteralExpression,
-
-		/// <summary>
-		/// true 字面量
-		/// </summary>
-		TrueLiteralExpression,
-
-		/// <summary>
-		/// false 字面量
-		/// </summary>
-		FalseLiteralExpression,
-
-		/// <summary>
-		/// .class 字面量
-		/// </summary>
-		ClassLiteralExpression,
-
-		/// <summary>
-		/// null 字面量
-		/// </summary>
-		NullLiteralExpression,
+		NumericLiteralExpression,    // 123
+		StringLiteralExpression,     // "asdfa"
+		CharacterLiteralExpression,  // 'a'
+		TrueLiteralExpression,       // true
+		FalseLiteralExpression,      // false
+		ClassLiteralExpression,      // abc.class
+		NullLiteralExpression,       // null
 
 
 		// primary function expressions
+		DefaultExpression,  // default
 
-		/// <summary>
-		/// typeof
-		/// </summary>
-		TypeOfExpression,
-
-		/// <summary>
-		/// sizeof
-		/// </summary>
-		SizeOfExpression,
-
-		/// <summary>
-		/// checked
-		/// </summary>
-		CheckedExpression,
-
-		/// <summary>
-		/// unchecked
-		/// </summary>
-		UncheckedExpression,
-
-		/// <summary>
-		/// default
-		/// </summary>
-		DefaultExpression,
-
-
-
-		// query expressions
-		QueryExpression,
-		QueryBody,
-		FromClause,
-		LetClause,
-		JoinClause,
-		JoinIntoClause,
-		WhereClause,
-		OrderByClause,
-		AscendingOrdering,
-		DescendingOrdering,
-		SelectClause,
-		GroupClause,
-		QueryContinuation,
 
 		// statements
 		Block,
-
-		/// <summary>
-		/// 变量声明语句段
-		/// </summary>
 		LocalDeclarationStatement,
-
-		/// <summary>
-		/// 变量声明
-		/// </summary>
 		VariableDeclaration,
-
-		/// <summary>
-		/// 变量声明？
-		/// </summary>
 		VariableDeclarator,
-
-		/// <summary>
-		/// 等于值
-		/// </summary>
 		EqualsValueClause,
-
-		/// <summary>
-		/// 表达式语句段
-		/// </summary>
 		ExpressionStatement,
-
-		/// <summary>
-		/// 空语句段
-		/// </summary>
 		EmptyStatement,
-
-		/// <summary>
-		/// 标签化语句段
-		/// </summary>
 		LabeledStatement,
 
 		// jump statements
-		GotoStatement,
-		GotoCaseStatement,
-		GotoDefaultStatement,
 		BreakStatement,
 		ContinueStatement,
 		ReturnStatement,
@@ -618,13 +322,10 @@ namespace Microsoft.CodeAnalysis.CSharp
 		WhileStatement,
 		DoStatement,
 		ForStatement,
-		ForEachStatement,
+		JavaEnhancedForStatement,
 		UsingStatement,
+		JavaSynchronizedStatement,
 		FixedStatement,
-
-		// checked statements
-		CheckedStatement,
-		UncheckedStatement,
 
 		UnsafeStatement,
 		LockStatement,
@@ -639,21 +340,22 @@ namespace Microsoft.CodeAnalysis.CSharp
 		CatchDeclaration,
 		CatchFilterClause,
 		FinallyClause,
+		JavaAssertStatement,
 
 		// declarations
-
 		CompilationUnit,
-		PackageDeclaration,
-		//JavaPackageModifier,
+		JavaPackageDeclaration,
 		ImportDeclaration,
 		ImportOnDemandSuffix,
 
-		JavaTypeParameterModifier,
+		//JavaTypeParameterModifier,
 
 		JavaNormalClassDeclaration,
 		JavaEnumDeclaration,
 		JavaNormalInterfaceDeclaration,
 		JavaAnnotationTypeDeclaration,
+		JavaClassBody,
+
 
 		JavaInitializerMethodDeclaration,
 		JavaAnonymousClassInitializerExpression,
@@ -670,11 +372,7 @@ namespace Microsoft.CodeAnalysis.CSharp
 		AnnotationArgument,
 		NameEquals,
 
-		
-
-		// type declarations
-		EnumDeclaration,
-
+	
 		//BaseList,
 		ImplementsListClause,
 		ExtendsListClause,
@@ -686,25 +384,13 @@ namespace Microsoft.CodeAnalysis.CSharp
 		StructConstraint,
 		TypeConstraint,
 		AdditionalTypeConstraint,
-		//ExplicitInterfaceSpecifier,
-		//EnumMemberDeclaration,
 		FieldDeclaration,
-		//EventFieldDeclaration,
 		MethodDeclaration,
-		//OperatorDeclaration,
-		//ConversionOperatorDeclaration,
 		ConstructorDeclaration,
 		BaseConstructorInitializer,
 		ThisConstructorInitializer,
 		DestructorDeclaration,
-		//PropertyDeclaration,
-		//EventDeclaration,
-		//IndexerDeclaration,
 		AccessorList,
-		//GetAccessorDeclaration,
-		//SetAccessorDeclaration,
-		//AddAccessorDeclaration,
-		//RemoveAccessorDeclaration,
 		UnknownAccessorDeclaration,
 		ParameterList,
 		BracketedParameterList,

@@ -73,8 +73,8 @@ namespace Microsoft.CodeAnalysis.CSharp
 					case SyntaxKind.PredefinedType:
 						return true;
 
-					case SyntaxKind.NullableType:
-						return ((NullableTypeSyntax)parent).ElementType == node;
+					//case SyntaxKind.NullableType:
+					//	return ((NullableTypeSyntax)parent).ElementType == node;
 
 					case SyntaxKind.TypeArgumentList:
 						// all children of GenericNames are type arguments
@@ -94,8 +94,8 @@ namespace Microsoft.CodeAnalysis.CSharp
 					case SyntaxKind.CatchDeclaration:
 						return ((CatchDeclarationSyntax)parent).Type == node;
 
-					case SyntaxKind.AsExpression:
-					case SyntaxKind.IsExpression:
+
+					case SyntaxKind.InstanceOfExpression:
 						return ((BinaryExpressionSyntax)parent).Right == node;
 					case SyntaxKind.DefaultExpression:
 						return ((DefaultExpressionSyntax)parent).Type == node;

@@ -155,10 +155,10 @@ namespace Microsoft.CodeAnalysis.CSharp
 			return SyntaxKindFacts.IsKeywordKind(token.CSharpKind());
 		}
 
-		public static bool IsContextualKeyword(this SyntaxToken token)
-		{
-			return SyntaxKindFacts.IsContextualKeyword(token.CSharpKind());
-		}
+		//public static bool IsContextualKeyword(this SyntaxToken token)
+		//{
+		//	return SyntaxKindFacts.IsContextualKeyword(token.CSharpKind());
+		//}
 
 		public static bool IsReservedKeyword(this SyntaxToken token)
 		{

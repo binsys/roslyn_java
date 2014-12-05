@@ -180,7 +180,7 @@ namespace Microsoft.CodeAnalysis.CSharp
 				startNode = usingDirective.Parent.Parent;
 			}
 
-			//var usingAliases = GetAncestorsOrThis<PackageDeclarationSyntax>(startNode)
+			//var usingAliases = GetAncestorsOrThis<JavaPackageDeclarationSyntax>(startNode)
 			//	.SelectMany(n => n.Usings)
 			//	.Concat(GetAncestorsOrThis<CompilationUnitSyntax>(startNode).SelectMany(c => c.Usings))
 			//	.Where(u => u.Alias != null)

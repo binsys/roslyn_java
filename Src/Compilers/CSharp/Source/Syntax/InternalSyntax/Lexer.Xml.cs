@@ -1122,19 +1122,14 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 					// check to see if it is an actual keyword
 					// NOTE: name _annotation values don't respect keywords - everything is an identifier.
 					SyntaxKind keywordKind;
-					if (!InXmlNameAttributeValue && !info.IsVerbatim && !info.HasIdentifierEscapeSequence && this._cache.TryGetKeywordKind(info.StringValue, out keywordKind))
+					if (!InXmlNameAttributeValue && !info.IsVerbatim && !info.HasIdentifierEscapeSequence &&
+					    this._cache.TryGetKeywordKind(info.StringValue, out keywordKind))
 					{
-						if (SyntaxKindFacts.IsContextualKeyword(keywordKind))
-						{
-							info.Kind = SyntaxKind.IdentifierToken;
-							info.ContextualKind = keywordKind;
-							// Don't need to set any special flags to store the original text of an identifier.
-						}
-						else
-						{
-							info.Kind = keywordKind;
-							info.RequiresTextForXmlEntity = info.Text != info.StringValue;
-						}
+
+
+						info.Kind = keywordKind;
+						info.RequiresTextForXmlEntity = info.Text != info.StringValue;
+
 					}
 					else
 					{
@@ -1172,7 +1167,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
 						// If it's valid in XML, then it was unexpected in cref mode.
 						// Otherwise, it's just bad XML.
-						if (MatchesProductionForXmlChar((uint)bad))
+						if (MatchesProductionForXmlChar((uint) bad))
 						{
 							this.AddCrefError(ErrorCode.ERR_UnexpectedCharacter, info.Text);
 						}

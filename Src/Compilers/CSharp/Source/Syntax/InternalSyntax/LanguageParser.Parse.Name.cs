@@ -32,7 +32,9 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 				this.Reset(ref pt);
 				this.Release(ref pt);
 
-				if (kind == ScanTypeArgumentListKind.DefiniteTypeArgumentList || (kind == ScanTypeArgumentListKind.PossibleTypeArgumentList && (options & NameOptions.InTypeList) != 0))
+				if (kind == ScanTypeArgumentListKind.DefiniteTypeArgumentList 
+					|| (kind == ScanTypeArgumentListKind.PossibleTypeArgumentList 
+					&& (options & NameOptions.InTypeList) != 0))
 				{
 					Debug.Assert(this.CurrentToken.Kind == SyntaxKind.LessThanToken);
 					SyntaxToken open;
@@ -55,20 +57,12 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
 			while (this.IsDot())
 			{
-				//*****.this
-				if (this.PeekToken(1).Kind == SyntaxKind.ThisKeyword)
-				{
-					break;
-				}
-
-				//******.class
-				if (this.PeekToken(1).Kind == SyntaxKind.ClassKeyword)
-				{
-					break;
-				}
-
-				//import
-				if (this.PeekToken(1).Kind == SyntaxKind.AsteriskToken)
+				//stop parse name with list:
+				//.this
+				//.super
+				//.class
+				//.*
+				if (this.PeekToken(1).Kind != SyntaxKind.IdentifierToken)
 				{
 					break;
 				}

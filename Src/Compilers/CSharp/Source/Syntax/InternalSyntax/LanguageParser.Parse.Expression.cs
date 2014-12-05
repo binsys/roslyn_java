@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
 
@@ -16,7 +17,6 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 		{
 			return this.ParseSubExpression(0, allowDeclarationExpressionAtTheBeginning);
 		}
-
 
 		private ExpressionSyntax ParseSubExpression(uint precedence, bool allowDeclarationExpressionAtTheBeginning = true, bool contextRequiresVariable = false)
 		{
@@ -67,15 +67,41 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
 				Debug.Assert(newPrecedence > 0);      // All binary operators must have precedence > 0!
 
-				// check for >> or >>=
+				// check for >> or >>= or >>> or >>>=
 				bool doubleOp = false;
+				bool doubleOpPlusOne = false;
 				if (tk == SyntaxKind.GreaterThanToken
-					&& (this.PeekToken(1).Kind == SyntaxKind.GreaterThanToken || this.PeekToken(1).Kind == SyntaxKind.GreaterThanEqualsToken))
+					&& (this.PeekToken(1).Kind == SyntaxKind.GreaterThanToken)
+					&& (this.PeekToken(2).Kind == SyntaxKind.GreaterThanToken
+						|| this.PeekToken(2).Kind == SyntaxKind.GreaterThanEqualsToken))
+				{
+					// check to see if they really are adjacent
+					if (this.CurrentToken.GetTrailingTriviaWidth() == 0 
+						&& this.PeekToken(1).GetLeadingTriviaWidth() == 0
+						&& this.PeekToken(1).GetTrailingTriviaWidth() == 0
+						&& this.PeekToken(2).GetLeadingTriviaWidth() == 0
+						)
+					{
+						opKind = SyntaxKindFacts.GetBinaryExpression(this.PeekToken(2).Kind == SyntaxKind.GreaterThanToken ?
+							SyntaxKind.GreaterThanGreaterThanGreaterThanToken :
+							SyntaxKind.GreaterThanGreaterThanGreaterThanEqualsToken);
+
+
+						newPrecedence = GetPrecedence(opKind);
+						doubleOp = true;
+						doubleOpPlusOne = true;
+					}
+				}
+				else if (tk == SyntaxKind.GreaterThanToken
+					&& (this.PeekToken(1).Kind == SyntaxKind.GreaterThanToken
+					|| this.PeekToken(1).Kind == SyntaxKind.GreaterThanEqualsToken))
 				{
 					// check to see if they really are adjacent
 					if (this.CurrentToken.GetTrailingTriviaWidth() == 0 && this.PeekToken(1).GetLeadingTriviaWidth() == 0)
 					{
-						opKind = SyntaxKindFacts.GetBinaryExpression(this.PeekToken(1).Kind == SyntaxKind.GreaterThanToken ? SyntaxKind.GreaterThanGreaterThanToken : SyntaxKind.GreaterThanGreaterThanEqualsToken);
+						opKind = SyntaxKindFacts.GetBinaryExpression(this.PeekToken(1).Kind == SyntaxKind.GreaterThanToken ? 
+							SyntaxKind.GreaterThanGreaterThanToken : 
+							SyntaxKind.GreaterThanGreaterThanEqualsToken);
 						newPrecedence = GetPrecedence(opKind);
 						doubleOp = true;
 					}
@@ -99,14 +125,29 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 				{
 					// combine tokens into a single token
 					var opToken2 = this.EatToken();
-					var kind = opToken2.Kind == SyntaxKind.GreaterThanToken ? SyntaxKind.GreaterThanGreaterThanToken : SyntaxKind.GreaterThanGreaterThanEqualsToken;
-					opToken = SyntaxFactory.Token(opToken.GetLeadingTrivia(), kind, opToken2.GetTrailingTrivia());
+					if (doubleOpPlusOne)
+					{
+						var opToken3 = this.EatToken();
+						var kind = opToken3.Kind == SyntaxKind.GreaterThanToken ? 
+							SyntaxKind.GreaterThanGreaterThanGreaterThanToken : 
+							SyntaxKind.GreaterThanGreaterThanGreaterThanEqualsToken;
+
+						opToken = SyntaxFactory.Token(opToken.GetLeadingTrivia(), kind, opToken3.GetTrailingTrivia());
+					}
+					else
+					{
+						var kind = opToken2.Kind == SyntaxKind.GreaterThanToken ? 
+							SyntaxKind.GreaterThanGreaterThanToken : 
+							SyntaxKind.GreaterThanGreaterThanEqualsToken;
+						opToken = SyntaxFactory.Token(opToken.GetLeadingTrivia(), kind, opToken2.GetTrailingTrivia());
+					}
+
 				}
 
-				if (opKind == SyntaxKind.IsExpression || opKind == SyntaxKind.AsExpression)
+				if (opKind == SyntaxKind.InstanceOfExpression)
 				{
 					leftOperand = _syntaxFactory.BinaryExpression(opKind, leftOperand, opToken,
-						this.ParseTypeCore(parentIsParameter: false, isOrAs: true, expectSizes: false, isArrayCreation: false));
+						this.ParseTypeCore(parentIsParameter: false, isInstanceOfOrAs: true, expectSizes: false, isArrayCreation: false));
 				}
 				else
 				{
@@ -123,8 +164,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 			// Only take the ternary if we're at a precedence less than the null coelescing
 			// expression.
 
-			var nullCoalescingPrecedence = GetPrecedence(SyntaxKind.CoalesceExpression);
-			if (tk == SyntaxKind.QuestionToken && precedence < nullCoalescingPrecedence)
+			var nullCoalescingPrecedence = 2U;//GetPrecedence(SyntaxKind.CoalesceExpression);
+			if (tk == SyntaxKind.QuestionToken && precedence < 2)
 			{
 				var questionToken = this.EatToken();
 
@@ -156,7 +197,6 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 				case SyntaxKind.IdentifierToken:
 					if (this.IsTrueIdentifier())
 					{
-
 						if (this.IsPossibleLambdaExpression(precedence))
 						{
 							expr = this.ParseLambdaExpression();
@@ -165,13 +205,17 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 						{
 							expr = ParseDeclarationExpression();
 						}
-						else if (allowDeclarationExpression && IsPossibleClassLiteralExpression(contextRequiresVariable))
+						else if (allowDeclarationExpression && IsPossibleIdentifierDotSuffix(SyntaxKind.ClassKeyword))
 						{
 							expr = ParseClassLiteralExpression();
 						}
-						else if (allowDeclarationExpression && IsPossibleQualifiedThisExpression(contextRequiresVariable))
+						else if (allowDeclarationExpression && IsPossibleIdentifierDotSuffix(SyntaxKind.ThisKeyword))
 						{
-							expr = ParseClassLiteralExpression();
+							expr = ParseJavaQualifiedThisExpression();
+						}
+						else if (allowDeclarationExpression && IsPossibleIdentifierDotSuffix(SyntaxKind.SuperKeyword))
+						{
+							expr = ParseJavaQualifiedSuperExpression();
 						}
 						else
 						{
@@ -267,14 +311,25 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 		private ExpressionSyntax ParseClassLiteralExpression()
 		{
 			TypeSyntax typeSyntax = ParseType(parentIsParameter: false);
+			return _syntaxFactory.ClassLiteralExpression(typeSyntax, 
+				this.EatToken(SyntaxKind.DotToken),
+				this.EatToken(SyntaxKind.ClassKeyword));
+		}
 
-			return typeSyntax;
+		private JavaQualifiedSuperExpressionSyntax ParseJavaQualifiedSuperExpression()
+		{
+			TypeSyntax typeSyntax = ParseType(parentIsParameter: false);
+			return _syntaxFactory.JavaQualifiedSuperExpression(typeSyntax,
+				this.EatToken(SyntaxKind.DotToken),
+				this.EatToken(SyntaxKind.SuperKeyword));
+		}
 
-			//return syntaxFactory.DeclarationExpression(typeSyntax,
-			//                                           ParseVariableDeclarator(typeSyntax,
-			//                                                                   VariableFlags.Local,
-			//                                                                   isFirst: true,
-			//                                                                   isExpressionContext: true));
+		private JavaQualifiedThisExpressionSyntax ParseJavaQualifiedThisExpression()
+		{
+			TypeSyntax typeSyntax = ParseType(parentIsParameter: false);
+			return _syntaxFactory.JavaQualifiedThisExpression(typeSyntax,
+				this.EatToken(SyntaxKind.DotToken),
+				this.EatToken(SyntaxKind.ThisKeyword));
 		}
 
 		private ExpressionSyntax ParsePostFixExpression(ExpressionSyntax expr)
@@ -306,7 +361,10 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 							var ccToken = this.EatToken();
 							ccToken = this.AddError(ccToken, ErrorCode.ERR_UnexpectedAliasedName);
 							var dotToken = this.ConvertToMissingWithTrailingTrivia(ccToken, SyntaxKind.DotToken);
-							expr = _syntaxFactory.MemberAccessExpression(SyntaxKind.SimpleMemberAccessExpression, expr, dotToken, this.ParseSimpleName(NameOptions.InExpression));
+							expr = _syntaxFactory.MemberAccessExpression(
+								expr,
+								dotToken,
+								this.ParseSimpleName(NameOptions.InExpression));
 						}
 						else
 						{
@@ -315,21 +373,17 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 						}
 						break;
 
-					case SyntaxKind.MinusGreaterThanToken:
-						expr = _syntaxFactory.MemberAccessExpression(SyntaxKind.PointerMemberAccessExpression, expr, this.EatToken(), this.ParseSimpleName(NameOptions.InExpression));
-						break;
+					//case SyntaxKind.MinusGreaterThanToken:
+					//	expr = _syntaxFactory.MemberAccessExpression(SyntaxKind.PointerMemberAccessExpression, 
+					//		expr, 
+					//		this.EatToken(), 
+					//		this.ParseSimpleName(NameOptions.InExpression));
+					//	break;
 					case SyntaxKind.DotToken:
-						var dot = this.EatToken();
-						if (this.CurrentToken.Kind == SyntaxKind.ClassKeyword)
-						{
-							var classKeyword = EatToken();
-							expr = _syntaxFactory.ClassLiteralExpression(expr, dot, classKeyword);
-						}
-						else
-						{
-							expr = _syntaxFactory.MemberAccessExpression(SyntaxKind.SimpleMemberAccessExpression, expr,
-								dot, this.ParseSimpleName(NameOptions.InExpression));
-						}
+						expr = _syntaxFactory.MemberAccessExpression(
+							expr,
+							this.EatToken(SyntaxKind.DotToken),
+							this.ParseSimpleName(NameOptions.InExpression));
 						break;
 
 					default:
@@ -337,7 +391,6 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 				}
 			}
 		}
-
 
 		private ExpressionSyntax ParseCastOrParenExpressionOrLambda(uint precedence, bool contextRequiresVariable)
 		{
@@ -404,12 +457,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 			}
 		}
 
-
 		private ExpressionSyntax ParseArrayOrObjectCreationExpression()
 		{
 			SyntaxToken @new = this.EatToken(SyntaxKind.NewKeyword);
 			bool isPossibleArrayCreation = this.IsPossibleArrayCreationExpression();
-			var type = this.ParseTypeCore(parentIsParameter: false, isOrAs: false, expectSizes: isPossibleArrayCreation, isArrayCreation: isPossibleArrayCreation);
+			var type = this.ParseTypeCore(parentIsParameter: false, isInstanceOfOrAs: false, expectSizes: isPossibleArrayCreation, isArrayCreation: isPossibleArrayCreation);
 
 			if (type.Kind == SyntaxKind.ArrayType)
 			{
@@ -514,7 +566,6 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 				this._pool.Free(initializers);
 			}
 		}
-
 
 		private void ParseObjectOrCollectionInitializerMembers(ref SyntaxToken startToken, SeparatedSyntaxListBuilder<ExpressionSyntax> list, out bool isObjectInitializer)
 		{
@@ -693,32 +744,6 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 			}
 		}
 
-		//private ImplicitArrayCreationExpressionSyntax ParseImplicitlyTypedArrayCreation()
-		//{
-		//	var @new = this.EatToken(SyntaxKind.NewKeyword);
-		//	@new = CheckFeatureAvailability(@new, MessageID.IDS_FeatureImplicitArray);
-		//	var openBracket = this.EatToken(SyntaxKind.OpenBracketToken);
-
-		//	var commas = this._pool.Allocate();
-		//	try
-		//	{
-		//		while (this.CurrentToken.Kind == SyntaxKind.CommaToken)
-		//		{
-		//			commas.Add(this.EatToken());
-		//		}
-
-		//		var closeBracket = this.EatToken(SyntaxKind.CloseBracketToken);
-
-		//		var initializer = this.ParseArrayInitializer();
-
-		//		return _syntaxFactory.ImplicitArrayCreationExpression(@new, openBracket, commas.ToTokenList(), closeBracket, initializer);
-		//	}
-		//	finally
-		//	{
-		//		this._pool.Free(commas);
-		//	}
-		//}
-
 		private InitializerExpressionSyntax ParseArrayInitializer()
 		{
 			var openBrace = this.EatToken(SyntaxKind.OpenBraceToken);
@@ -789,7 +814,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 			if (this.CurrentToken.Kind == SyntaxKind.OpenParenToken)
 			{
 				var paramList = this.ParseLambdaParameterList();
-				var arrow = this.EatToken(SyntaxKind.EqualsGreaterThanToken);
+				var arrow = this.EatToken(SyntaxKind.MinusGreaterThanToken);
 				arrow = CheckFeatureAvailability(arrow, MessageID.IDS_FeatureLambda);
 				CSharpSyntaxNode body;
 				if (this.CurrentToken.Kind == SyntaxKind.OpenBraceToken)
@@ -806,7 +831,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 			else
 			{
 				var name = this.ParseIdentifierToken();
-				var arrow = this.EatToken(SyntaxKind.EqualsGreaterThanToken);
+				var arrow = this.EatToken(SyntaxKind.MinusGreaterThanToken);
 				arrow = CheckFeatureAvailability(arrow, MessageID.IDS_FeatureLambda);
 				CSharpSyntaxNode body = null;
 				if (this.CurrentToken.Kind == SyntaxKind.OpenBraceToken)
@@ -819,7 +844,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 				}
 
 				result = _syntaxFactory.SimpleLambdaExpression(
-					_syntaxFactory.Parameter(default(SyntaxList<AnnotationSyntax>), default(SyntaxList<SyntaxToken>), type: null, identifier: name, @default: null),
+					_syntaxFactory.Parameter(default(SyntaxList<AnnotationSyntax>), default(SyntaxList<SyntaxToken>), type: null,dotDotDotToken:null, identifier: name, @default: null),
 					arrow,
 					body);
 			}
@@ -885,7 +910,6 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 			}
 		}
 
-
 		private ParameterSyntax ParseLambdaParameter(bool isFirst, ref bool hasTypes)
 		{
 			TypeSyntax paramType = null;
@@ -894,16 +918,10 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
 			// Params are actually illegal in a lambda, but we'll allow it for error recovery purposes and
 			// give the "params unexpected" error at semantic analysis time.
-			bool isRefOrOutOrParams = this.CurrentToken.Kind == SyntaxKind.ParamsKeyword;
 			var pk = this.PeekToken(1).Kind;
-			if (isRefOrOutOrParams
-				|| (pk != SyntaxKind.CommaToken && pk != SyntaxKind.CloseParenToken && (hasTypes || isFirst))
+			if ((pk != SyntaxKind.CommaToken && pk != SyntaxKind.CloseParenToken && (hasTypes || isFirst))
 				|| IsPredefinedType(this.CurrentToken.Kind))
 			{
-				if (isRefOrOutOrParams)
-				{
-					refOrOutOrParams = this.EatToken();
-				}
 
 				paramType = this.ParseType(true);
 			}
@@ -923,7 +941,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 				paramName = this.AddError(paramName, ErrorCode.ERR_InconsistentLambdaParameterUsage);
 			}
 
-			return _syntaxFactory.Parameter(default(SyntaxList<AnnotationSyntax>), refOrOutOrParams, paramType, paramName, null);
+			return _syntaxFactory.Parameter(default(SyntaxList<AnnotationSyntax>), refOrOutOrParams, paramType, null,paramName, null);
 		}
 		#endregion
 
@@ -937,9 +955,6 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 					return this.ParseElementInitializer();
 			}
 		}
-
-
-
 
 		private AnonymousObjectCreationExpressionSyntax ParseAnonymousTypeExpression()
 		{
@@ -1006,7 +1021,6 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 			}
 		}
 
-
 		private AnonymousObjectMemberDeclaratorSyntax ParseAnonymousTypeMemberInitializer()
 		{
 			bool isNamedAssignment = this.IsNamedAssignment();
@@ -1026,7 +1040,6 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 			return _syntaxFactory.AnonymousObjectMemberDeclarator(nameEquals, expression);
 		}
 
-
 		private DefaultExpressionSyntax ParseDefaultExpression()
 		{
 			var keyword = this.EatToken();
@@ -1038,7 +1051,6 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
 			return _syntaxFactory.DefaultExpression(keyword, openParen, type, closeParen);
 		}
-
 
 	}
 }

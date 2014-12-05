@@ -690,22 +690,10 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 				// check to see if it is an actual keyword
 				if (!info.IsVerbatim && !info.HasIdentifierEscapeSequence)
 				{
-					if (this.ModeIs(LexerMode.Directive))
-					{
 
-						throw new NotImplementedException();
-					}
-					else
+					if (!this._cache.TryGetKeywordKind(info.Text, out info.Kind))
 					{
-						if (!this._cache.TryGetKeywordKind(info.Text, out info.Kind))
-						{
-							info.ContextualKind = info.Kind = SyntaxKind.IdentifierToken;
-						}
-						else if (SyntaxKindFacts.IsContextualKeyword(info.Kind))
-						{
-							info.ContextualKind = info.Kind;
-							info.Kind = SyntaxKind.IdentifierToken;
-						}
+						info.ContextualKind = info.Kind = SyntaxKind.IdentifierToken;
 					}
 
 					if (info.Kind == SyntaxKind.None)

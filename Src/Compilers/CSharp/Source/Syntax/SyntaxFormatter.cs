@@ -190,7 +190,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
 					return LineBreaksAfterSemicolon(currentToken, nextToken);
 
 				case SyntaxKind.CommaToken:
-					return currentToken.Parent is EnumDeclarationSyntax ? 1 : 0;
+					return currentToken.Parent is JavaEnumDeclarationSyntax ? 1 : 0;
 				case SyntaxKind.ElseKeyword:
 					return nextToken.CSharpKind() != SyntaxKind.IfKeyword ? 1 : 0;
 				case SyntaxKind.ColonToken:
@@ -307,7 +307,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
 
 			if (token.IsKind(SyntaxKind.CommaToken) &&
 				!next.IsKind(SyntaxKind.CommaToken) &&
-				!token.Parent.IsKind(SyntaxKind.EnumDeclaration))
+				!token.Parent.IsKind(SyntaxKind.JavaEnumDeclaration))
 			{
 				return true;
 			}
@@ -354,7 +354,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
 				return true;
 			}
 
-			if (token.IsKind(SyntaxKind.EqualsGreaterThanToken) || next.IsKind(SyntaxKind.EqualsGreaterThanToken))
+			if (token.IsKind(SyntaxKind.MinusGreaterThanToken) || next.IsKind(SyntaxKind.MinusGreaterThanToken))
 			{
 				return true;
 			}

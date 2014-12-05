@@ -15,7 +15,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 		private struct CompilationUnitBodyBuilder
 		{
 			public SyntaxListBuilder<AnnotationSyntax> Annotations;
-			public PackageDeclarationSyntax Package;
+			public JavaPackageDeclarationSyntax Package;
 			public SyntaxListBuilder<ImportDeclarationSyntax> Imports;
 			public SyntaxListBuilder<MemberDeclarationSyntax> Members;
 
@@ -23,7 +23,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 			public CompilationUnitBodyBuilder(SyntaxListPool pool)
 			{
 				Annotations = pool.Allocate<AnnotationSyntax>();
-				//Packages = pool.Allocate<PackageDeclarationSyntax>();
+				//Packages = pool.Allocate<JavaPackageDeclarationSyntax>();
 				Package = null;
 				Imports = pool.Allocate<ImportDeclarationSyntax>();
 				Members = pool.Allocate<MemberDeclarationSyntax>();

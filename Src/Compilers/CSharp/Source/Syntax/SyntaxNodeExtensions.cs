@@ -27,27 +27,6 @@ namespace Microsoft.CodeAnalysis.CSharp
 			}
 		}
 
-		public static bool IsQuery(this CSharpSyntaxNode syntax)
-		{
-			Debug.Assert(syntax != null);
-			switch (syntax.Kind)
-			{
-				case SyntaxKind.FromClause:
-				case SyntaxKind.GroupClause:
-				case SyntaxKind.JoinClause:
-				case SyntaxKind.JoinIntoClause:
-				case SyntaxKind.LetClause:
-				case SyntaxKind.OrderByClause:
-				case SyntaxKind.QueryContinuation:
-				case SyntaxKind.QueryExpression:
-				case SyntaxKind.SelectClause:
-				case SyntaxKind.WhereClause:
-					return true;
-				default:
-					return false;
-			}
-		}
-
 		/// <summary>
 		/// This method is used to keep the code that generates binders in sync
 		/// with the code that searches for binders.  We don't want the searcher

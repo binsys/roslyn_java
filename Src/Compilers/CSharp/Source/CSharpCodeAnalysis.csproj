@@ -113,6 +113,7 @@
     <Compile Include="Syntax\InternalSyntax\LanguageParser.Parse.Annotation.cs" />
     <Compile Include="Syntax\InternalSyntax\LanguageParser.Parse.Statement.cs" />
     <Compile Include="Syntax\InternalSyntax\LanguageParser.Parse.Expression.cs" />
+    <Compile Include="Syntax\JavaPackageDeclarationSyntax.cs" />
     <Compile Include="XmlParseErrorCode.cs" />
     <Compile Include="XmlSyntaxDiagnosticInfo.cs" />
     <Compile Include="LanguageVersion.cs" />
@@ -125,7 +126,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Syntax\ArrayRankSpecifierSyntax.cs" />
-    <Compile Include="Syntax\AnnotationSyntax.cs" />
     <Compile Include="Syntax\BaseMethodDeclarationSyntax.cs" />
     <Compile Include="Syntax\BaseSyntaxNodeExtensions.cs" />
     <Compile Include="Syntax\CSharpSyntaxNode.cs" />
@@ -277,9 +277,6 @@
     <InternalsVisibleToTest Include="Roslyn.Scripting.Common.UnitTests" />
     <InternalsVisibleToTest Include="Roslyn.Scripting.CSharp.UnitTests" />
     <InternalsVisibleToTest Include="Roslyn.Services.Editor.CSharp.UnitTests" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <ImportGroup Label="Targets">
     <Import Project="..\..\..\Tools\Microsoft.CodeAnalysis.Toolset.Open\Targets\VSL.Imports.targets" />

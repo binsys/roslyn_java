@@ -322,7 +322,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 			(byte)CharFlags.CompoundPunctStart,    // +
 			(byte)CharFlags.Punct,                 // ,
 			(byte)CharFlags.CompoundPunctStart,    // -
-			(byte)CharFlags.Dot,                   // .
+			(byte)CharFlags.Complex,                   // .
 			(byte)CharFlags.Slash,                 // /
 			(byte)CharFlags.Digit,                 // 0
 			(byte)CharFlags.Digit,                 // 1

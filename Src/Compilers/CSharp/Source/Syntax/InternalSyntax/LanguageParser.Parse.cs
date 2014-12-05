@@ -387,10 +387,9 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 		{
 			if (this.IsIncrementalAndFactoryContextMatches && this.CurrentNodeKind == SyntaxKind.IdentifierName)
 			{
-				if (!SyntaxKindFacts.IsContextualKeyword(((CSharp.Syntax.IdentifierNameSyntax)this.CurrentNode).Identifier.CSharpKind()))
-				{
-					return (IdentifierNameSyntax)this.EatNode();
-				}
+
+				return (IdentifierNameSyntax)this.EatNode();
+				
 			}
 
 			var tk = ParseIdentifierToken();

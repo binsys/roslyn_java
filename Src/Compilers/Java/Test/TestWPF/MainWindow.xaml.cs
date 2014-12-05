@@ -120,30 +120,9 @@ namespace TestWPF
 		{
 
 
-			this.txt2.Text = @"
-class 
-";
-			this.txt2.Text = @"
-public class DexBackedDexFile 
-	extends BaseDexBuffer 
-	implements DexFile 
-{
-	public Set<? extends DexBackedClassDef> getClasses() 
-	{
-		return new FixedSizeSet<DexBackedClassDef>() 
-			{
-				@Nonnull
-				@Override
-				public DexBackedClassDef readItem(int index) 
-				{
-					return new DexBackedClassDef(DexBackedDexFile.this, getClassDefItemOffset(index));
-				}
-			};
-	}
-}
-";
-			return;
 
+
+	
 			this.txt2.Text = @"/*
  * Copyright 2012, Google Inc.
  * All rights reserved.

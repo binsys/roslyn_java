@@ -108,7 +108,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
 				return
 					_syntaxFactory.TypeParameter(
-						attrs.Count == 0 ? null : _syntaxFactory.JavaTypeParameterModifier(attrs),
+						attrs.ToList(),
 						identity, typeBound);
 			}
 			finally

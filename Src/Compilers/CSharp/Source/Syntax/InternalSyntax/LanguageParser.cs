@@ -52,7 +52,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 		{
 			Fixed = 0x01,
 			Const = 0x02,
-			Local = 0x04
+			Local = 0x04,
+			Final = 0x08,
 		}
 
 		[Flags]
@@ -104,7 +105,9 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 			PointerOrMultiplication,
 
 
-			ClassKeywordSuffix,
+
+			JavaWildcardType,
+			//ClassKeywordSuffix,
 		}
 
 
@@ -113,7 +116,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 			NotName,
 			GenericName,
 			SimpleName,
-			ClassKeywordSuffix,
+			//ClassKeywordSuffix,
 		}
 
 
@@ -328,7 +331,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 					case SyntaxKind.JavaNormalClassDeclaration:
 					case SyntaxKind.JavaNormalInterfaceDeclaration:
 					case SyntaxKind.JavaAnnotationTypeDeclaration:
-					case SyntaxKind.EnumDeclaration:
+					case SyntaxKind.JavaEnumDeclaration:
 						return true;
 				}
 			}
@@ -402,7 +405,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 					case SyntaxKind.JavaNormalClassDeclaration:
 					case SyntaxKind.JavaNormalInterfaceDeclaration:
 					case SyntaxKind.JavaAnnotationTypeDeclaration:
-					case SyntaxKind.EnumDeclaration:
+					case SyntaxKind.JavaEnumDeclaration:
 					case SyntaxKind.FieldDeclaration:
 						return true;
 				}
@@ -476,6 +479,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 				case SyntaxKind.ConstKeyword:
 				case SyntaxKind.StaticKeyword:
 				case SyntaxKind.VolatileKeyword:
+				case SyntaxKind.FinalKeyword:
 					return true;
 				default:
 					return false;
@@ -487,22 +491,22 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 		{
 			switch (kind)
 			{
-				case SyntaxKind.BreakKeyword:
-				case SyntaxKind.CaseKeyword:
-				case SyntaxKind.CatchKeyword:
-				case SyntaxKind.ConstKeyword:
-				case SyntaxKind.ContinueKeyword:
-				case SyntaxKind.DoKeyword:
-				case SyntaxKind.FinallyKeyword:
-				case SyntaxKind.ForKeyword:
-				case SyntaxKind.GotoKeyword:
-				case SyntaxKind.IfKeyword:
-				case SyntaxKind.ReturnKeyword:
-				case SyntaxKind.SwitchKeyword:
-				case SyntaxKind.ThrowKeyword:
-				case SyntaxKind.TryKeyword:
-				case SyntaxKind.ImportKeyword:
-				case SyntaxKind.WhileKeyword:
+				case SyntaxKind.BreakKeyword:     // break
+				case SyntaxKind.CaseKeyword:      // case
+				case SyntaxKind.CatchKeyword:     // catch
+				case SyntaxKind.ConstKeyword:     // const
+				case SyntaxKind.ContinueKeyword:  // continue
+				case SyntaxKind.DoKeyword:        // do
+				case SyntaxKind.FinallyKeyword:   // finally
+				case SyntaxKind.ForKeyword:       // for
+				case SyntaxKind.IfKeyword:        // if
+				case SyntaxKind.ReturnKeyword:    // return
+				case SyntaxKind.SwitchKeyword:    // switch
+				case SyntaxKind.ThrowKeyword:     // throw
+				case SyntaxKind.TryKeyword:       // try
+				case SyntaxKind.ImportKeyword:    // import
+				case SyntaxKind.WhileKeyword:     // while
+				case SyntaxKind.InstanceOfKeyword:// instanceof
 					return true;
 				default:
 					return false;
@@ -513,90 +517,85 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 		{
 			switch (op)
 			{
-				case SyntaxKind.SimpleAssignmentExpression:
-				case SyntaxKind.AddAssignmentExpression:
-				case SyntaxKind.SubtractAssignmentExpression:
-				case SyntaxKind.MultiplyAssignmentExpression:
-				case SyntaxKind.DivideAssignmentExpression:
-				case SyntaxKind.ModuloAssignmentExpression:
-				case SyntaxKind.AndAssignmentExpression:
-				case SyntaxKind.ExclusiveOrAssignmentExpression:
-				case SyntaxKind.OrAssignmentExpression:
-				case SyntaxKind.LeftShiftAssignmentExpression:
-				case SyntaxKind.RightShiftAssignmentExpression:
-				case SyntaxKind.CoalesceExpression:
+				case SyntaxKind.SimpleAssignmentExpression:     // a = b
+				case SyntaxKind.AddAssignmentExpression:        // a += b
+				case SyntaxKind.SubtractAssignmentExpression:   // a -= b
+				case SyntaxKind.MultiplyAssignmentExpression:   // a *= b
+				case SyntaxKind.DivideAssignmentExpression:     // a /= b
+				case SyntaxKind.ModuloAssignmentExpression:     // a %= b
+				case SyntaxKind.AndAssignmentExpression:        // a &= b
+				case SyntaxKind.ExclusiveOrAssignmentExpression:// a ^= b
+				case SyntaxKind.OrAssignmentExpression:         // a |= b
+				case SyntaxKind.LeftShiftAssignmentExpression:  // a <<= b
+				case SyntaxKind.RightShiftAssignmentExpression: // a >> = b
 					return true;
 				default:
 					return false;
 			}
 		}
 
+		/// <summary>
+		/// 获取运算符优先级
+		/// </summary>
+		/// <param name="op"></param>
+		/// <returns></returns>
 		private static uint GetPrecedence(SyntaxKind op)
 		{
 			switch (op)
 			{
-				case SyntaxKind.SimpleAssignmentExpression:
-				case SyntaxKind.AddAssignmentExpression:
-				case SyntaxKind.SubtractAssignmentExpression:
-				case SyntaxKind.MultiplyAssignmentExpression:
-				case SyntaxKind.DivideAssignmentExpression:
-				case SyntaxKind.ModuloAssignmentExpression:
-				case SyntaxKind.AndAssignmentExpression:
-				case SyntaxKind.ExclusiveOrAssignmentExpression:
-				case SyntaxKind.OrAssignmentExpression:
-				case SyntaxKind.LeftShiftAssignmentExpression:
-				case SyntaxKind.RightShiftAssignmentExpression:
+				case SyntaxKind.SimpleAssignmentExpression:     // a = b
+				case SyntaxKind.AddAssignmentExpression:        // a += b
+				case SyntaxKind.SubtractAssignmentExpression:   // a -= b
+				case SyntaxKind.MultiplyAssignmentExpression:   // a *= b
+				case SyntaxKind.DivideAssignmentExpression:     // a /= b
+				case SyntaxKind.ModuloAssignmentExpression:     // a %= b
+				case SyntaxKind.AndAssignmentExpression:        // a &= b
+				case SyntaxKind.ExclusiveOrAssignmentExpression:// a ^= b
+				case SyntaxKind.OrAssignmentExpression:         // a |= b
+				case SyntaxKind.LeftShiftAssignmentExpression:  // a <<= b
+				case SyntaxKind.RightShiftAssignmentExpression: // a >>= b
+				case SyntaxKind.UnsignedRightShiftAssignmentExpression: // a >>>= b
 					return 1;
-				case SyntaxKind.CoalesceExpression:
-					return 2;
-				case SyntaxKind.LogicalOrExpression:
+				case SyntaxKind.LogicalOrExpression:            // ||
 					return 3;
-				case SyntaxKind.LogicalAndExpression:
+				case SyntaxKind.LogicalAndExpression:           // &&
 					return 4;
-				case SyntaxKind.BitwiseOrExpression:
+				case SyntaxKind.BitwiseOrExpression:            // |
 					return 5;
-				case SyntaxKind.ExclusiveOrExpression:
+				case SyntaxKind.ExclusiveOrExpression:          // ^
 					return 6;
-				case SyntaxKind.BitwiseAndExpression:
+				case SyntaxKind.BitwiseAndExpression:           // &
 					return 7;
-				case SyntaxKind.EqualsExpression:
-				case SyntaxKind.NotEqualsExpression:
+				case SyntaxKind.EqualsExpression:               // =
+				case SyntaxKind.NotEqualsExpression:            // !=
 					return 8;
-				case SyntaxKind.LessThanExpression:
-				case SyntaxKind.LessThanOrEqualExpression:
-				case SyntaxKind.GreaterThanExpression:
-				case SyntaxKind.GreaterThanOrEqualExpression:
-				case SyntaxKind.IsExpression:
-				case SyntaxKind.AsExpression:
+				case SyntaxKind.LessThanExpression:             // <
+				case SyntaxKind.LessThanOrEqualExpression:      // <=
+				case SyntaxKind.GreaterThanExpression:          // >
+				case SyntaxKind.GreaterThanOrEqualExpression:   // >=
+				case SyntaxKind.InstanceOfExpression:                   // is
+				//case SyntaxKind.AsExpression:                   // as
 					return 9;
-				case SyntaxKind.LeftShiftExpression:
-				case SyntaxKind.RightShiftExpression:
+				case SyntaxKind.LeftShiftExpression:            // <<
+				case SyntaxKind.RightShiftExpression:           // >>
+				case SyntaxKind.UnsignedRightShiftExpression:   // >>>
 					return 10;
-				case SyntaxKind.AddExpression:
-				case SyntaxKind.SubtractExpression:
+				case SyntaxKind.AddExpression:                  // +
+				case SyntaxKind.SubtractExpression:             // -
 					return 11;
-				case SyntaxKind.MultiplyExpression:
-				case SyntaxKind.DivideExpression:
-				case SyntaxKind.ModuloExpression:
+				case SyntaxKind.MultiplyExpression:             // *
+				case SyntaxKind.DivideExpression:               // /
+				case SyntaxKind.ModuloExpression:               // %
 					return 12;
-				case SyntaxKind.UnaryPlusExpression:
-				case SyntaxKind.UnaryMinusExpression:
-				case SyntaxKind.BitwiseNotExpression:
-				case SyntaxKind.LogicalNotExpression:
-				case SyntaxKind.PreIncrementExpression:
-				case SyntaxKind.PreDecrementExpression:
-				case SyntaxKind.TypeOfExpression:
-				case SyntaxKind.SizeOfExpression:
-				case SyntaxKind.CheckedExpression:
-				case SyntaxKind.UncheckedExpression:
-				case SyntaxKind.AwaitExpression:
+				case SyntaxKind.UnaryPlusExpression:            // +a
+				case SyntaxKind.UnaryMinusExpression:           // -a
+				case SyntaxKind.BitwiseNotExpression:           // ~a
+				case SyntaxKind.LogicalNotExpression:           // !a
+				case SyntaxKind.PreIncrementExpression:         // ++a
+				case SyntaxKind.PreDecrementExpression:         // --a
 					return 13;
-				case SyntaxKind.CastExpression:
+				case SyntaxKind.CastExpression:                 // ()
 					return 14;
-				case SyntaxKind.PointerIndirectionExpression:
-					return 15;
-				case SyntaxKind.AddressOfExpression:
-					return 16;
 				default:
 					return 0;
 			}
@@ -738,8 +737,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 					return (allowThisKeyword ? ParamFlags.This : ParamFlags.None);
 
 				// goto default;
-				case SyntaxKind.ParamsKeyword:
-					return ParamFlags.Params;
+				//case SyntaxKind.ParamsKeyword:
+				//	return ParamFlags.Params;
 				default:
 					return ParamFlags.None;
 			}
@@ -991,7 +990,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 				case SyntaxKind.StringLiteralToken:
 				case SyntaxKind.CharacterLiteralToken:
 				case SyntaxKind.OpenParenToken:
-				case SyntaxKind.EqualsGreaterThanToken:
+				case SyntaxKind.MinusGreaterThanToken:
 					return true;
 				case SyntaxKind.IdentifierToken:
 					return this.IsTrueIdentifier();
@@ -1048,7 +1047,6 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 		{
 			switch (kind)
 			{
-				case SyntaxKind.AsKeyword:
 				case SyntaxKind.InstanceOfKeyword:
 				case SyntaxKind.SemicolonToken:
 				case SyntaxKind.CloseParenToken:
@@ -1092,7 +1090,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 				case SyntaxKind.OpenBracketToken:
 				case SyntaxKind.DotToken:
 				case SyntaxKind.MinusGreaterThanToken:
-				case SyntaxKind.QuestionQuestionToken:
+				//case SyntaxKind.QuestionQuestionToken:
 				case SyntaxKind.EndOfFileToken:
 					return false;
 				default:

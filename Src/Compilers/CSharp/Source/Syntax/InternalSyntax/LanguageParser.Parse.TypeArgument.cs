@@ -69,11 +69,6 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 		// Parses the individual generic parameter/arguments in a name.
 		private TypeSyntax ParseTypeArgument()
 		{
-			if (this.IsPossibleTypeParameterConstraintClauseStart())
-			{
-				return this.AddError(this.CreateMissingIdentifierName(), ErrorCode.ERR_TypeExpected);
-			}
-
 			var attrs = this._pool.Allocate<AnnotationSyntax>();
 			try
 			{
@@ -92,15 +87,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 					this._termState = saveTerm;
 				}
 
-				SyntaxToken varianceToken = null;
-
-
 				var result = this.ParseType(parentIsParameter: false);
-
-				if (varianceToken != null)
-				{
-					result = AddLeadingSkippedSyntax(result, varianceToken);
-				}
 
 				if (attrs.Count > 0)
 				{

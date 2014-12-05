@@ -15,54 +15,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 	internal partial class LanguageParser : SyntaxParser
 	{
 
-		// If "isMethodBody" is true, then this is the immediate body of a method/accessor.
-		// In this case, we create a many-child list if the body is not a small single statement.
-		// This then allows a "with many weak children" red node when the red node is created.
-		// If "isAccessorBody" is true, then we produce a special diagnostic if the open brace is
-		// missing.  Also, "isMethodBody" must be true.
-		private BlockSyntax ParseBlock(bool isMethodBody = false, bool isAccessorBody = false)
-		{
-			// This makes logical sense, but isn't actually required.
-			Debug.Assert(!isAccessorBody || isMethodBody, "An accessor body is a method body.");
 
-			// Check again for incremental re-use, since ParseBlock is called from a bunch of places
-			// other than ParseStatement()
-			if (this.IsIncrementalAndFactoryContextMatches && this.CurrentNodeKind == SyntaxKind.Block)
-			{
-				return (BlockSyntax)this.EatNode();
-			}
-
-			// There's a special error code for a missing token after an accessor keyword
-			var openBrace = isAccessorBody && this.CurrentToken.Kind != SyntaxKind.OpenBraceToken
-				? this.AddError(SyntaxFactory.MissingToken(SyntaxKind.OpenBraceToken), ErrorCode.ERR_SemiOrLBraceExpected)
-				: this.EatToken(SyntaxKind.OpenBraceToken);
-
-			var statements = this._pool.Allocate<StatementSyntax>();
-			try
-			{
-				CSharpSyntaxNode tmp = openBrace;
-				this.ParseStatements(ref tmp, statements, stopOnSwitchSections: false);
-				openBrace = (SyntaxToken)tmp;
-				var closeBrace = this.EatToken(SyntaxKind.CloseBraceToken);
-
-				SyntaxList<StatementSyntax> statementList;
-				if (isMethodBody && IsLargeEnoughNonEmptyStatementList(statements))
-				{
-					// Force creation a many-children list, even if only 1, 2, or 3 elements in the statement list.
-					statementList = new SyntaxList<StatementSyntax>(SyntaxList.List(((SyntaxListBuilder)statements).ToArray()));
-				}
-				else
-				{
-					statementList = statements;
-				}
-
-				return _syntaxFactory.Block(openBrace, statementList, closeBrace);
-			}
-			finally
-			{
-				this._pool.Free(statements);
-			}
-		}
 
 		private ConstructorDeclarationSyntax ParseConstructorDeclaration(string typeName, SyntaxListBuilder<AnnotationSyntax> attributes, SyntaxListBuilder modifiers)
 		{
@@ -181,7 +134,6 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 			}
 		}
 
-
 		private JavaInitializerMethodDeclarationSyntax ParseJavaInitializerMethodDeclaration(SyntaxListBuilder modifiers)
 		{
 			//InstanceInitializer:
@@ -270,8 +222,6 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 			return null;
 		}
 
-
-
 		private MethodDeclarationSyntax ParseMethodDeclaration(
 			SyntaxListBuilder<AnnotationSyntax> attributes,
 			SyntaxListBuilder modifiers,
@@ -306,23 +256,13 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 					// our context again (perhaps an open brace).
 				}
 
-				if (this.CurrentToken.Kind == SyntaxKind.ThrowsKeyword)
-				{
-
-				}
-
-				//this.ParseImplementsListClause()
-
 
 				this._termState = saveTerm;
 
 				BlockSyntax body;
 				SyntaxToken semicolon;
 
-
-
 				this.ParseBodyOrSemicolon(out body, out semicolon);
-
 
 				return _syntaxFactory.MethodDeclaration(
 					attributes,
@@ -344,9 +284,6 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 				}
 			}
 		}
-
-
-
 
 		private JavaThrowsListClauseSyntax ParseJavaThrowsListClause(bool allowArguments)
 		{

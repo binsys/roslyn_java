@@ -1465,7 +1465,7 @@ namespace Microsoft.CodeAnalysis.CSharp
 				case SyntaxKind.NameMemberCref:
 				//case SyntaxKind.IndexerMemberCref:
 				case SyntaxKind.ArrayType:
-				case SyntaxKind.NullableType:
+				//case SyntaxKind.NullableType:
 					// Adjustment may be required.
 					break;
 				default:
@@ -1489,7 +1489,7 @@ namespace Microsoft.CodeAnalysis.CSharp
 
 					break;
 				case SyntaxKind.SimpleMemberAccessExpression:
-				case SyntaxKind.PointerMemberAccessExpression:
+				//case SyntaxKind.PointerMemberAccessExpression:
 					if (((MemberAccessExpressionSyntax)parent).Name == node)
 					{
 						return parent;
@@ -1527,10 +1527,10 @@ namespace Microsoft.CodeAnalysis.CSharp
 					break;
 
 				case SyntaxKind.ObjectCreationExpression:
-					if (node.Kind == SyntaxKind.NullableType && ((ObjectCreationExpressionSyntax)parent).Type == node)
-					{
-						return parent;
-					}
+					//if (node.Kind == SyntaxKind.NullableType && ((ObjectCreationExpressionSyntax)parent).Type == node)
+					//{
+					//	return parent;
+					//}
 
 					break;
 
@@ -1551,7 +1551,7 @@ namespace Microsoft.CodeAnalysis.CSharp
 				switch (expression.Kind)
 				{
 					case SyntaxKind.SimpleMemberAccessExpression:
-					case SyntaxKind.PointerMemberAccessExpression:
+					//case SyntaxKind.PointerMemberAccessExpression:
 						var max = (MemberAccessExpressionSyntax)expression;
 						if (max.Name.Kind == SyntaxKind.GenericName)
 						{
