@@ -262,9 +262,9 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
 			{
 				return 1;
 			}
-			else if (currentToken.Parent.CSharpKind() == SyntaxKind.ImportDeclaration)
+			else if (currentToken.Parent.CSharpKind() == SyntaxKind.JavaImportDeclaration)
 			{
-				return nextToken.Parent.CSharpKind() == SyntaxKind.ImportDeclaration ? 1 : 2;
+				return nextToken.Parent.CSharpKind() == SyntaxKind.JavaImportDeclaration ? 1 : 2;
 			}
 			else
 			{
@@ -714,7 +714,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
 					if (node is MemberDeclarationSyntax ||
 						node is TypeBoundSyntax ||
 						node is SwitchSectionSyntax ||
-						node is ImportDeclarationSyntax)
+						node is JavaImportDeclarationSyntax)
 					{
 						return parentDepth + 1;
 					}

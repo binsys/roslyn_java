@@ -8,8 +8,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
 {
 	internal struct SeparatedSyntaxListBuilder<TNode> where TNode : SyntaxNode
 	{
-		private readonly SyntaxListBuilder builder;
-		private bool expectedSeparator;
+		private readonly SyntaxListBuilder _builder;
+		private bool _expectedSeparator;
 
 		public SeparatedSyntaxListBuilder(int size)
 			: this(new SyntaxListBuilder(size))
@@ -23,15 +23,15 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
 
 		internal SeparatedSyntaxListBuilder(SyntaxListBuilder builder)
 		{
-			this.builder = builder;
-			this.expectedSeparator = false;
+			this._builder = builder;
+			this._expectedSeparator = false;
 		}
 
 		public bool IsNull
 		{
 			get
 			{
-				return this.builder == null;
+				return this._builder == null;
 			}
 		}
 
@@ -39,18 +39,18 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
 		{
 			get
 			{
-				return this.builder.Count;
+				return this._builder.Count;
 			}
 		}
 
 		public void Clear()
 		{
-			this.builder.Clear();
+			this._builder.Clear();
 		}
 
 		private void CheckExpectedElement()
 		{
-			if (this.expectedSeparator)
+			if (this._expectedSeparator)
 			{
 				throw new InvalidOperationException(CSharpResources.SeparatorIsExpected);
 			}
@@ -58,7 +58,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
 
 		private void CheckExpectedSeparator()
 		{
-			if (!this.expectedSeparator)
+			if (!this._expectedSeparator)
 			{
 				throw new InvalidOperationException(CSharpResources.ElementIsExpected);
 			}
@@ -67,16 +67,16 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
 		public SeparatedSyntaxListBuilder<TNode> Add(TNode node)
 		{
 			CheckExpectedElement();
-			this.expectedSeparator = true;
-			this.builder.Add(node);
+			this._expectedSeparator = true;
+			this._builder.Add(node);
 			return this;
 		}
 
 		public SeparatedSyntaxListBuilder<TNode> AddSeparator(SyntaxToken separatorToken)
 		{
 			CheckExpectedSeparator();
-			this.expectedSeparator = false;
-			this.builder.AddInternal(separatorToken.Node);
+			this._expectedSeparator = false;
+			this._builder.AddInternal(separatorToken.Node);
 			return this;
 		}
 
@@ -84,8 +84,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
 		{
 			CheckExpectedElement();
 			SyntaxNodeOrTokenList list = nodes.GetWithSeparators();
-			this.builder.AddRange(list);
-			this.expectedSeparator = ((this.builder.Count & 1) != 0);
+			this._builder.AddRange(list);
+			this._expectedSeparator = ((this._builder.Count & 1) != 0);
 			return this;
 		}
 
@@ -93,39 +93,39 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
 		{
 			CheckExpectedElement();
 			SyntaxNodeOrTokenList list = nodes.GetWithSeparators();
-			this.builder.AddRange(list, this.Count, Math.Min(count << 1, list.Count));
-			this.expectedSeparator = ((this.builder.Count & 1) != 0);
+			this._builder.AddRange(list, this.Count, Math.Min(count << 1, list.Count));
+			this._expectedSeparator = ((this._builder.Count & 1) != 0);
 			return this;
 		}
 
 		public SeparatedSyntaxList<TNode> ToList()
 		{
-			if (this.builder == null)
+			if (this._builder == null)
 			{
 				return new SeparatedSyntaxList<TNode>();
 			}
 
-			return this.builder.ToSeparatedList<TNode>();
+			return this._builder.ToSeparatedList<TNode>();
 		}
 
 		public SeparatedSyntaxList<TDerived> ToList<TDerived>() where TDerived : TNode
 		{
-			if (this.builder == null)
+			if (this._builder == null)
 			{
 				return new SeparatedSyntaxList<TDerived>();
 			}
 
-			return this.builder.ToSeparatedList<TDerived>();
+			return this._builder.ToSeparatedList<TDerived>();
 		}
 
 		public static implicit operator SyntaxListBuilder(SeparatedSyntaxListBuilder<TNode> builder)
 		{
-			return builder.builder;
+			return builder._builder;
 		}
 
 		public static implicit operator SeparatedSyntaxList<TNode>(SeparatedSyntaxListBuilder<TNode> builder)
 		{
-			if (builder.builder != null)
+			if (builder._builder != null)
 			{
 				return builder.ToList();
 			}

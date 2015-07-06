@@ -16,7 +16,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 		{
 			public SyntaxListBuilder<AnnotationSyntax> Annotations;
 			public JavaPackageDeclarationSyntax Package;
-			public SyntaxListBuilder<ImportDeclarationSyntax> Imports;
+			public SyntaxListBuilder<JavaImportDeclarationSyntax> Imports;
 			public SyntaxListBuilder<MemberDeclarationSyntax> Members;
 
 
@@ -25,7 +25,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 				Annotations = pool.Allocate<AnnotationSyntax>();
 				//Packages = pool.Allocate<JavaPackageDeclarationSyntax>();
 				Package = null;
-				Imports = pool.Allocate<ImportDeclarationSyntax>();
+				Imports = pool.Allocate<JavaImportDeclarationSyntax>();
 				Members = pool.Allocate<MemberDeclarationSyntax>();
 			}
 

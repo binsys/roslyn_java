@@ -245,7 +245,10 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 								var missingIdentifier = CreateMissingIdentifierToken();
 								missingIdentifier = this.AddError(missingIdentifier, offset, width, ErrorCode.ERR_IdentifierExpected);
 
-								return _syntaxFactory.VariableDeclarator(missingIdentifier, null, null);
+
+
+								return _syntaxFactory.VariableDeclarator(missingIdentifier, default(SyntaxList<ArrayRankSpecifierSyntax>), null,
+									null);
 							}
 						}
 					}
@@ -257,6 +260,28 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 				}
 			}
 
+
+
+			//if (this.IsPossibleRankAndDimensionSpecifier())
+			//{
+			//	var ranks = this._pool.Allocate<ArrayRankSpecifierSyntax>();
+			//	try
+			//	{
+			//		while (this.IsPossibleRankAndDimensionSpecifier())
+			//		{
+			//			bool unused;
+			//			var rank = this.ParseArrayRankSpecifier(isArrayCreation, expectSizes, out unused);
+			//			ranks.Add(rank);
+			//			expectSizes = false;
+			//		}
+
+			//		type = _syntaxFactory.ArrayType(type, ranks);
+			//	}
+			//	finally
+			//	{
+			//		this._pool.Free(ranks);
+			//	}
+			//}
 			// NOTE: Diverges from Dev10.
 			//
 			// When we see parse an identifier and we see the partial contextual keyword, we check
@@ -268,9 +293,10 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 			BracketedArgumentListSyntax argumentList = null;
 			EqualsValueClauseSyntax initializer = null;
 			TerminatorState saveTerm = this._termState;
-			bool isFixed = (flags & VariableFlags.Fixed) != 0;
-			bool isConst = (flags & VariableFlags.Const) != 0;
+			SyntaxList<ArrayRankSpecifierSyntax> ranges = default(SyntaxList<ArrayRankSpecifierSyntax>);
+
 			bool isLocal = (flags & VariableFlags.Local) != 0;
+			bool isFinal = (flags & VariableFlags.Final) != 0;
 
 			// Give better error message in the case where the user did something like:
 			//
@@ -286,13 +312,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 			switch (this.CurrentToken.Kind)
 			{
 				case SyntaxKind.EqualsToken:
-					if (isFixed)
-					{
-						goto default;
-					}
-
 					var equals = this.EatToken();
-					var init = this.ParseVariableInitializer(isLocal && !isConst);
+					var init = this.ParseVariableInitializer(isLocal);
 					initializer = _syntaxFactory.EqualsValueClause(equals, init);
 					break;
 
@@ -306,75 +327,96 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 					break;
 
 				case SyntaxKind.OpenBracketToken:
+
 					bool sawNonOmittedSize;
-					this._termState |= TerminatorState.IsPossibleEndOfVariableDeclaration;
-					var specifier = this.ParseArrayRankSpecifier(isArrayCreation: false, expectSizes: flags == VariableFlags.Fixed, sawNonOmittedSize: out sawNonOmittedSize);
-					this._termState = saveTerm;
-					var open = specifier.OpenBracketToken;
-					var sizes = specifier.Sizes;
-					var close = specifier.CloseBracketToken;
-					if (isFixed && !sawNonOmittedSize)
+					if (this.IsPossibleRankAndDimensionSpecifier())
 					{
-						close = this.AddError(close, ErrorCode.ERR_ValueExpected);
-					}
-
-					var args = this._pool.AllocateSeparated<ArgumentSyntax>();
-					try
-					{
-						var withSeps = sizes.GetWithSeparators();
-						foreach (var item in withSeps)
+						this._termState |= TerminatorState.IsPossibleEndOfVariableDeclaration;
+						var ranks = this._pool.Allocate<ArrayRankSpecifierSyntax>();
+						try
 						{
-							var expression = item as ExpressionSyntax;
-							if (expression != null)
+							while (this.IsPossibleRankAndDimensionSpecifier())
 							{
-								args.Add(_syntaxFactory.Argument(null, expression));
-							}
-							else
-							{
-								args.AddSeparator((SyntaxToken)item);
+								var rank = this.ParseArrayRankSpecifier(false, false, out sawNonOmittedSize);
+								ranks.Add(rank);
 							}
 						}
-
-						argumentList = _syntaxFactory.BracketedArgumentList(open, args, close);
-						if (!isFixed)
+						finally
 						{
-							argumentList = this.AddError(argumentList, ErrorCode.ERR_CStyleArray);
-							// If we have "int x[] = new int[10];" then parse the initializer.
-							if (this.CurrentToken.Kind == SyntaxKind.EqualsToken)
-							{
-								goto case SyntaxKind.EqualsToken;
-							}
+							ranges = ranks.ToList();
+							this._pool.Free(ranks);
 						}
+						this._termState = saveTerm;
 					}
-					finally
+
+					if (this.CurrentToken.Kind == SyntaxKind.EqualsToken)
 					{
-						this._pool.Free(args);
+						goto case SyntaxKind.EqualsToken;
 					}
+					
+					//this._termState |= TerminatorState.IsPossibleEndOfVariableDeclaration;
+					//var specifier = this.ParseArrayRankSpecifier(isArrayCreation: false, expectSizes: false, sawNonOmittedSize: out sawNonOmittedSize);
+					//this._termState = saveTerm;
+					//var open = specifier.OpenBracketToken;
+					//var sizes = specifier.Sizes;
+					//var close = specifier.CloseBracketToken;
+					//if (!sawNonOmittedSize)
+					//{
+					//	close = this.AddError(close, ErrorCode.ERR_ValueExpected);
+					//}
+
+					//var args = this._pool.AllocateSeparated<ArgumentSyntax>();
+					//try
+					//{
+					//	var withSeps = sizes.GetWithSeparators();
+					//	foreach (var item in withSeps)
+					//	{
+					//		var expression = item as ExpressionSyntax;
+					//		if (expression != null)
+					//		{
+					//			args.Add(_syntaxFactory.Argument(null, expression));
+					//		}
+					//		else
+					//		{
+					//			args.AddSeparator((SyntaxToken)item);
+					//		}
+					//	}
+
+					//	argumentList = _syntaxFactory.BracketedArgumentList(open, args, close);
+					//	{
+					//		argumentList = this.AddError(argumentList, ErrorCode.ERR_CStyleArray);
+					//		// If we have "int x[] = new int[10];" then parse the initializer.
+					//		if (this.CurrentToken.Kind == SyntaxKind.EqualsToken)
+					//		{
+					//			goto case SyntaxKind.EqualsToken;
+					//		}
+					//	}
+					//}
+					//finally
+					//{
+					//	this._pool.Free(args);
+					//}
 
 					break;
 
 				default:
-					if (isConst)
-					{
-						name = this.AddError(name, ErrorCode.ERR_ConstValueRequired);  // Error here for missing constant initializers
-					}
-					else if (isFixed)
-					{
-						if (parentType.Kind == SyntaxKind.ArrayType)
-						{
-							// They accidentally put the array before the identifier
-							name = this.AddError(name, ErrorCode.ERR_FixedDimsRequired);
-						}
-						else
-						{
-							goto case SyntaxKind.OpenBracketToken;
-						}
-					}
+					//if (isFixed)
+					//{
+					//	if (parentType.Kind == SyntaxKind.ArrayType)
+					//	{
+					//		// They accidentally put the array before the identifier
+					//		name = this.AddError(name, ErrorCode.ERR_FixedDimsRequired);
+					//	}
+					//	else
+					//	{
+					//		goto case SyntaxKind.OpenBracketToken;
+					//	}
+					//}
 
 					break;
 			}
 
-			return _syntaxFactory.VariableDeclarator(name, argumentList, initializer);
+			return _syntaxFactory.VariableDeclarator(name, ranges, argumentList, initializer);
 		}
 
 		// This is public and parses open types. You probably don't want to use it.

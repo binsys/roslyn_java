@@ -134,8 +134,6 @@
     <Compile Include="Syntax\CSharpSyntaxTree.ParsedSyntaxTree.cs" />
     <Compile Include="Syntax\CSharpSyntaxVisitor.cs" />
     <Compile Include="Syntax\CSharpSyntaxWalker.cs" />
-    <Compile Include="Syntax\DeclarationStatementSyntax.cs" />
-    <Compile Include="Syntax\ExpressionStatementSyntax.cs" />
     <Compile Include="Syntax\GenericNameSyntax.cs" />
     <Compile Include="Syntax\InternalSyntax\Lexer.ScanIdentifier.cs" />
     <Compile Include="Syntax\InternalSyntax\Lexer.Xml.cs" />
@@ -200,7 +198,6 @@
     <Compile Include="Syntax\InternalSyntax\SyntaxToken.SyntaxTokenWithTrivia.cs" />
     <Compile Include="Syntax\InternalSyntax\SyntaxTokenReplacer.cs" />
     <Compile Include="Syntax\InternalSyntax\SyntaxTrivia.cs" />
-    <Compile Include="Syntax\MethodDeclarationSyntax.cs" />
     <Compile Include="Syntax\NameSyntax.cs" />
     <Compile Include="Syntax\ParameterSyntax.cs" />
     <Compile Include="Syntax\QualifiedNameSyntax.cs" />
@@ -234,7 +231,6 @@
     <Compile Include="Syntax\SyntaxTriviaFunctions.cs" />
     <Compile Include="Syntax\SyntaxTriviaListBuilder.cs" />
     <Compile Include="Syntax\TranslationalSyntaxReference.cs" />
-    <Compile Include="Syntax\TypeSyntax.cs" />
     <Compile Include="Syntax\XmlNameAttributeElementKind.cs" />
     <Compile Include="Utilities\EnumExtensions.cs" />
     <Compile Include="Utilities\FirstAmongEqualsSet.cs" />
@@ -277,6 +273,8 @@
     <InternalsVisibleToTest Include="Roslyn.Scripting.Common.UnitTests" />
     <InternalsVisibleToTest Include="Roslyn.Scripting.CSharp.UnitTests" />
     <InternalsVisibleToTest Include="Roslyn.Services.Editor.CSharp.UnitTests" />
+	  <InternalsVisibleToTest Include="JavaTest" />
+	  
   </ItemGroup>
   <ImportGroup Label="Targets">
     <Import Project="..\..\..\Tools\Microsoft.CodeAnalysis.Toolset.Open\Targets\VSL.Imports.targets" />

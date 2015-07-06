@@ -33,7 +33,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 			}
 		}
 
-		public bool IsPossiblePackageAnnotations()
+		public bool IsPossibleJavaPackageAnnotations()
 		{
 			//skip @interface define
 			if (this.CurrentToken.Kind == SyntaxKind.AtToken && this.PeekToken(1).Kind == SyntaxKind.InterfaceKeyword)
@@ -269,10 +269,10 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 			}
 
 			SyntaxToken identifierOrThisOpt;
-			TypeParameterListSyntax typeParameterListOpt;
-			this.ParseMemberName(out identifierOrThisOpt, out typeParameterListOpt);
+			//TypeParameterListSyntax typeParameterListOpt;
+			this.ParseMemberName(out identifierOrThisOpt/*, out typeParameterListOpt*/);
 
-			if (identifierOrThisOpt == null && typeParameterListOpt == null)
+			if (identifierOrThisOpt == null /*&& typeParameterListOpt == null*/)
 			{
 				return false;
 			}
@@ -606,7 +606,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
 
 
-		private bool IsPossibleIdentifierDotSuffix(SyntaxKind kind)
+		private bool IsPossibleIdentifierDotSuffix(SyntaxKind kind, bool identifierIsKeyword = false)
 		{
 			var tk = this.CurrentToken.Kind;
 			if (tk == SyntaxKind.IdentifierName 
@@ -858,6 +858,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 					return true;
 				case SyntaxKind.ThisKeyword:
 					return allowThisKeyword;
+				case SyntaxKind.FinalKeyword:
+					return true;
 				case SyntaxKind.IdentifierToken:
 					return this.IsTrueIdentifier();
 

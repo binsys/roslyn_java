@@ -184,112 +184,121 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 			ExpressionSyntax expr = null;
 
 			var tk = this.CurrentToken.Kind;
-			switch (tk)
+			if (SyntaxKindFacts.IsPredefinedType(tk) && allowDeclarationExpression
+				&& this.PeekToken(1).Kind == SyntaxKind.DotToken 
+				&& this.PeekToken(2).Kind == SyntaxKind.ClassKeyword)
 			{
-				case SyntaxKind.DefaultKeyword:
-					expr = this.ParseDefaultExpression();
-					break;
-				case SyntaxKind.ColonColonToken:
-					// misplaced ::
-					// TODO: this should not be a compound name.. (disallow dots)
-					expr = this.ParseQualifiedName(NameOptions.InExpression);
-					break;
-				case SyntaxKind.IdentifierToken:
-					if (this.IsTrueIdentifier())
-					{
-						if (this.IsPossibleLambdaExpression(precedence))
+				expr = ParseClassLiteralExpression();
+			}
+			else
+			{
+				switch (tk)
+				{
+					case SyntaxKind.DefaultKeyword:
+						expr = this.ParseDefaultExpression();
+						break;
+					case SyntaxKind.ColonColonToken:
+						// misplaced ::
+						// TODO: this should not be a compound name.. (disallow dots)
+						expr = this.ParseQualifiedName(NameOptions.InExpression);
+						break;
+					case SyntaxKind.IdentifierToken:
+						if (this.IsTrueIdentifier())
 						{
-							expr = this.ParseLambdaExpression();
-						}
-						else if (allowDeclarationExpression && IsPossibleDeclarationExpression(contextRequiresVariable))
-						{
-							expr = ParseDeclarationExpression();
-						}
-						else if (allowDeclarationExpression && IsPossibleIdentifierDotSuffix(SyntaxKind.ClassKeyword))
-						{
-							expr = ParseClassLiteralExpression();
-						}
-						else if (allowDeclarationExpression && IsPossibleIdentifierDotSuffix(SyntaxKind.ThisKeyword))
-						{
-							expr = ParseJavaQualifiedThisExpression();
-						}
-						else if (allowDeclarationExpression && IsPossibleIdentifierDotSuffix(SyntaxKind.SuperKeyword))
-						{
-							expr = ParseJavaQualifiedSuperExpression();
-						}
-						else
-						{
-							expr = this.ParseSimpleName(NameOptions.InExpression);
-						}
-					}
-					else
-					{
-						expr = this.CreateMissingIdentifierName();
-						expr = this.AddError(expr, ErrorCode.ERR_InvalidExprTerm, this.CurrentToken.Text);
-					}
-
-					break;
-				case SyntaxKind.ThisKeyword:
-					expr = _syntaxFactory.ThisExpression(this.EatToken());
-					break;
-				case SyntaxKind.SuperKeyword:
-					expr = _syntaxFactory.BaseExpression(this.EatToken());
-					break;
-				case SyntaxKind.ArgListKeyword:
-				case SyntaxKind.FalseKeyword:
-
-				case SyntaxKind.TrueKeyword:
-				case SyntaxKind.NullKeyword:
-				case SyntaxKind.NumericLiteralToken:
-				case SyntaxKind.StringLiteralToken:
-				case SyntaxKind.CharacterLiteralToken:
-					expr = _syntaxFactory.LiteralExpression(SyntaxKindFacts.GetLiteralExpression(tk), this.EatToken());
-					break;
-				case SyntaxKind.OpenParenToken:
-					expr = this.ParseCastOrParenExpressionOrLambda(precedence, contextRequiresVariable: contextRequiresVariable);
-					break;
-				case SyntaxKind.NewKeyword:
-					expr = this.ParseNewExpression();
-					break;
-				case SyntaxKind.OpenBraceToken:
-					expr = this.ParseArrayInitializer();
-					break;
-				case SyntaxKind.AtToken:
-					expr = this.ParseAnnotationCreationExpression();
-					break;
-				default:
-					// check for intrinsic type followed by '.'
-					if (IsPredefinedType(tk))
-					{
-						if (allowDeclarationExpression && IsPossibleDeclarationExpression(contextRequiresVariable))
-						{
-							expr = ParseDeclarationExpression();
+							if (this.IsPossibleLambdaExpression(precedence))
+							{
+								expr = this.ParseLambdaExpression();
+							}
+							else if (allowDeclarationExpression && IsPossibleDeclarationExpression(contextRequiresVariable))
+							{
+								expr = ParseDeclarationExpression();
+							}
+							else if (allowDeclarationExpression && IsPossibleIdentifierDotSuffix(SyntaxKind.ClassKeyword))
+							{
+								expr = ParseClassLiteralExpression();
+							}
+							else if (allowDeclarationExpression && IsPossibleIdentifierDotSuffix(SyntaxKind.ThisKeyword))
+							{
+								expr = ParseJavaQualifiedThisExpression();
+							}
+							else if (allowDeclarationExpression && IsPossibleIdentifierDotSuffix(SyntaxKind.SuperKeyword))
+							{
+								expr = ParseJavaQualifiedSuperExpression();
+							}
+							else
+							{
+								expr = this.ParseSimpleName(NameOptions.InExpression);
+							}
 						}
 						else
 						{
-							expr = _syntaxFactory.PredefinedType(this.EatToken());
+							expr = this.CreateMissingIdentifierName();
+							expr = this.AddError(expr, ErrorCode.ERR_InvalidExprTerm, this.CurrentToken.Text);
+						}
 
-							if (this.CurrentToken.Kind != SyntaxKind.DotToken || tk == SyntaxKind.VoidKeyword)
+						break;
+					case SyntaxKind.ThisKeyword:
+						expr = _syntaxFactory.ThisExpression(this.EatToken());
+						break;
+					case SyntaxKind.SuperKeyword:
+						expr = _syntaxFactory.BaseExpression(this.EatToken());
+						break;
+					case SyntaxKind.ArgListKeyword:
+					case SyntaxKind.FalseKeyword:
+
+					case SyntaxKind.TrueKeyword:
+					case SyntaxKind.NullKeyword:
+					case SyntaxKind.NumericLiteralToken:
+					case SyntaxKind.StringLiteralToken:
+					case SyntaxKind.CharacterLiteralToken:
+						expr = _syntaxFactory.LiteralExpression(SyntaxKindFacts.GetLiteralExpression(tk), this.EatToken());
+						break;
+					case SyntaxKind.OpenParenToken:
+						expr = this.ParseCastOrParenExpressionOrLambda(precedence, contextRequiresVariable: contextRequiresVariable);
+						break;
+					case SyntaxKind.NewKeyword:
+						expr = this.ParseNewExpression();
+						break;
+					case SyntaxKind.OpenBraceToken:
+						expr = this.ParseArrayInitializer();
+						break;
+					case SyntaxKind.AtToken:
+						expr = this.ParseAnnotationCreationExpression();
+						break;
+					default:
+						// check for intrinsic type followed by '.'
+						if (IsPredefinedType(tk))
+						{
+							if (allowDeclarationExpression && IsPossibleDeclarationExpression(contextRequiresVariable))
+							{
+								expr = ParseDeclarationExpression();
+							}
+							else
+							{
+								expr = _syntaxFactory.PredefinedType(this.EatToken());
+
+								if (this.CurrentToken.Kind != SyntaxKind.DotToken || tk == SyntaxKind.VoidKeyword)
+								{
+									expr = this.AddError(expr, ErrorCode.ERR_InvalidExprTerm, SyntaxKindFacts.GetText(tk));
+								}
+							}
+						}
+						else
+						{
+							expr = this.CreateMissingIdentifierName();
+
+							if (tk == SyntaxKind.EndOfFileToken)
+							{
+								expr = this.AddError(expr, ErrorCode.ERR_ExpressionExpected);
+							}
+							else
 							{
 								expr = this.AddError(expr, ErrorCode.ERR_InvalidExprTerm, SyntaxKindFacts.GetText(tk));
 							}
 						}
-					}
-					else
-					{
-						expr = this.CreateMissingIdentifierName();
 
-						if (tk == SyntaxKind.EndOfFileToken)
-						{
-							expr = this.AddError(expr, ErrorCode.ERR_ExpressionExpected);
-						}
-						else
-						{
-							expr = this.AddError(expr, ErrorCode.ERR_InvalidExprTerm, SyntaxKindFacts.GetText(tk));
-						}
-					}
-
-					break;
+						break;
+				}
 			}
 
 			return this.ParsePostFixExpression(expr);

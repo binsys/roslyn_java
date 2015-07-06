@@ -266,14 +266,6 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 							{
 								mod = this.AddError(mod, ErrorCode.ERR_DupParamMod, SyntaxKindFacts.GetText(SyntaxKind.ThisKeyword));
 							}
-							else if ((flags & ParamFlags.Out) != 0)
-							{
-								mod = this.AddError(mod, ErrorCode.ERR_BadOutWithThis);
-							}
-							else if ((flags & ParamFlags.Ref) != 0)
-							{
-								mod = this.AddError(mod, ErrorCode.ERR_BadRefWithThis);
-							}
 							else if ((flags & ParamFlags.Params) != 0)
 							{
 								mod = this.AddError(mod, ErrorCode.ERR_BadParamModThis);
@@ -282,6 +274,10 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 							{
 								flags |= ParamFlags.This;
 							}
+						}
+						if (mod.Kind == SyntaxKind.FinalKeyword)
+						{
+							flags |= ParamFlags.Final;
 						}
 						//else if (mod.Kind == SyntaxKind.ParamsKeyword)
 						//{
@@ -337,7 +333,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 				break;
 			}
 
-			if (fieldMods != 0 && fieldMods != SyntaxModifier.Static && ((fieldMods & AccessModifiers) == 0 || (flags & (ParamFlags.Ref | ParamFlags.Out)) != 0))
+			if (fieldMods != 0 && fieldMods != SyntaxModifier.Static && ((fieldMods & AccessModifiers) == 0))
 			{
 				for (int i = 0; i < modifiers.Count; i++)
 				{
@@ -345,13 +341,9 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
 					if (mod != SyntaxModifier.None && mod != SyntaxModifier.Static)
 					{
-						Debug.Assert((fieldMods & AccessModifiers) == 0 || (flags & (ParamFlags.Ref | ParamFlags.Out)) != 0);
+						Debug.Assert((fieldMods & AccessModifiers) == 0);
 
-						if ((flags & (ParamFlags.Ref | ParamFlags.Out)) != 0)
-						{
-							modifiers[i] = this.AddError(modifiers[i], ErrorCode.ERR_RefOutParameterWithFieldModifier);
-						}
-						else if ((fieldMods & AccessModifiers) == 0)
+						if ((fieldMods & AccessModifiers) == 0)
 						{
 							modifiers[i] = this.AddError(modifiers[i], ErrorCode.ERR_ParamMissingAccessMod);
 						}

@@ -11,18 +11,18 @@ namespace Microsoft.CodeAnalysis.CSharp
 	/// </summary>
 	internal class SimpleSyntaxReference : SyntaxReference
 	{
-		private readonly SyntaxNode node;
+		private readonly SyntaxNode _node;
 
 		internal SimpleSyntaxReference(SyntaxNode node)
 		{
-			this.node = node;
+			this._node = node;
 		}
 
 		public override SyntaxTree SyntaxTree
 		{
 			get
 			{
-				return this.node.SyntaxTree;
+				return this._node.SyntaxTree;
 			}
 		}
 
@@ -30,13 +30,13 @@ namespace Microsoft.CodeAnalysis.CSharp
 		{
 			get
 			{
-				return this.node.Span;
+				return this._node.Span;
 			}
 		}
 
-		public override SyntaxNode GetSyntax(CancellationToken cancellationToken)
+		public override SyntaxNode GetSyntax(CancellationToken cancellationToken = default(CancellationToken))
 		{
-			return this.node;
+			return this._node;
 		}
 	}
 }

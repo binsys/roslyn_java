@@ -3,7 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 		xmlns:svc="clr-namespace:Roslyn.SyntaxVisualizer.Control"
 		xmlns:ava="clr-namespace:ICSharpCode.AvalonEdit;assembly=ICSharpCode.AvalonEdit"
+		xmlns:forms="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
 		WindowStartupLocation="CenterScreen"
+		TextOptions.TextFormattingMode="Display"
         Title="MainWindow" Height="800" Width="1200" Loaded="Window_Loaded">
 	<DockPanel>
 		<!-- Main menu -->
@@ -61,12 +63,6 @@
 
 			<svc:SyntaxVisualizerControl   x:Name="syntaxVisualizer" />
 
-			<!--<treeview:SharpTreeView
-				Name="treeView"
-				ShowRoot="False"
-				AllowDropOrder="True"
-				AllowDrop="True"
-				BorderThickness="0,1,1,1" Visibility="Visible" SelectionChanged="treeView_SelectionChanged" />-->
 
 			<GridSplitter
 				Grid.ZIndex="1"
@@ -76,11 +72,14 @@
 				HorizontalAlignment="Center"
 				VerticalAlignment="Stretch"
 				BorderBrush="Transparent" />
+
+
 			<!-- Right pane: Text Editor -->
 			<Grid Grid.Column="2">
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition
 						Width="*" />
+
 				</Grid.ColumnDefinitions>
 				<Grid.RowDefinitions>
 					<RowDefinition Height="Auto" />
@@ -115,17 +114,40 @@
 				<!-- decompilerTextView is into the mainPane by code -->
 				<!--<ContentPresenter Name="mainPane" Grid.Row="3"/>-->
 				<Border  Grid.Row="3" >
-					<ava:TextEditor  x:Name="txt2" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-	
-						<ava:TextEditor.Options>
-							<ava:TextEditorOptions  ShowSpaces="True" ShowTabs="True" ShowEndOfLine="True"></ava:TextEditorOptions>
-						</ava:TextEditor.Options>
-					</ava:TextEditor>
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="1*"/>
+							<ColumnDefinition Width="100"/>
+						</Grid.ColumnDefinitions>
+						<ava:TextEditor  x:Name="txt2" 
+										 VerticalScrollBarVisibility="Auto" 
+										 ShowLineNumbers="True" 
+										 HorizontalScrollBarVisibility="Auto" 
+										 SyntaxHighlighting="Java" 
+										 FontFamily="Consolas" FontSize="10pt">
+
+							<ava:TextEditor.Options>
+								<ava:TextEditorOptions  ShowSpaces="True" ShowTabs="True" ShowEndOfLine="False"></ava:TextEditorOptions>
+							</ava:TextEditor.Options>
+						</ava:TextEditor>
+						<GridSplitter Grid.Column="1" Width="4" HorizontalAlignment="Left"/>
+						<DockPanel Grid.Column="1" Margin="4 0 0 0">
+							<ComboBox Name="propertyGridComboBox" DockPanel.Dock="Top" SelectedIndex="0" SelectionChanged="propertyGridComboBoxSelectionChanged">
+								<ComboBoxItem>TextEditor</ComboBoxItem>
+								<ComboBoxItem>TextArea</ComboBoxItem>
+								<ComboBoxItem>Options</ComboBoxItem>
+							</ComboBox>
+							<WindowsFormsHost DockPanel.Dock="Right" Name="propertyGridHost">
+								<forms:PropertyGrid x:Name="propertyGrid"/>
+							</WindowsFormsHost>
+						</DockPanel>
+					</Grid>
+
 					<!--<TextBox VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" x:Name="txt" TextWrapping="NoWrap"  AcceptsReturn="True" Text="aaaaafffff\r\nnasdfeasdf"></TextBox>-->
 				</Border>
-				
-					
-				
+
+
+
 
 				<GridSplitter
 					Grid.ZIndex="1"

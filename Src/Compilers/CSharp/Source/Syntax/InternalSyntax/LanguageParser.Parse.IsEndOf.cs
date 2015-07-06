@@ -12,12 +12,6 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 {
 	internal partial class LanguageParser : SyntaxParser
 	{
-
-		public bool IsEndOfNamespace()
-		{
-			return this.CurrentToken.Kind == SyntaxKind.CloseBraceToken;
-		}
-
 		private bool IsFieldDeclaration(bool isEvent)
 		{
 			if (this.CurrentToken.Kind != SyntaxKind.IdentifierToken)
@@ -108,7 +102,6 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 			return this.CurrentToken.Kind == SyntaxKind.SemicolonToken;
 		}
 
-
 		private bool IsEndOfTypeArgumentList()
 		{
 			return this.CurrentToken.Kind == SyntaxKind.GreaterThanToken;
@@ -138,6 +131,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 				|| this.CurrentToken.Kind == SyntaxKind.CatchKeyword
 				|| this.CurrentToken.Kind == SyntaxKind.FinallyKeyword;
 		}
+
 		private bool IsEndOfCatchBlock()
 		{
 			return this.CurrentToken.Kind == SyntaxKind.CloseBraceToken
@@ -171,16 +165,10 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 			}
 		}
 
-
-
 		private bool IsEndOfArgumentList()
 		{
 			return this.CurrentToken.Kind == SyntaxKind.CloseParenToken
 				|| this.CurrentToken.Kind == SyntaxKind.CloseBracketToken;
 		}
-
-
-
-
 	}
 }

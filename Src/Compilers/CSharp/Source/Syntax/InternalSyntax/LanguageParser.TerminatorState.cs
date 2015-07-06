@@ -13,8 +13,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 	internal partial class LanguageParser : SyntaxParser
 	{
 
-		// Parsing rule terminating conditions.  This is how we know if it is 
-		// okay to abort the current parsing rule when unexpected tokens occur.
+		// Parsing rule terminating conditions.  
+		// This is how we know if it is okay to abort the current parsing rule when unexpected tokens occur.
 		[Flags]
 		internal enum TerminatorState
 		{
@@ -46,6 +46,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
 		private const int LastTerminatorState = (int)TerminatorState.IsEndOfNameInExplicitInterface;
 
+		private TerminatorState _termState; // Resettable
+
 		private bool IsTerminator()
 		{
 			if (this.CurrentToken.Kind == SyntaxKind.EndOfFileToken)
@@ -61,7 +63,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 					switch (isolated)
 					{
 						case TerminatorState.IsPackageMemberStartOrStop:
-							if (this.IsNamespaceMemberStartOrStop())
+							if (this.IsPackageMemberStartOrStop())
 							{
 								return true;
 							}

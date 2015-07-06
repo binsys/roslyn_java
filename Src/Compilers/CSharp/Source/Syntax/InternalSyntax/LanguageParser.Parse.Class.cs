@@ -27,6 +27,21 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 			var extendsClause = this.ParseExtendsClause();
 			var implementsClauseList = this.ParseImplementsListClause(false);
 
+			var body = this.ParseJavaClassBody(name);
+
+			return _syntaxFactory.JavaNormalClassDeclaration(
+				this.CreateJavaMemberModifierSyntax(attributes, modifiers),
+				classKeyword, 
+				name, 
+				typeParameters, 
+				extendsClause, 
+				implementsClauseList, body);
+		}
+
+
+
+		private JavaClassBodySyntax ParseJavaClassBody(SyntaxToken name)
+		{
 			// Parse class body
 			bool parseMembers = true;
 			SyntaxListBuilder<MemberDeclarationSyntax> members = default(SyntaxListBuilder<MemberDeclarationSyntax>);
@@ -55,19 +70,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 					semicolon = this.EatToken();
 				}
 
-				return _syntaxFactory.JavaNormalClassDeclaration(
-					this.CreateJavaMemberModifierSyntax(attributes, modifiers),
-					classKeyword,
-					name,
-
-					typeParameters,
-					extendsClause,
-					implementsClauseList,
-					openBrace,
-					members,
-					closeBrace,
-					semicolon
-					);
+				return _syntaxFactory.JavaClassBody(openBrace, members.ToList(), closeBrace, semicolon);
 			}
 			finally
 			{

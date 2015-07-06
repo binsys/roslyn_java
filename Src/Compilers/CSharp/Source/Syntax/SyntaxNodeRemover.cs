@@ -43,10 +43,10 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
 
 		private class SyntaxRemover : CSharpSyntaxRewriter
 		{
-			private readonly HashSet<SyntaxNode> nodesToRemove;
-			private readonly SyntaxRemoveOptions options;
-			private readonly TextSpan searchSpan;
-			private SyntaxTriviaListBuilder residualTrivia;
+			private readonly HashSet<SyntaxNode> _nodesToRemove;
+			private readonly SyntaxRemoveOptions _options;
+			private readonly TextSpan _searchSpan;
+			private readonly SyntaxTriviaListBuilder _residualTrivia;
 			//private HashSet<SyntaxNode> directivesToKeep;
 
 			public SyntaxRemover(
@@ -54,10 +54,10 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
 				SyntaxRemoveOptions options)
 				: base(nodesToRemove.Any(n => n.IsPartOfStructuredTrivia()))
 			{
-				this.nodesToRemove = new HashSet<SyntaxNode>(nodesToRemove);
-				this.options = options;
-				this.searchSpan = ComputeTotalSpan(nodesToRemove);
-				this.residualTrivia = SyntaxTriviaListBuilder.Create();
+				this._nodesToRemove = new HashSet<SyntaxNode>(nodesToRemove);
+				this._options = options;
+				this._searchSpan = ComputeTotalSpan(nodesToRemove);
+				this._residualTrivia = SyntaxTriviaListBuilder.Create();
 			}
 
 			private static TextSpan ComputeTotalSpan(SyntaxNode[] nodes)
@@ -80,9 +80,9 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
 			{
 				get
 				{
-					if (this.residualTrivia != null)
+					if (this._residualTrivia != null)
 					{
-						return this.residualTrivia.ToList();
+						return this._residualTrivia.ToList();
 					}
 					else
 					{
@@ -98,14 +98,14 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
 					this.AddEndOfLine();
 				}
 
-				this.residualTrivia.Add(trivia);
+				this._residualTrivia.Add(trivia);
 			}
 
 			private void AddEndOfLine()
 			{
-				if (this.residualTrivia.Count == 0 || !IsEndOfLine(this.residualTrivia[this.residualTrivia.Count - 1]))
+				if (this._residualTrivia.Count == 0 || !IsEndOfLine(this._residualTrivia[this._residualTrivia.Count - 1]))
 				{
-					this.residualTrivia.Add(SyntaxFactory.CarriageReturnLineFeed);
+					this._residualTrivia.Add(SyntaxFactory.CarriageReturnLineFeed);
 				}
 			}
 
@@ -123,12 +123,13 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
 
 			private bool IsForRemoval(SyntaxNode node)
 			{
-				return this.nodesToRemove.Contains(node);
+				return this._nodesToRemove.Contains(node);
 			}
 
 			private bool ShouldVisit(SyntaxNode node)
 			{
-				return node.FullSpan.IntersectsWith(this.searchSpan) || (this.residualTrivia != null && this.residualTrivia.Count > 0);
+				return node.FullSpan.IntersectsWith(this._searchSpan) 
+					|| (this._residualTrivia != null && this._residualTrivia.Count > 0);
 			}
 
 			public override SyntaxNode Visit(SyntaxNode node)
@@ -162,11 +163,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
 				}
 
 				// the next token gets the accrued trivia.
-				if (result.CSharpKind() != SyntaxKind.None && this.residualTrivia != null && this.residualTrivia.Count > 0)
+				if (result.CSharpKind() != SyntaxKind.None && this._residualTrivia != null && this._residualTrivia.Count > 0)
 				{
-					this.residualTrivia.Add(result.LeadingTrivia);
-					result = result.WithLeadingTrivia(this.residualTrivia.ToList());
-					this.residualTrivia.Clear();
+					this._residualTrivia.Add(result.LeadingTrivia);
+					result = result.WithLeadingTrivia(this._residualTrivia.ToList());
+					this._residualTrivia.Clear();
 				}
 
 				return result;
@@ -257,27 +258,27 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
 
 			private void AddTrivia(SyntaxNode node)
 			{
-				if ((this.options & SyntaxRemoveOptions.KeepLeadingTrivia) != 0)
+				if ((this._options & SyntaxRemoveOptions.KeepLeadingTrivia) != 0)
 				{
 					this.AddResidualTrivia(node.GetLeadingTrivia());
 				}
-				else if ((this.options & SyntaxRemoveOptions.KeepEndOfLine) != 0
+				else if ((this._options & SyntaxRemoveOptions.KeepEndOfLine) != 0
 					&& HasEndOfLine(node.GetLeadingTrivia()))
 				{
 					this.AddEndOfLine();
 				}
 
-				if ((this.options & (SyntaxRemoveOptions.KeepDirectives | SyntaxRemoveOptions.KeepUnbalancedDirectives)) != 0)
+				if ((this._options & (SyntaxRemoveOptions.KeepDirectives | SyntaxRemoveOptions.KeepUnbalancedDirectives)) != 0)
 				{
 					//this.AddDirectives(node, GetRemovedSpan(node.Span, node.FullSpan));
 					throw new NotImplementedException();
 				}
 
-				if ((this.options & SyntaxRemoveOptions.KeepTrailingTrivia) != 0)
+				if ((this._options & SyntaxRemoveOptions.KeepTrailingTrivia) != 0)
 				{
 					this.AddResidualTrivia(node.GetTrailingTrivia());
 				}
-				else if ((this.options & SyntaxRemoveOptions.KeepEndOfLine) != 0
+				else if ((this._options & SyntaxRemoveOptions.KeepEndOfLine) != 0
 					&& HasEndOfLine(node.GetTrailingTrivia()))
 				{
 					this.AddEndOfLine();
@@ -286,13 +287,13 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
 
 			private void AddTrivia(SyntaxToken token, SyntaxNode node)
 			{
-				if ((this.options & SyntaxRemoveOptions.KeepLeadingTrivia) != 0)
+				if ((this._options & SyntaxRemoveOptions.KeepLeadingTrivia) != 0)
 				{
 					this.AddResidualTrivia(token.LeadingTrivia);
 					this.AddResidualTrivia(token.TrailingTrivia);
 					this.AddResidualTrivia(node.GetLeadingTrivia());
 				}
-				else if ((this.options & SyntaxRemoveOptions.KeepEndOfLine) != 0
+				else if ((this._options & SyntaxRemoveOptions.KeepEndOfLine) != 0
 					&& (HasEndOfLine(token.LeadingTrivia) ||
 						HasEndOfLine(token.TrailingTrivia) ||
 						HasEndOfLine(node.GetLeadingTrivia())))
@@ -300,7 +301,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
 					this.AddEndOfLine();
 				}
 
-				if ((this.options & (SyntaxRemoveOptions.KeepDirectives | SyntaxRemoveOptions.KeepUnbalancedDirectives)) != 0)
+				if ((this._options & (SyntaxRemoveOptions.KeepDirectives | SyntaxRemoveOptions.KeepUnbalancedDirectives)) != 0)
 				{
 					var span = TextSpan.FromBounds(token.Span.Start, node.Span.End);
 					var fullSpan = TextSpan.FromBounds(token.FullSpan.Start, node.FullSpan.End);
@@ -308,11 +309,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
 					throw new NotImplementedException();
 				}
 
-				if ((this.options & SyntaxRemoveOptions.KeepTrailingTrivia) != 0)
+				if ((this._options & SyntaxRemoveOptions.KeepTrailingTrivia) != 0)
 				{
 					this.AddResidualTrivia(node.GetTrailingTrivia());
 				}
-				else if ((this.options & SyntaxRemoveOptions.KeepEndOfLine) != 0
+				else if ((this._options & SyntaxRemoveOptions.KeepEndOfLine) != 0
 					&& HasEndOfLine(node.GetTrailingTrivia()))
 				{
 					this.AddEndOfLine();
@@ -321,23 +322,23 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
 
 			private void AddTrivia(SyntaxNode node, SyntaxToken token)
 			{
-				if ((this.options & SyntaxRemoveOptions.KeepLeadingTrivia) != 0)
+				if ((this._options & SyntaxRemoveOptions.KeepLeadingTrivia) != 0)
 				{
 					this.AddResidualTrivia(node.GetLeadingTrivia());
 				}
-				else if ((this.options & SyntaxRemoveOptions.KeepEndOfLine) != 0
+				else if ((this._options & SyntaxRemoveOptions.KeepEndOfLine) != 0
 					&& HasEndOfLine(node.GetLeadingTrivia()))
 				{
 					this.AddEndOfLine();
 				}
 
-				if ((this.options & SyntaxRemoveOptions.KeepTrailingTrivia) != 0)
+				if ((this._options & SyntaxRemoveOptions.KeepTrailingTrivia) != 0)
 				{
 					this.AddResidualTrivia(node.GetTrailingTrivia());
 					this.AddResidualTrivia(token.LeadingTrivia);
 					this.AddResidualTrivia(token.TrailingTrivia);
 				}
-				else if ((this.options & SyntaxRemoveOptions.KeepEndOfLine) != 0
+				else if ((this._options & SyntaxRemoveOptions.KeepEndOfLine) != 0
 					&& (HasEndOfLine(node.GetTrailingTrivia()) ||
 						HasEndOfLine(token.LeadingTrivia) ||
 						HasEndOfLine(token.TrailingTrivia)))
@@ -350,12 +351,12 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
 			{
 				var removedSpan = fullSpan;
 
-				if ((this.options & SyntaxRemoveOptions.KeepLeadingTrivia) != 0)
+				if ((this._options & SyntaxRemoveOptions.KeepLeadingTrivia) != 0)
 				{
 					removedSpan = TextSpan.FromBounds(span.Start, removedSpan.End);
 				}
 
-				if ((this.options & SyntaxRemoveOptions.KeepTrailingTrivia) != 0)
+				if ((this._options & SyntaxRemoveOptions.KeepTrailingTrivia) != 0)
 				{
 					removedSpan = TextSpan.FromBounds(removedSpan.Start, span.End);
 				}

@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 using Microsoft.CodeAnalysis.Collections;
@@ -458,7 +459,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 					}
 				}
 			}
-			else
+			else if (character == 'u' || character == 'x')
 			{
 				Debug.Assert(character == 'u' || character == 'x');
 
@@ -495,6 +496,70 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
 					character = (char)intChar;
 				}
+			}
+			else //Octal
+			{
+				Debug.Assert(SyntaxKindFacts.IsOctalDigit(character));
+
+				List<char> chars = new List<char>();
+				int intChar = 0;
+
+				chars.Add(character);
+				intChar = Convert.ToInt32(new string(chars.ToArray()), 8);
+
+
+				this.AdvanceChar();
+				character = this.PeekChar();// 第二个
+				if (SyntaxKindFacts.IsOctalDigit(character))
+				{
+					chars.Add(character);
+					intChar = Convert.ToInt32(new string(chars.ToArray()), 8);
+
+					this.AdvanceChar();
+					character = this.PeekChar(); //第三个
+					if (SyntaxKindFacts.IsOctalDigit(character))
+					{
+						if (SyntaxKindFacts.IsZeroToThreeDigit(chars[0]))
+						{
+							chars.Add(character);
+							intChar = Convert.ToInt32(new string(chars.ToArray()), 8);
+							this.AdvanceChar();
+						}
+						else
+						{
+							if (!peek)
+							{
+								info = CreateIllegalEscapeDiagnostic(start);
+							}
+						}
+					}
+				}
+
+				character = (char)intChar;
+				//else
+				//{
+				//	for (int i = 0; i < 2; i++)
+				//	{
+				//		char ch2 = this.PeekChar();
+				//		if (!SyntaxKindFacts.IsOctalDigit(ch2))
+				//		{
+				//			if (character == 'u')
+				//			{
+				//				if (!peek)
+				//				{
+				//					info = CreateIllegalEscapeDiagnostic(start);
+				//				}
+				//			}
+
+				//			break;
+				//		}
+
+				//		intChar = (intChar << 4) + SyntaxKindFacts.HexValue(ch2);
+				//		this.AdvanceChar();
+				//	}
+
+				//	character = (char)intChar;
+				//}
 			}
 
 			return character;

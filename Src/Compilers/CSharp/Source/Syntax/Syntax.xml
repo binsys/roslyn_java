@@ -53,7 +53,7 @@
 		<Node Name="CompilationUnitSyntax" Base="CSharpSyntaxNode">
 			<Kind Name="CompilationUnit"/>
 			<Field Name="Package" Type="JavaPackageDeclarationSyntax" Optional="true"/>
-			<Field Name="Imports" Type="SyntaxList&lt;ImportDeclarationSyntax&gt;"/>
+			<Field Name="Imports" Type="SyntaxList&lt;JavaImportDeclarationSyntax&gt;"/>
 			<Field Name="Members" Type="SyntaxList&lt;MemberDeclarationSyntax&gt;"/>
 			<Field Name="EndOfFileToken" Type="SyntaxToken">
 				<Kind Name="EndOfFileToken"/>
@@ -82,8 +82,8 @@
 				<Field Name="JavaModifiers" Type="SyntaxList&lt;SyntaxToken&gt;"></Field>
 			</Node>
 	
-		<Node Name="ImportDeclarationSyntax" Base="CSharpSyntaxNode">
-			<Kind Name="ImportDeclaration"/>
+		<Node Name="JavaImportDeclarationSyntax" Base="CSharpSyntaxNode">
+			<Kind Name="JavaImportDeclaration"/>
 			<Field Name="ImportKeyword" Type="SyntaxToken">
 				<Kind Name="ImportKeyword"/>
 			</Field>
@@ -91,14 +91,14 @@
 				<Kind Name="StaticKeyword"/>
 			</Field>
 			<Field Name="Name" Type="NameSyntax"/>
-			<Field Name="ImportOnDemandSuffix" Type="ImportOnDemandSuffixSyntax" Optional="true"/>
+			<Field Name="ImportOnDemandSuffix" Type="JavaImportOnDemandSuffixSyntax" Optional="true"/>
 			<Field Name="SemicolonToken" Type="SyntaxToken">
 				<Kind Name="SemicolonToken"/>
 			</Field>
 		</Node>
 	
-		<Node Name="ImportOnDemandSuffixSyntax" Base="CSharpSyntaxNode">
-			<Kind Name="ImportOnDemandSuffix"/>
+		<Node Name="JavaImportOnDemandSuffixSyntax" Base="CSharpSyntaxNode">
+			<Kind Name="JavaImportOnDemandSuffix"/>
 			<Field Name="DotToken" Type="SyntaxToken">
 				<Kind Name="DotToken"/>
 			</Field>
@@ -116,6 +116,9 @@
 			<Field Name="CloseBraceToken" Type="SyntaxToken">
 				<Kind Name="CloseBraceToken"/>
 			</Field>
+			<Field Name="SemicolonToken" Type="SyntaxToken" Optional="true">
+				<Kind Name="SemicolonToken"/>
+			</Field>
 		</Node>
 	
 
@@ -126,16 +129,6 @@
 				<Field Name="Keyword" Type="SyntaxToken"></Field>
 				<Field Name="Identifier" Type="SyntaxToken">
 					<Kind Name="IdentifierToken"/>
-				</Field>
-				<Field Name="OpenBraceToken" Type="SyntaxToken">
-					<Kind Name="OpenBraceToken"/>
-				</Field>
-				<Field Name="Members" Type="SyntaxList&lt;MemberDeclarationSyntax&gt;"/>
-				<Field Name="CloseBraceToken" Type="SyntaxToken">
-					<Kind Name="CloseBraceToken"/>
-				</Field>
-				<Field Name="SemicolonToken" Type="SyntaxToken" Optional="true">
-					<Kind Name="SemicolonToken"/>
 				</Field>
 			</AbstractNode>
 				<AbstractNode Name="JavaClassDeclarationSyntax" Base="JavaTypeDeclarationSyntax">
@@ -153,16 +146,12 @@
 						<Field Name="TypeParameterList" Type="TypeParameterListSyntax" Optional="true" />
 						<Field Name="Extends" Type="ExtendsClauseSyntax" Optional="true"/>
 						<Field Name="Superinterfaces" Type="ImplementsListClauseSyntax" Optional="true" Override="true"/>
-						<Field Name="OpenBraceToken" Type="SyntaxToken" Override="true">
-							<Kind Name="OpenBraceToken"/>
+						
+						<Field Name="ClassBody" Type="JavaClassBodySyntax">
+							<Kind Name="JavaClassBody"/>
 						</Field>
-						<Field Name="Members" Type="SyntaxList&lt;MemberDeclarationSyntax&gt;" Override="true"/>
-						<Field Name="CloseBraceToken" Type="SyntaxToken" Override="true">
-							<Kind Name="CloseBraceToken"/>
-						</Field>
-						<Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
-							<Kind Name="SemicolonToken"/>
-						</Field>
+						
+						
 						<!--
 						{ClassModifier} 
 						class 
@@ -172,17 +161,22 @@
 						[Superinterfaces] 
 						ClassBody-->
 					</Node>
-					<Node Name="JavaEnumDeclarationSyntax" Base="MemberDeclarationSyntax">
+					<Node Name="JavaEnumDeclarationSyntax" Base="JavaClassDeclarationSyntax">
 						<Kind Name="JavaEnumDeclaration"/>
-						<Field Name="Modifier" Type="JavaMemberModifierSyntax"  Optional="true"></Field>
-						<Field Name="Keyword" Type="SyntaxToken" >
+						<Field Name="Modifier" Type="JavaMemberModifierSyntax"  Optional="true" Override="true"></Field>
+						<Field Name="Keyword" Type="SyntaxToken" Override="true" >
 							<Kind Name="EnumKeyword"/>
 						</Field>
-						<Field Name="Identifier" Type="SyntaxToken" >
+						<Field Name="Identifier" Type="SyntaxToken" Override="true" >
 							<Kind Name="IdentifierToken"/>
 						</Field>
-						<Field Name="Superinterfaces" Type="ImplementsListClauseSyntax" Optional="true"/>
+						
+						
+						
+						<Field Name="Superinterfaces" Type="ImplementsListClauseSyntax" Optional="true" Override="true"/>
 
+						
+						
 						<Field Name="EnumBody" Type="JavaEnumBodySyntax"/>
 
 						<!--{ClassModifier} 
@@ -192,7 +186,7 @@
 							EnumBody-->
 					</Node>
 				<AbstractNode Name="JavaInterfaceDeclarationSyntax" Base="JavaTypeDeclarationSyntax">
-					
+
 				</AbstractNode>
 					<Node Name="JavaNormalInterfaceDeclarationSyntax" Base="JavaInterfaceDeclarationSyntax">
 						<Kind Name="JavaNormalInterfaceDeclaration"/>
@@ -203,16 +197,19 @@
 						<Field Name="Identifier" Type="SyntaxToken" Override="true">
 							<Kind Name="IdentifierToken"/>
 						</Field>
+						
+						
+						
 						<Field Name="TypeParameterList" Type="TypeParameterListSyntax" Optional="true" />
 						<Field Name="ExtendsInterfaces" Type="ExtendsListClauseSyntax" Optional="true"/>
-						<Field Name="OpenBraceToken" Type="SyntaxToken" Override="true">
+						<Field Name="OpenBraceToken" Type="SyntaxToken" >
 							<Kind Name="OpenBraceToken"/>
 						</Field>
-						<Field Name="Members" Type="SyntaxList&lt;MemberDeclarationSyntax&gt;" Override="true"/>
-						<Field Name="CloseBraceToken" Type="SyntaxToken" Override="true">
+						<Field Name="Members" Type="SyntaxList&lt;MemberDeclarationSyntax&gt;" />
+						<Field Name="CloseBraceToken" Type="SyntaxToken" >
 							<Kind Name="CloseBraceToken"/>
 						</Field>
-						<Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
+						<Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" >
 							<Kind Name="SemicolonToken"/>
 						</Field>
 						<!--
@@ -235,14 +232,14 @@
 						<Field Name="Identifier" Type="SyntaxToken" Override="true">
 							<Kind Name="IdentifierToken"/>
 						</Field>
-						<Field Name="OpenBraceToken" Type="SyntaxToken" Override="true">
+						<Field Name="OpenBraceToken" Type="SyntaxToken" >
 							<Kind Name="OpenBraceToken"/>
 						</Field>
-						<Field Name="Members" Type="SyntaxList&lt;MemberDeclarationSyntax&gt;" Override="true"/>
-						<Field Name="CloseBraceToken" Type="SyntaxToken" Override="true">
+						<Field Name="Members" Type="SyntaxList&lt;MemberDeclarationSyntax&gt;" />
+						<Field Name="CloseBraceToken" Type="SyntaxToken" >
 							<Kind Name="CloseBraceToken"/>
 						</Field>
-						<Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
+						<Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" >
 							<Kind Name="SemicolonToken"/>
 						</Field>
 						<!--
@@ -345,6 +342,7 @@
 					</Field>
 					<Field Name="Modifiers" Type="SyntaxList&lt;SyntaxToken&gt;">
 					</Field>
+					<Field Name="TypeParameterList" Type="TypeParameterListSyntax" Optional="true"/>
 					<Field Name="ParameterList" Type="ParameterListSyntax">
 					</Field>
 					<Field Name="Throws" Type="JavaThrowsListClauseSyntax" Optional="true"/>
@@ -355,18 +353,20 @@
 	
 					<Node Name="MethodDeclarationSyntax" Base="BaseMethodDeclarationSyntax">
 						<Kind Name="MethodDeclaration"/>
+						<Kind Name="DestructorDeclaration"/>
 						<Field Name="AttributeLists" Type="SyntaxList&lt;AnnotationSyntax&gt;" Override="true"/>
 						<Field Name="Modifiers" Type="SyntaxList&lt;SyntaxToken&gt;" Override="true"/>
+						
+						<Field Name="TypeParameterList" Type="TypeParameterListSyntax" Optional="true" Override="true"/>
 						<Field Name="ReturnType" Type="TypeSyntax">
 						</Field>
 						<Field Name="Identifier" Type="SyntaxToken">
 							<Kind Name="IdentifierToken"/>
 						</Field>
-						<Field Name="TypeParameterList" Type="TypeParameterListSyntax" Optional="true"/>
+
 						<Field Name="ParameterList" Type="ParameterListSyntax" Override="true"/>
 						<Field Name="Throws" Type="JavaThrowsListClauseSyntax" Optional="true" Override="true"/>
-						<Field Name="ConstraintClauses" Type="SyntaxList&lt;TypeBoundSyntax&gt;">
-						</Field>
+
 						<Field Name="Body" Type="BlockSyntax" Optional="true" Override="true"/>
 						<Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
 							<Kind Name="SemicolonToken"/>
@@ -377,6 +377,7 @@
 						<Kind Name="ConstructorDeclaration"/>
 						<Field Name="AttributeLists" Type="SyntaxList&lt;AnnotationSyntax&gt;" Override="true"/>
 						<Field Name="Modifiers" Type="SyntaxList&lt;SyntaxToken&gt;" Override="true"/>
+						<Field Name="TypeParameterList" Type="TypeParameterListSyntax" Optional="true" Override="true"/>
 						<Field Name="Identifier" Type="SyntaxToken">
 							<Kind Name="IdentifierToken"/>
 						</Field>
@@ -389,27 +390,10 @@
 						</Field>
 					</Node>
 	
-					<Node Name="DestructorDeclarationSyntax" Base="BaseMethodDeclarationSyntax">
-						<Kind Name="DestructorDeclaration"/>
-						<Field Name="AttributeLists" Type="SyntaxList&lt;AnnotationSyntax&gt;" Override="true"/>
-						<Field Name="Modifiers" Type="SyntaxList&lt;SyntaxToken&gt;" Override="true"/>
-						<Field Name="TildeToken" Type="SyntaxToken">
-							<Kind Name="TildeToken"/>
-						</Field>
-						<Field Name="Identifier" Type="SyntaxToken">
-							<Kind Name="IdentifierToken"/>
-						</Field>
-						<Field Name="ParameterList" Type="ParameterListSyntax" Override="true"/>
-						<Field Name="Throws" Type="JavaThrowsListClauseSyntax" Optional="true" Override="true"/>
-						<Field Name="Body" Type="BlockSyntax" Optional="true" Override="true"/>
-						<Field Name="SemicolonToken" Type="SyntaxToken" Optional="true" Override="true">
-							<Kind Name="SemicolonToken"/>
-						</Field>
-					</Node>
-
 			<Node Name="IncompleteMemberSyntax" Base="MemberDeclarationSyntax">
 				<Kind Name="IncompleteMember"/>
 				<Field Name="AttributeLists" Type="SyntaxList&lt;AnnotationSyntax&gt;"/>
+				<Field Name="TypeParameterList" Type="TypeParameterListSyntax" Optional="true"/>
 				<Field Name="Modifiers" Type="SyntaxList&lt;SyntaxToken&gt;"/>
 				<Field Name="Type" Type="TypeSyntax" Optional="true"/>
 			</Node>
@@ -446,8 +430,6 @@
 			<Field Name="Type" Type="TypeSyntax">
 			</Field>
 		</Node>
-
-
 	
 		<Node Name="ArrayRankSpecifierSyntax" Base="CSharpSyntaxNode">
 			<Kind Name="ArrayRankSpecifier" />
@@ -975,6 +957,7 @@
 					<Kind Name="CloseBraceToken"/>
 				</Field>
 			</Node>
+	
 			<Node Name="LocalDeclarationStatementSyntax" Base="StatementSyntax">
 				<Kind Name="LocalDeclarationStatement"/>
 				<Field Name="Modifiers" Type="SyntaxList&lt;SyntaxToken&gt;">
@@ -984,6 +967,7 @@
 					<Kind Name="SemicolonToken"/>
 				</Field>
 			</Node>
+	
 			<Node Name="ExpressionStatementSyntax" Base="StatementSyntax">
 				<Kind Name="ExpressionStatement"/>
 				<Field Name="Expression" Type="ExpressionSyntax"/>
@@ -991,12 +975,14 @@
 					<Kind Name="SemicolonToken"/>
 				</Field>
 			</Node>
+	
 			<Node Name="EmptyStatementSyntax" Base="StatementSyntax">
 				<Kind Name="EmptyStatement"/>
 				<Field Name="SemicolonToken" Type="SyntaxToken">
 					<Kind Name="SemicolonToken"/>
 				</Field>
 			</Node>
+	
 			<Node Name="LabeledStatementSyntax" Base="StatementSyntax">
 				<Kind Name="LabeledStatement"/>
 				<Field Name="Identifier" Type="SyntaxToken">
@@ -1007,7 +993,6 @@
 				</Field>
 				<Field Name="Statement" Type="StatementSyntax"/>
 			</Node>
-
 			<Node Name="BreakStatementSyntax" Base="StatementSyntax">
 				<Kind Name="BreakStatement"/>
 				<Field Name="BreakKeyword" Type="SyntaxToken">
@@ -1228,6 +1213,8 @@
 			<Kind Name="VariableDeclarator"/>
 			<Field Name="Identifier" Type="SyntaxToken">
 				<Kind Name="IdentifierToken"/>
+			</Field>
+			<Field Name="RankSpecifiers" Type="SyntaxList&lt;ArrayRankSpecifierSyntax&gt;">
 			</Field>
 			<Field Name="ArgumentList" Type="BracketedArgumentListSyntax" Optional="true"/>
 			<Field Name="Initializer" Type="EqualsValueClauseSyntax" Optional="true"/>

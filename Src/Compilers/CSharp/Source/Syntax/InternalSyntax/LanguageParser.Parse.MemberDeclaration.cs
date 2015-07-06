@@ -39,10 +39,18 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
 			try
 			{
+				
 				this.ParseAnnotationDeclarations(annotations);
 
 				// All modifiers that might start an expression are processed above.
 				this.ParseModifiers(modifiers);
+
+				TypeParameterListSyntax typeParameterListOpt = default(TypeParameterListSyntax);
+
+				if (this.CurrentToken.Kind == SyntaxKind.LessThanToken)
+				{
+					typeParameterListOpt = this.ParseTypeParameterList();
+				}
 
 				// Check for constructor form
 				if (this.CurrentToken.Kind == SyntaxKind.IdentifierToken && this.PeekToken(1).Kind == SyntaxKind.OpenParenToken)
@@ -55,7 +63,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 					//            missing ';'
 					if (this.CurrentToken.ValueText == typeName)
 					{
-						return this.ParseConstructorDeclaration(typeName, annotations, modifiers);
+						return this.ParseConstructorDeclaration(typeName, annotations, modifiers, typeParameterListOpt);
 					}
 
 					// Script: 
@@ -67,7 +75,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
 					var identifier = this.EatToken();
 
-					return this.ParseMethodDeclaration(annotations, modifiers, voidType, identifier: identifier, typeParameterList: null);
+					return this.ParseMethodDeclaration(annotations, modifiers, voidType, identifier: identifier, typeParameterList: typeParameterListOpt,isDtor:false);
 				}
 				else if (this.CurrentToken.Kind == SyntaxKind.OpenBraceToken && annotations.Count == 0)
 				{
@@ -81,11 +89,13 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 				//	return this.ParseDestructorDeclaration(typeName, annotations, modifiers);
 				//}
 
+				
+
 				// Check for constant (prefers const field over const local variable decl)
-				if (this.CurrentToken.Kind == SyntaxKind.ConstKeyword)
-				{
-					return this.ParseConstantFieldDeclaration(annotations, modifiers, parentKind);
-				}
+				//if (this.CurrentToken.Kind == SyntaxKind.ConstKeyword)
+				//{
+				//	return this.ParseConstantFieldDeclaration(annotations, modifiers, parentKind);
+				//}
 
 
 				// It's valid to have a type declaration here -- check for those
@@ -93,6 +103,9 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 				{
 					return this.ParseTypeDeclaration(annotations, modifiers);
 				}
+
+
+
 
 				// Everything that's left -- methods, fields, properties, 
 				// indexers, and non-conversion operators -- starts with a type 
@@ -114,7 +127,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 						ErrorCode.ERR_BadModifierLocation,
 						misplacedModifier.Text);
 
-					return _syntaxFactory.IncompleteMember(annotations, modifiers.ToTokenList(), type);
+					return _syntaxFactory.IncompleteMember(annotations,typeParameterListOpt, modifiers.ToTokenList(), type);
 				}
 
 
@@ -129,12 +142,13 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 				// the following name and determine what to do from there.
 	
 				SyntaxToken identifierOrThisOpt;
-				TypeParameterListSyntax typeParameterListOpt;
-				this.ParseMemberName( out identifierOrThisOpt, out typeParameterListOpt);
+				
+				//this.ParseMemberName( out identifierOrThisOpt, out typeParameterListOpt);
+				this.ParseMemberName( out identifierOrThisOpt);
 
 				// First, check if we got absolutely nothing.  If so, then 
 				// We need to consume a bad member and try again.
-				if (identifierOrThisOpt == null && typeParameterListOpt == null)
+				if (identifierOrThisOpt == null)
 				{
 					if (annotations.Count == 0 && modifiers.Count == 0 && type.IsMissing)
 					{
@@ -142,7 +156,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 						return null;
 					}
 
-					var incompleteMember = _syntaxFactory.IncompleteMember(annotations, modifiers.ToTokenList(), type.IsMissing ? null : type);
+					var incompleteMember = _syntaxFactory.IncompleteMember(annotations,typeParameterListOpt, modifiers.ToTokenList(), type.IsMissing ? null : type);
 					if (incompleteMember.ContainsDiagnostics)
 					{
 						return incompleteMember;
@@ -165,9 +179,12 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
 				Debug.Assert(identifierOrThisOpt != null);
 
+				var dtor = identifierOrThisOpt.ValueText == "finalize" && type is PredefinedTypeSyntax && ((PredefinedTypeSyntax)type).Keyword.Kind == SyntaxKind.VoidKeyword;
+
+
 
 				// treat anything else as a method.
-				return this.ParseMethodDeclaration(annotations, modifiers, type, identifierOrThisOpt, typeParameterListOpt);
+				return this.ParseMethodDeclaration(annotations, modifiers, type, identifierOrThisOpt, typeParameterListOpt, isDtor: dtor);
 
 			}
 			finally
@@ -272,29 +289,29 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 		}
 
 
-		private FieldDeclarationSyntax ParseConstantFieldDeclaration(SyntaxListBuilder<AnnotationSyntax> attributes, SyntaxListBuilder modifiers, SyntaxKind parentKind)
-		{
-			var constToken = this.EatToken(SyntaxKind.ConstKeyword);
-			modifiers.Add(constToken);
+		//private FieldDeclarationSyntax ParseConstantFieldDeclaration(SyntaxListBuilder<AnnotationSyntax> attributes, SyntaxListBuilder modifiers, SyntaxKind parentKind)
+		//{
+		//	var constToken = this.EatToken(SyntaxKind.ConstKeyword);
+		//	modifiers.Add(constToken);
 
-			var type = this.ParseType(false);
+		//	var type = this.ParseType(false);
 
-			var variables = this._pool.AllocateSeparated<VariableDeclaratorSyntax>();
-			try
-			{
-				this.ParseVariableDeclarators(type, VariableFlags.Const, variables, parentKind);
-				var semicolon = this.EatToken(SyntaxKind.SemicolonToken);
-				return _syntaxFactory.FieldDeclaration(
-					attributes,
-					modifiers.ToTokenList(),
-					_syntaxFactory.VariableDeclaration(type, variables),
-					semicolon);
-			}
-			finally
-			{
-				this._pool.Free(variables);
-			}
-		}
+		//	var variables = this._pool.AllocateSeparated<VariableDeclaratorSyntax>();
+		//	try
+		//	{
+		//		this.ParseVariableDeclarators(type, VariableFlags.Const, variables, parentKind);
+		//		var semicolon = this.EatToken(SyntaxKind.SemicolonToken);
+		//		return _syntaxFactory.FieldDeclaration(
+		//			attributes,
+		//			modifiers.ToTokenList(),
+		//			_syntaxFactory.VariableDeclaration(type, variables),
+		//			semicolon);
+		//	}
+		//	finally
+		//	{
+		//		this._pool.Free(variables);
+		//	}
+		//}
 
 
 
@@ -330,11 +347,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 		}
 
 		private void ParseMemberName(
-			out SyntaxToken identifierOrThisOpt,
-			out TypeParameterListSyntax typeParameterListOpt)
+			out SyntaxToken identifierOrThisOpt/*,
+			out TypeParameterListSyntax typeParameterListOpt*/)
 		{
 			identifierOrThisOpt = null;
-			typeParameterListOpt = null;
+			//typeParameterListOpt = null;
 
 			if (!IsPossibleMemberName())
 			{
@@ -395,7 +412,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 						}
 
 						identifierOrThisOpt = this.ParseIdentifierToken();
-						typeParameterListOpt = this.ParseTypeParameterList();
+						//typeParameterListOpt = this.ParseTypeParameterList();
 						break;
 					}
 					else

@@ -345,8 +345,8 @@ namespace Microsoft.CodeAnalysis.CSharp
 		// declarations
 		CompilationUnit,
 		JavaPackageDeclaration,
-		ImportDeclaration,
-		ImportOnDemandSuffix,
+		JavaImportDeclaration,
+		JavaImportOnDemandSuffix,
 
 		//JavaTypeParameterModifier,
 

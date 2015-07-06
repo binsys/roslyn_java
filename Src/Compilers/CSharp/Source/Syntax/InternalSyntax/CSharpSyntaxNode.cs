@@ -276,10 +276,12 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 		/// Gets the syntax node represented the structure of this trivia, if any. The HasStructure property can be used to 
 		/// determine if this trivia has structure.
 		/// </summary>
+		/// 
 		/// <returns>
 		/// A CSharpSyntaxNode derived from StructuredTriviaSyntax, with the structured view of this trivia node. 
 		/// If this trivia node does not have structure, returns null.
 		/// </returns>
+		/// 
 		/// <remarks>
 		/// Some types of trivia have structure that can be accessed as additional syntax nodes.
 		/// These forms of trivia include: 

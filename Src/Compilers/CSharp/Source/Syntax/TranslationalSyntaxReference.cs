@@ -16,32 +16,32 @@ namespace Microsoft.CodeAnalysis.CSharp
 	/// </summary>
 	internal class TranslationSyntaxReference : SyntaxReference
 	{
-		private readonly SyntaxReference reference;
-		private readonly Func<SyntaxReference, SyntaxNode> nodeGetter;
+		private readonly SyntaxReference _reference;
+		private readonly Func<SyntaxReference, SyntaxNode> _nodeGetter;
 
 		public TranslationSyntaxReference(SyntaxReference reference, Func<SyntaxReference, SyntaxNode> nodeGetter)
 		{
-			this.reference = reference;
-			this.nodeGetter = nodeGetter;
+			this._reference = reference;
+			this._nodeGetter = nodeGetter;
 		}
 
 		public override SyntaxNode GetSyntax(CancellationToken cancellationToken)
 		{
-			var node = nodeGetter(this.reference);
+			var node = _nodeGetter(this._reference);
 
-			Debug.Assert(node.SyntaxTree == this.reference.SyntaxTree);
+			Debug.Assert(node.SyntaxTree == this._reference.SyntaxTree);
 
 			return node;
 		}
 
 		public override TextSpan Span
 		{
-			get { return this.reference.Span; }
+			get { return this._reference.Span; }
 		}
 
 		public override SyntaxTree SyntaxTree
 		{
-			get { return this.reference.SyntaxTree; }
+			get { return this._reference.SyntaxTree; }
 		}
 	}
 }

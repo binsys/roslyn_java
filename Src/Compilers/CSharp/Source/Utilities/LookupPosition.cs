@@ -82,7 +82,30 @@ namespace Microsoft.CodeAnalysis.CSharp
 		{
 			Debug.Assert(typeDecl != null);
 
-			return IsBeforeToken(position, typeDecl, typeDecl.CloseBraceToken);
+			SyntaxToken closeBrace = default(SyntaxToken);
+
+			if (typeDecl is JavaNormalClassDeclarationSyntax)
+			{
+				closeBrace = ((JavaNormalClassDeclarationSyntax) typeDecl).ClassBody.CloseBraceToken;
+			}
+			else if (typeDecl is JavaEnumDeclarationSyntax)
+			{
+				closeBrace = ((JavaEnumDeclarationSyntax)typeDecl).EnumBody.CloseBraceToken;
+			}
+			else if (typeDecl is JavaNormalInterfaceDeclarationSyntax)
+			{
+				closeBrace = ((JavaNormalInterfaceDeclarationSyntax)typeDecl).CloseBraceToken;
+			}
+			else if (typeDecl is JavaAnnotationTypeDeclarationSyntax)
+			{
+				closeBrace = ((JavaAnnotationTypeDeclarationSyntax)typeDecl).CloseBraceToken;
+			}
+			else
+			{
+				return false;
+			}
+
+			return IsBeforeToken(position, typeDecl, closeBrace);
 		}
 
 

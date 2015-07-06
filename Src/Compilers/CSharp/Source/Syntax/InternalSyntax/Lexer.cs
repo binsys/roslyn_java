@@ -17,7 +17,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 	{
 		Syntax = 0x0001,
 		DebuggerSyntax = 0x0002,
-		Directive = 0x0004,
+		//Directive = 0x0004,
 
 		XmlDocComment = 0x0008,
 		XmlElementTag = 0x0010,
@@ -149,8 +149,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 #else
 					return this.LexSyntaxToken();
 #endif
-				case LexerMode.Directive:
-					return this.LexDirectiveToken();
+				//case LexerMode.Directive:
+				//	return this.LexDirectiveToken();
 			}
 
 			switch (ModeOf(this._mode))
@@ -1216,13 +1216,19 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 				case 'x':
 				case 'u':
 				case 'U':
+
+				case '0':
+				case '1':
+				case '2':
+				case '3':
+				case '4':
+				case '5':
+				case '6':
+				case '7':
 					TextWindow.Reset(start);
 					SyntaxDiagnosticInfo error;
 					ch = TextWindow.NextUnicodeEscape(surrogateCharacter: out surrogateCharacter, info: out error);
 					AddError(error);
-					break;
-				case '0':
-					ch = '\0';
 					break;
 				default:
 					this.AddError(start, TextWindow.Position - start, ErrorCode.ERR_IllegalEscape);
@@ -1611,258 +1617,258 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 			return SyntaxFactory.Whitespace(TextWindow.GetText(intern: true));
 		}
 
-		private SyntaxToken LexDirectiveToken()
-		{
-			this.Start();
-			TokenInfo info = default(TokenInfo);
-			this.ScanDirectiveToken(ref info);
-			var errors = this.Errors;
-			var trailing = this.LexDirectiveTrailingTrivia(info.Kind == SyntaxKind.EndOfDirectiveToken);
-			return Create(ref info, null, trailing, errors);
-		}
+		//private SyntaxToken LexDirectiveToken()
+		//{
+		//	this.Start();
+		//	TokenInfo info = default(TokenInfo);
+		//	this.ScanDirectiveToken(ref info);
+		//	var errors = this.Errors;
+		//	var trailing = this.LexDirectiveTrailingTrivia(info.Kind == SyntaxKind.EndOfDirectiveToken);
+		//	return Create(ref info, null, trailing, errors);
+		//}
 
-		private bool ScanDirectiveToken(ref TokenInfo info)
-		{
-			char character;
-			char surrogateCharacter;
-			bool isEscaped = false;
+		//private bool ScanDirectiveToken(ref TokenInfo info)
+		//{
+		//	char character;
+		//	char surrogateCharacter;
+		//	bool isEscaped = false;
 
-			switch (character = TextWindow.PeekChar())
-			{
-				case SlidingTextWindow.InvalidCharacter:
-					if (!TextWindow.IsReallyAtEnd())
-					{
-						goto default;
-					}
-					// don't consume end characters here
-					info.Kind = SyntaxKind.EndOfDirectiveToken;
-					break;
+		//	switch (character = TextWindow.PeekChar())
+		//	{
+		//		case SlidingTextWindow.InvalidCharacter:
+		//			if (!TextWindow.IsReallyAtEnd())
+		//			{
+		//				goto default;
+		//			}
+		//			// don't consume end characters here
+		//			info.Kind = SyntaxKind.EndOfDirectiveToken;
+		//			break;
 
-				case '\r':
-				case '\n':
-					// don't consume end characters here
-					info.Kind = SyntaxKind.EndOfDirectiveToken;
-					break;
+		//		case '\r':
+		//		case '\n':
+		//			// don't consume end characters here
+		//			info.Kind = SyntaxKind.EndOfDirectiveToken;
+		//			break;
 
-				//case '#':
-				//	TextWindow.AdvanceChar();
-				//	info.Kind = SyntaxKind.HashToken;
-				//	break;
+		//		//case '#':
+		//		//	TextWindow.AdvanceChar();
+		//		//	info.Kind = SyntaxKind.HashToken;
+		//		//	break;
 
-				case '(':
-					TextWindow.AdvanceChar();
-					info.Kind = SyntaxKind.OpenParenToken;
-					break;
+		//		case '(':
+		//			TextWindow.AdvanceChar();
+		//			info.Kind = SyntaxKind.OpenParenToken;
+		//			break;
 
-				case ')':
-					TextWindow.AdvanceChar();
-					info.Kind = SyntaxKind.CloseParenToken;
-					break;
+		//		case ')':
+		//			TextWindow.AdvanceChar();
+		//			info.Kind = SyntaxKind.CloseParenToken;
+		//			break;
 
-				case ',':
-					TextWindow.AdvanceChar();
-					info.Kind = SyntaxKind.CommaToken;
-					break;
+		//		case ',':
+		//			TextWindow.AdvanceChar();
+		//			info.Kind = SyntaxKind.CommaToken;
+		//			break;
 
-				case '!':
-					TextWindow.AdvanceChar();
-					if (TextWindow.PeekChar() == '=')
-					{
-						TextWindow.AdvanceChar();
-						info.Kind = SyntaxKind.ExclamationEqualsToken;
-					}
-					else
-					{
-						info.Kind = SyntaxKind.ExclamationToken;
-					}
+		//		case '!':
+		//			TextWindow.AdvanceChar();
+		//			if (TextWindow.PeekChar() == '=')
+		//			{
+		//				TextWindow.AdvanceChar();
+		//				info.Kind = SyntaxKind.ExclamationEqualsToken;
+		//			}
+		//			else
+		//			{
+		//				info.Kind = SyntaxKind.ExclamationToken;
+		//			}
 
-					break;
+		//			break;
 
-				case '=':
-					TextWindow.AdvanceChar();
-					if (TextWindow.PeekChar() == '=')
-					{
-						TextWindow.AdvanceChar();
-						info.Kind = SyntaxKind.EqualsEqualsToken;
-					}
-					else
-					{
-						info.Kind = SyntaxKind.EqualsToken;
-					}
+		//		case '=':
+		//			TextWindow.AdvanceChar();
+		//			if (TextWindow.PeekChar() == '=')
+		//			{
+		//				TextWindow.AdvanceChar();
+		//				info.Kind = SyntaxKind.EqualsEqualsToken;
+		//			}
+		//			else
+		//			{
+		//				info.Kind = SyntaxKind.EqualsToken;
+		//			}
 
-					break;
+		//			break;
 
-				case '&':
-					if (TextWindow.PeekChar(1) == '&')
-					{
-						TextWindow.AdvanceChar(2);
-						info.Kind = SyntaxKind.AmpersandAmpersandToken;
-						break;
-					}
+		//		case '&':
+		//			if (TextWindow.PeekChar(1) == '&')
+		//			{
+		//				TextWindow.AdvanceChar(2);
+		//				info.Kind = SyntaxKind.AmpersandAmpersandToken;
+		//				break;
+		//			}
 
-					goto default;
+		//			goto default;
 
-				case '|':
-					if (TextWindow.PeekChar(1) == '|')
-					{
-						TextWindow.AdvanceChar(2);
-						info.Kind = SyntaxKind.BarBarToken;
-						break;
-					}
+		//		case '|':
+		//			if (TextWindow.PeekChar(1) == '|')
+		//			{
+		//				TextWindow.AdvanceChar(2);
+		//				info.Kind = SyntaxKind.BarBarToken;
+		//				break;
+		//			}
 
-					goto default;
+		//			goto default;
 
-				case '0':
-				case '1':
-				case '2':
-				case '3':
-				case '4':
-				case '5':
-				case '6':
-				case '7':
-				case '8':
-				case '9':
-					this.ScanInteger();
-					info.Kind = SyntaxKind.NumericLiteralToken;
-					info.Text = TextWindow.GetText(true);
-					info.ValueKind = SpecialType.System_Int32;
-					info.IntValue = this.GetValueInt32(info.Text, false);
-					break;
+		//		case '0':
+		//		case '1':
+		//		case '2':
+		//		case '3':
+		//		case '4':
+		//		case '5':
+		//		case '6':
+		//		case '7':
+		//		case '8':
+		//		case '9':
+		//			this.ScanInteger();
+		//			info.Kind = SyntaxKind.NumericLiteralToken;
+		//			info.Text = TextWindow.GetText(true);
+		//			info.ValueKind = SpecialType.System_Int32;
+		//			info.IntValue = this.GetValueInt32(info.Text, false);
+		//			break;
 
-				case '\"':
-					this.ScanStringLiteral(ref info, false);
-					break;
+		//		case '\"':
+		//			this.ScanStringLiteral(ref info, false);
+		//			break;
 
-				case '\\':
-					{
-						// Could be unicode escape. Try that.
-						character = TextWindow.PeekCharOrUnicodeEscape(out surrogateCharacter);
-						isEscaped = true;
-						if (SyntaxKindFacts.IsIdentifierStartCharacter(character))
-						{
-							this.ScanIdentifierOrKeyword(ref info);
-							break;
-						}
+		//		case '\\':
+		//			{
+		//				// Could be unicode escape. Try that.
+		//				character = TextWindow.PeekCharOrUnicodeEscape(out surrogateCharacter);
+		//				isEscaped = true;
+		//				if (SyntaxKindFacts.IsIdentifierStartCharacter(character))
+		//				{
+		//					this.ScanIdentifierOrKeyword(ref info);
+		//					break;
+		//				}
 
-						goto default;
-					}
+		//				goto default;
+		//			}
 
-				default:
-					if (!isEscaped && SyntaxKindFacts.IsNewLine(character))
-					{
-						goto case '\n';
-					}
+		//		default:
+		//			if (!isEscaped && SyntaxKindFacts.IsNewLine(character))
+		//			{
+		//				goto case '\n';
+		//			}
 
-					if (SyntaxKindFacts.IsIdentifierStartCharacter(character))
-					{
-						this.ScanIdentifierOrKeyword(ref info);
-					}
-					else
-					{
-						// unknown single character
-						if (isEscaped)
-						{
-							SyntaxDiagnosticInfo error;
-							TextWindow.NextCharOrUnicodeEscape(out surrogateCharacter, out error);
-							AddError(error);
-						}
-						else
-						{
-							TextWindow.AdvanceChar();
-						}
+		//			if (SyntaxKindFacts.IsIdentifierStartCharacter(character))
+		//			{
+		//				this.ScanIdentifierOrKeyword(ref info);
+		//			}
+		//			else
+		//			{
+		//				// unknown single character
+		//				if (isEscaped)
+		//				{
+		//					SyntaxDiagnosticInfo error;
+		//					TextWindow.NextCharOrUnicodeEscape(out surrogateCharacter, out error);
+		//					AddError(error);
+		//				}
+		//				else
+		//				{
+		//					TextWindow.AdvanceChar();
+		//				}
 
-						info.Kind = SyntaxKind.None;
-						info.Text = TextWindow.GetText(true);
-					}
+		//				info.Kind = SyntaxKind.None;
+		//				info.Text = TextWindow.GetText(true);
+		//			}
 
-					break;
-			}
+		//			break;
+		//	}
 
-			Debug.Assert(info.Kind != SyntaxKind.None || info.Text != null);
-			return info.Kind != SyntaxKind.None;
-		}
+		//	Debug.Assert(info.Kind != SyntaxKind.None || info.Text != null);
+		//	return info.Kind != SyntaxKind.None;
+		//}
 
-		private SyntaxListBuilder LexDirectiveTrailingTrivia(bool includeEndOfLine)
-		{
-			SyntaxListBuilder trivia = null;
+		//private SyntaxListBuilder LexDirectiveTrailingTrivia(bool includeEndOfLine)
+		//{
+		//	SyntaxListBuilder trivia = null;
 
-			CSharpSyntaxNode tr;
-			while (true)
-			{
-				var pos = TextWindow.Position;
-				tr = this.LexDirectiveTrivia();
-				if (tr == null)
-				{
-					break;
-				}
-				else if (tr.Kind == SyntaxKind.EndOfLineTrivia)
-				{
-					if (includeEndOfLine)
-					{
-						AddTrivia(tr, ref trivia);
-					}
-					else
-					{
-						// don't consume end of line...
-						TextWindow.Reset(pos);
-					}
+		//	CSharpSyntaxNode tr;
+		//	while (true)
+		//	{
+		//		var pos = TextWindow.Position;
+		//		tr = this.LexDirectiveTrivia();
+		//		if (tr == null)
+		//		{
+		//			break;
+		//		}
+		//		else if (tr.Kind == SyntaxKind.EndOfLineTrivia)
+		//		{
+		//			if (includeEndOfLine)
+		//			{
+		//				AddTrivia(tr, ref trivia);
+		//			}
+		//			else
+		//			{
+		//				// don't consume end of line...
+		//				TextWindow.Reset(pos);
+		//			}
 
-					break;
-				}
-				else
-				{
-					AddTrivia(tr, ref trivia);
-				}
-			}
+		//			break;
+		//		}
+		//		else
+		//		{
+		//			AddTrivia(tr, ref trivia);
+		//		}
+		//	}
 
-			return trivia;
-		}
+		//	return trivia;
+		//}
 
-		private CSharpSyntaxNode LexDirectiveTrivia()
-		{
-			CSharpSyntaxNode trivia = null;
+		//private CSharpSyntaxNode LexDirectiveTrivia()
+		//{
+		//	CSharpSyntaxNode trivia = null;
 
-			this.Start();
-			char ch = TextWindow.PeekChar();
-			switch (ch)
-			{
-				case '/':
-					if (TextWindow.PeekChar(1) == '/')
-					{
-						// normal single line comment
-						this.ScanToEndOfLine();
-						var text = TextWindow.GetText(false);
-						trivia = SyntaxFactory.Comment(text);
-					}
+		//	this.Start();
+		//	char ch = TextWindow.PeekChar();
+		//	switch (ch)
+		//	{
+		//		case '/':
+		//			if (TextWindow.PeekChar(1) == '/')
+		//			{
+		//				// normal single line comment
+		//				this.ScanToEndOfLine();
+		//				var text = TextWindow.GetText(false);
+		//				trivia = SyntaxFactory.Comment(text);
+		//			}
 
-					break;
-				case '\r':
-				case '\n':
-					trivia = this.ScanEndOfLine();
-					break;
-				case ' ':
-				case '\t':       // Horizontal tab
-				case '\v':       // Vertical Tab
-				case '\f':       // Form-feed
-					trivia = this.ScanWhitespace();
-					break;
+		//			break;
+		//		case '\r':
+		//		case '\n':
+		//			trivia = this.ScanEndOfLine();
+		//			break;
+		//		case ' ':
+		//		case '\t':       // Horizontal tab
+		//		case '\v':       // Vertical Tab
+		//		case '\f':       // Form-feed
+		//			trivia = this.ScanWhitespace();
+		//			break;
 
-				default:
-					if (SyntaxKindFacts.IsWhitespace(ch))
-					{
-						goto case ' ';
-					}
+		//		default:
+		//			if (SyntaxKindFacts.IsWhitespace(ch))
+		//			{
+		//				goto case ' ';
+		//			}
 
-					if (SyntaxKindFacts.IsNewLine(ch))
-					{
-						goto case '\n';
-					}
+		//			if (SyntaxKindFacts.IsNewLine(ch))
+		//			{
+		//				goto case '\n';
+		//			}
 
-					break;
-			}
+		//			break;
+		//	}
 
-			return trivia;
-		}
+		//	return trivia;
+		//}
 
 		
 	}

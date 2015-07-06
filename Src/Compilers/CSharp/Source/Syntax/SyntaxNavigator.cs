@@ -28,11 +28,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
 		private static readonly Func<SyntaxTrivia, bool>[] StepIntoFunctions = new Func<SyntaxTrivia, bool>[]
         {
             /* 000 */ null,
-            /* 001 */ t =>                                                                   SyntaxKindFacts.IsDocumentationCommentTrivia((SyntaxKind)t.RawKind),
-            /* 010 */ t =>                                                  t.IsDirective                                                                ,
-            /* 011 */ t =>                                                  t.IsDirective || SyntaxKindFacts.IsDocumentationCommentTrivia((SyntaxKind)t.RawKind),
+            /* 001 */ t => SyntaxKindFacts.IsDocumentationCommentTrivia((SyntaxKind)t.RawKind),
+            /* 010 */ t => t.IsDirective                                                                ,
+            /* 011 */ t => t.IsDirective || SyntaxKindFacts.IsDocumentationCommentTrivia((SyntaxKind)t.RawKind),
             /* 100 */ t => t.RawKind == (int)SyntaxKind.SkippedTokensTrivia                                                                                 ,
-            /* 101 */ t => t.RawKind == (int)SyntaxKind.SkippedTokensTrivia                  || SyntaxKindFacts.IsDocumentationCommentTrivia((SyntaxKind)t.RawKind),
+            /* 101 */ t => t.RawKind == (int)SyntaxKind.SkippedTokensTrivia || SyntaxKindFacts.IsDocumentationCommentTrivia((SyntaxKind)t.RawKind),
             /* 110 */ t => t.RawKind == (int)SyntaxKind.SkippedTokensTrivia || t.IsDirective                                                                ,
             /* 111 */ t => t.RawKind == (int)SyntaxKind.SkippedTokensTrivia || t.IsDirective || SyntaxKindFacts.IsDocumentationCommentTrivia((SyntaxKind)t.RawKind),
         };

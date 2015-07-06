@@ -1,5 +1,7 @@
-﻿using ICSharpCode.AvalonEdit.Document;
+﻿using System.Windows.Threading;
+using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Editing;
+using ICSharpCode.AvalonEdit.Folding;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using System;
@@ -17,112 +19,82 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Microsoft.CodeAnalysis.Text;
+using Roslyn.SyntaxVisualizer.Control;
 
 namespace TestWPF
 {
-
-	internal static class HelperExtensionMethods
-	{
-		//internal static SnapshotSpan ToSnapshotSpan(this TextSpan textSpan, ITextSnapshot snapshot)
-		//{
-		//    return new SnapshotSpan(snapshot, new Span(textSpan.get_Start(), textSpan.get_Length()));
-		//}
-	}
 	/// <summary>
 	/// MainWindow.xaml 的交互逻辑
 	/// </summary>
 	public partial class MainWindow : Window
 	{
+
+		FoldingManager _foldingManager;
+		object _foldingStrategy;
+		private CSharpParseOptions opt;
+		private CSharpSyntaxTree currentTree;
+
 		public MainWindow()
 		{
+			this.SetValue(TextOptions.TextFormattingModeProperty, TextFormattingMode.Display);
+
 			InitializeComponent();
 
-			var linm = new LineNumberMargin();
-
-			this.txt2.TextArea.LeftMargins.Add(linm);
-
-
-
+			DispatcherTimer foldingUpdateTimer = new DispatcherTimer();
+			foldingUpdateTimer.Interval = TimeSpan.FromSeconds(2);
+			foldingUpdateTimer.Tick += delegate { UpdateFoldings(); };
+			foldingUpdateTimer.Start();
 
 
-			this.syntaxVisualizer.SyntaxNodeNavigationToSourceRequested += delegate(SyntaxNode node)
+
+			this.syntaxVisualizer.SyntaxNodeNavigationToSourceRequested += node => this.NavigateToSource(node.Span);
+			this.syntaxVisualizer.SyntaxTokenNavigationToSourceRequested += token => this.NavigateToSource(token.Span);
+			this.syntaxVisualizer.SyntaxTriviaNavigationToSourceRequested += trivia => this.NavigateToSource(trivia.Span);
+
+
+			this.txt2.TextArea.SelectionChanged += (sender, args) =>
 			{
-				this.NavigateToSource(node.Span);
+				//this.txt2.sele
+
+				//TextSpan ts = new TextSpan(this.txt2.SelectionStart,this.txt2.SelectionLength);
+
+				this.syntaxVisualizer.NavigateToBestMatch(this.txt2.SelectionStart, this.txt2.SelectionLength, null,
+					SyntaxCategory.None, true, null);
+
 			};
-			this.syntaxVisualizer.SyntaxTokenNavigationToSourceRequested += delegate(SyntaxToken token)
+
+
+			this.txt2.TextArea.TextEntered += (sender, args) =>
 			{
-				this.NavigateToSource(token.Span);
-			};
-			this.syntaxVisualizer.SyntaxTriviaNavigationToSourceRequested += delegate(SyntaxTrivia trivia)
-			{
-				this.NavigateToSource(trivia.Span);
-			};
-		}
-
-		private void NavigateToSource(TextSpan span)
-		{
-
-
-			this.txt2.Select(span.Start, span.Length);
-
-			//this.txt2.SelectionStart
-			//DocumentLine line = this.txt2.Document.GetLineByOffset(this.txt2.CaretOffset);
-			//this.txt2.Select(line.Offset, line.Length);
-			var line = this.txt2.Document.GetLineByOffset(this.txt2.SelectionStart);
-			this.txt2.ScrollToLine(line.LineNumber);
-			//if (base.IsVisible && this.activeWpfTextView != null)
-			//{
-			//    SnapshotSpan snapshotSpan = span.ToSnapshotSpan(this.activeWpfTextView.get_TextBuffer().get_CurrentSnapshot());
-			//    this.activeWpfTextView.get_Selection().Select(snapshotSpan, false);
-			//    this.activeWpfTextView.get_ViewScroller().EnsureSpanVisible(snapshotSpan);
-			//}
-		}
-
-
-		private void btnShow_Click(object sender, RoutedEventArgs e)
-		{
-			CSharpParseOptions opt = CSharpParseOptions.Default;
-			//opt = opt.WithDocumentationMode(DocumentationMode.Diagnose);
-			var tree = CSharpSyntaxTree.ParseText(this.txt2.Text, options: opt);
-
-
-			//var cus = tree.GetCompilationUnitRoot();
-			this.syntaxVisualizer.DisplaySyntaxTree(tree);
-
-			//foreach (object item in this.syntaxVisualizer.treeView.Items)
-			//{
-			//	TreeViewItem treeItem = this.syntaxVisualizer.treeView.ItemContainerGenerator.ContainerFromItem(item) as TreeViewItem;
-			//	if (treeItem != null)
-			//		ExpandAll(treeItem, true);
-			//	treeItem.IsExpanded = true;
-			//}
-
-			//this.syntaxVisualizer.treeView.
-		}
-
-		private void ExpandAll(ItemsControl items, bool expand)
-		{
-			foreach (object obj in items.Items)
-			{
-				ItemsControl childControl = items.ItemContainerGenerator.ContainerFromItem(obj) as ItemsControl;
-				if (childControl != null)
+				if (this.currentTree != null)
 				{
-					ExpandAll(childControl, expand);
+					this.currentTree = (CSharpSyntaxTree)this.currentTree.WithChangedText(SourceText.From(this.txt2.Text));
+					this.syntaxVisualizer.DisplaySyntaxTree(this.currentTree);
 				}
-				TreeViewItem item = childControl as TreeViewItem;
-				if (item != null)
-					item.IsExpanded = true;
-			}
+				else
+				{
+					this.currentTree = (CSharpSyntaxTree)CSharpSyntaxTree.ParseText(this.txt2.Text, options: opt);
+					this.syntaxVisualizer.DisplaySyntaxTree(this.currentTree);
+				}
+
+
+			};
+
+			opt = CSharpParseOptions.Default;
+			opt = opt.WithDocumentationMode(DocumentationMode.Diagnose);
+			
 		}
 
 
 		private void Window_Loaded(object sender, RoutedEventArgs e)
 		{
+			propertyGridComboBox.SelectedIndex = 2;
+			this.txt2.TextArea.IndentationStrategy = new ICSharpCode.AvalonEdit.Indentation.CSharp.CSharpIndentationStrategy(this.txt2.Options);
+			_foldingStrategy = new BraceFoldingStrategy();
+			_foldingManager = FoldingManager.Install(this.txt2.TextArea);
 
 
-
-
-	
+			#region Test Source
 			this.txt2.Text = @"/*
  * Copyright 2012, Google Inc.
  * All rights reserved.
@@ -253,6 +225,100 @@ public class DexBackedDexFile extends BaseDexBuffer implements DexFile {
     }
 }
 ";
+			#endregion
+		}
+
+
+		private void NavigateToSource(TextSpan span)
+		{
+
+			try
+			{
+				this.txt2.Select(span.Start, span.Length);
+
+				//this.txt2.SelectionStart
+				//DocumentLine line = this.txt2.Document.GetLineByOffset(this.txt2.CaretOffset);
+				//this.txt2.Select(line.Offset, line.Length);
+				var line = this.txt2.Document.GetLineByOffset(this.txt2.SelectionStart);
+				this.txt2.ScrollToLine(line.LineNumber);
+			}
+			catch (Exception)
+			{
+
+			}
+
+		}
+
+		void UpdateFoldings()
+		{
+			if (_foldingStrategy is BraceFoldingStrategy)
+			{
+				((BraceFoldingStrategy)_foldingStrategy).UpdateFoldings(_foldingManager, this.txt2.Document);
+			}
+		}
+
+
+
+
+
+		private void btnShow_Click(object sender, RoutedEventArgs e)
+		{
+			
+			//
+			this.currentTree = (CSharpSyntaxTree)CSharpSyntaxTree.ParseText(this.txt2.Text, options: opt);
+
+
+			//var cus = tree.GetCompilationUnitRoot();
+			this.syntaxVisualizer.DisplaySyntaxTree(this.currentTree);
+
+			//TextSpan 
+
+			//this.syntaxVisualizer.SyntaxTree.GetRoot().DescendantNodesAndTokens()
+
+			//foreach (object item in this.syntaxVisualizer.treeView.Items)
+			//{
+			//	TreeViewItem treeItem = this.syntaxVisualizer.treeView.ItemContainerGenerator.ContainerFromItem(item) as TreeViewItem;
+			//	if (treeItem != null)
+			//		ExpandAll(treeItem, true);
+			//	treeItem.IsExpanded = true;
+			//}
+
+			//this.syntaxVisualizer.treeView.
+		}
+
+		private void ExpandAll(ItemsControl items, bool expand)
+		{
+			foreach (object obj in items.Items)
+			{
+				ItemsControl childControl = items.ItemContainerGenerator.ContainerFromItem(obj) as ItemsControl;
+				if (childControl != null)
+				{
+					ExpandAll(childControl, expand);
+				}
+				TreeViewItem item = childControl as TreeViewItem;
+				if (item != null)
+					item.IsExpanded = true;
+			}
+		}
+
+
+
+		private void propertyGridComboBoxSelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if (propertyGrid == null)
+				return;
+			switch (propertyGridComboBox.SelectedIndex)
+			{
+				case 0:
+					propertyGrid.SelectedObject = this.txt2;
+					break;
+				case 1:
+					propertyGrid.SelectedObject = this.txt2.TextArea;
+					break;
+				case 2:
+					propertyGrid.SelectedObject = this.txt2.Options;
+					break;
+			}
 		}
 	}
 }

@@ -8,13 +8,13 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
 {
 	internal class SyntaxTriviaListBuilder
 	{
-		private SyntaxTrivia[] nodes;
-		private int count;
-		private SyntaxTrivia[] previous;
+		private SyntaxTrivia[] _nodes;
+		private int _count;
+		private SyntaxTrivia[] _previous;
 
 		public SyntaxTriviaListBuilder(int size)
 		{
-			this.nodes = new SyntaxTrivia[size];
+			this._nodes = new SyntaxTrivia[size];
 		}
 
 		public static SyntaxTriviaListBuilder Create()
@@ -24,35 +24,35 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
 
 		public int Count
 		{
-			get { return count; }
+			get { return _count; }
 		}
 
 		public void Clear()
 		{
-			this.count = 0;
+			this._count = 0;
 		}
 
 		public SyntaxTrivia this[int index]
 		{
 			get
 			{
-				if (index < 0 || index > this.count)
+				if (index < 0 || index > this._count)
 				{
 					throw new IndexOutOfRangeException();
 				}
 
-				return this.nodes[index];
+				return this._nodes[index];
 			}
 		}
 
 		public SyntaxTriviaListBuilder Add(SyntaxTrivia item)
 		{
-			if (nodes == null || count >= nodes.Length)
+			if (_nodes == null || _count >= _nodes.Length)
 			{
-				this.Grow(count == 0 ? 8 : nodes.Length * 2);
+				this.Grow(_count == 0 ? 8 : _nodes.Length * 2);
 			}
 
-			nodes[count++] = item;
+			_nodes[_count++] = item;
 			return this;
 		}
 
@@ -63,13 +63,13 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
 
 		public void Add(SyntaxTrivia[] items, int offset, int length)
 		{
-			if (nodes == null || count + length > nodes.Length)
+			if (_nodes == null || _count + length > _nodes.Length)
 			{
-				this.Grow(count + length);
+				this.Grow(_count + length);
 			}
 
-			Array.Copy(items, offset, nodes, count, length);
-			count += length;
+			Array.Copy(items, offset, _nodes, _count, length);
+			_count += length;
 		}
 
 		public void Add(SyntaxTriviaList list)
@@ -79,29 +79,29 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
 
 		public void Add(SyntaxTriviaList list, int offset, int length)
 		{
-			if (nodes == null || count + length > nodes.Length)
+			if (_nodes == null || _count + length > _nodes.Length)
 			{
-				this.Grow(count + length);
+				this.Grow(_count + length);
 			}
 
-			list.CopyTo(offset, nodes, count, length);
-			count += length;
+			list.CopyTo(offset, _nodes, _count, length);
+			_count += length;
 		}
 
 		private void Grow(int size)
 		{
 			var tmp = new SyntaxTrivia[size];
-			if (previous != null)
+			if (_previous != null)
 			{
-				Array.Copy(previous, tmp, this.count);
-				this.previous = null;
+				Array.Copy(_previous, tmp, this._count);
+				this._previous = null;
 			}
 			else
 			{
-				Array.Copy(nodes, tmp, nodes.Length);
+				Array.Copy(_nodes, tmp, _nodes.Length);
 			}
 
-			this.nodes = tmp;
+			this._nodes = tmp;
 		}
 
 		public static implicit operator SyntaxTriviaList(SyntaxTriviaListBuilder builder)
@@ -111,34 +111,34 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
 
 		public SyntaxTriviaList ToList()
 		{
-			if (this.count > 0)
+			if (this._count > 0)
 			{
-				if (this.previous != null)
+				if (this._previous != null)
 				{
-					this.Grow(this.count);
+					this.Grow(this._count);
 				}
 
-				switch (this.count)
+				switch (this._count)
 				{
 					case 1:
-						return new SyntaxTriviaList(default(SyntaxToken), nodes[0].UnderlyingNode, position: 0, index: 0);
+						return new SyntaxTriviaList(default(SyntaxToken), _nodes[0].UnderlyingNode, position: 0, index: 0);
 					case 2:
 						return new SyntaxTriviaList(default(SyntaxToken), Syntax.InternalSyntax.SyntaxList.List(
-							(Syntax.InternalSyntax.CSharpSyntaxNode)nodes[0].UnderlyingNode,
-							(Syntax.InternalSyntax.CSharpSyntaxNode)nodes[1].UnderlyingNode), position: 0, index: 0);
+							(Syntax.InternalSyntax.CSharpSyntaxNode)_nodes[0].UnderlyingNode,
+							(Syntax.InternalSyntax.CSharpSyntaxNode)_nodes[1].UnderlyingNode), position: 0, index: 0);
 					case 3:
 						return new SyntaxTriviaList(default(SyntaxToken),
 							Syntax.InternalSyntax.SyntaxList.List(
-								(Syntax.InternalSyntax.CSharpSyntaxNode)nodes[0].UnderlyingNode,
-								(Syntax.InternalSyntax.CSharpSyntaxNode)nodes[1].UnderlyingNode,
-								(Syntax.InternalSyntax.CSharpSyntaxNode)nodes[2].UnderlyingNode),
+								(Syntax.InternalSyntax.CSharpSyntaxNode)_nodes[0].UnderlyingNode,
+								(Syntax.InternalSyntax.CSharpSyntaxNode)_nodes[1].UnderlyingNode,
+								(Syntax.InternalSyntax.CSharpSyntaxNode)_nodes[2].UnderlyingNode),
 							position: 0, index: 0);
 					default:
 						{
-							var tmp = new ArrayElement<Syntax.InternalSyntax.CSharpSyntaxNode>[count];
-							for (int i = 0; i < this.count; i++)
+							var tmp = new ArrayElement<Syntax.InternalSyntax.CSharpSyntaxNode>[_count];
+							for (int i = 0; i < this._count; i++)
 							{
-								tmp[i].Value = (Syntax.InternalSyntax.CSharpSyntaxNode)this.nodes[i].UnderlyingNode;
+								tmp[i].Value = (Syntax.InternalSyntax.CSharpSyntaxNode)this._nodes[i].UnderlyingNode;
 							}
 
 							return new SyntaxTriviaList(default(SyntaxToken), Syntax.InternalSyntax.SyntaxList.List(tmp), position: 0, index: 0);

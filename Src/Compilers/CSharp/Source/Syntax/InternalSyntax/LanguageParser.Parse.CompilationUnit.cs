@@ -59,7 +59,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 					switch (this.CurrentToken.Kind)
 					{
 						case SyntaxKind.AtToken:
-							if (this.IsPossiblePackageAnnotations())
+							if (this.IsPossibleJavaPackageAnnotations())
 							{
 								// incomplete members must be processed before we add any nodes to the body:
 								ReduceIncompleteMembers(ref pendingIncompleteMembers, ref body, ref initialBadNodes);
@@ -100,7 +100,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
 							// incomplete members must be processed before we add any nodes to the body:
 							ReduceIncompleteMembers(ref pendingIncompleteMembers, ref body, ref initialBadNodes);
-							var import = this.ParseImportDeclaration();
+							var import = this.ParseJavaImportDeclaration();
 							if (seen > PackageParts.Imports)
 							{
 								import = this.AddError(import, ErrorCode.ERR_UsingAfterElements);
@@ -221,11 +221,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 			return _syntaxFactory.JavaPackageDeclaration(pendingAnnotations.ToList(), usingToken, name, semicolon);
 		}
 
-		private ImportDeclarationSyntax ParseImportDeclaration()
+		private JavaImportDeclarationSyntax ParseJavaImportDeclaration()
 		{
-			if (this.IsIncrementalAndFactoryContextMatches && this.CurrentNodeKind == SyntaxKind.ImportDeclaration)
+			if (this.IsIncrementalAndFactoryContextMatches && this.CurrentNodeKind == SyntaxKind.JavaImportDeclaration)
 			{
-				return (ImportDeclarationSyntax)this.EatNode();
+				return (JavaImportDeclarationSyntax)this.EatNode();
 			}
 
 			Debug.Assert(this.CurrentToken.Kind == SyntaxKind.ImportKeyword);
@@ -240,7 +240,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
 			NameSyntax name;
 			SyntaxToken semicolon;
-			ImportOnDemandSuffixSyntax importOnDemand = null;
+			JavaImportOnDemandSuffixSyntax importOnDemand = null;
 			//this.ParseTypeName()
 
 			if (IsPossiblePackageMemberDeclaration())
@@ -265,7 +265,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
 				if (this.CurrentToken.Kind == SyntaxKind.DotToken && this.PeekToken(1).Kind == SyntaxKind.AsteriskToken)
 				{
-					importOnDemand = _syntaxFactory.ImportOnDemandSuffix(this.EatToken(SyntaxKind.DotToken),
+					importOnDemand = _syntaxFactory.JavaImportOnDemandSuffix(this.EatToken(SyntaxKind.DotToken),
 						this.EatToken(SyntaxKind.AsteriskToken));
 				}
 				semicolon = SyntaxFactory.MissingToken(SyntaxKind.SemicolonToken);
@@ -284,7 +284,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
 				if (this.CurrentToken.Kind == SyntaxKind.DotToken && this.PeekToken(1).Kind == SyntaxKind.AsteriskToken)
 				{
-					importOnDemand = _syntaxFactory.ImportOnDemandSuffix(this.EatToken(SyntaxKind.DotToken),
+					importOnDemand = _syntaxFactory.JavaImportOnDemandSuffix(this.EatToken(SyntaxKind.DotToken),
 						this.EatToken(SyntaxKind.AsteriskToken));
 				}
 
@@ -292,7 +292,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 				semicolon = this.EatToken(SyntaxKind.SemicolonToken);
 			}
 
-			return _syntaxFactory.ImportDeclaration(importKeywordToken, staticKeyword, name, importOnDemand, semicolon);
+			return _syntaxFactory.JavaImportDeclaration(importKeywordToken, staticKeyword, name, importOnDemand, semicolon);
 		}
 
 	}

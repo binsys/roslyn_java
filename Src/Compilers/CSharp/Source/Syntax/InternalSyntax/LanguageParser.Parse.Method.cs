@@ -17,7 +17,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
 
 
-		private ConstructorDeclarationSyntax ParseConstructorDeclaration(string typeName, SyntaxListBuilder<AnnotationSyntax> attributes, SyntaxListBuilder modifiers)
+		private ConstructorDeclarationSyntax ParseConstructorDeclaration(string typeName, SyntaxListBuilder<AnnotationSyntax> attributes, SyntaxListBuilder modifiers, TypeParameterListSyntax typeParameterList)
 		{
 			var name = this.ParseIdentifierToken();
 			Debug.Assert(name.ValueText == typeName);
@@ -42,7 +42,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 				SyntaxToken semicolon;
 				this.ParseBodyOrSemicolon(out body, out semicolon);
 
-				return _syntaxFactory.ConstructorDeclaration(attributes, modifiers.ToTokenList(), name, paramList, throws, initializer, body, semicolon);
+				return _syntaxFactory.ConstructorDeclaration(attributes, modifiers.ToTokenList(),typeParameterList, name, paramList, throws, initializer, body, semicolon);
 			}
 			finally
 			{
@@ -124,7 +124,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 				semicolon = null;
 				if (this.CurrentToken.Kind == SyntaxKind.SemicolonToken)
 				{
-					semicolon = this.EatTokenWithPrejudice(ErrorCode.ERR_UnexpectedSemicolon);
+					semicolon = this.EatToken(SyntaxKind.SemicolonToken);
+					//semicolon = this.EatTokenWithPrejudice(ErrorCode.ERR_UnexpectedSemicolon);
 				}
 			}
 			else
@@ -227,62 +228,55 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 			SyntaxListBuilder modifiers,
 			TypeSyntax type,
 			SyntaxToken identifier,
-			TypeParameterListSyntax typeParameterList)
+			TypeParameterListSyntax typeParameterList,bool isDtor)
 		{
 			// Parse the name (it could be qualified)
 			var saveTerm = this._termState;
 			this._termState |= TerminatorState.IsEndOfMethodSignature;
 
-			var paramList = this.ParseParenthesizedParameterList(allowThisKeyword: true, allowDefaults: true, allowAttributes: true, allowFieldModifiers: false);
-
-			var constraints = default(SyntaxListBuilder<TypeBoundSyntax>);
+			var paramList = this.ParseParenthesizedParameterList(allowThisKeyword: true, allowDefaults: true,
+				allowAttributes: true, allowFieldModifiers: true);
 
 			JavaThrowsListClauseSyntax throws = this.ParseJavaThrowsListClause(true);
 
-			try
+
+			if (this.CurrentToken.Kind == SyntaxKind.ColonToken)
 			{
-				if (this.CurrentToken.Kind == SyntaxKind.ColonToken)
-				{
-					// Use else if, rather than if, because if we see both a constructor initializer and a constraint clause, we're too lost to recover.
-					var colonToken = this.CurrentToken;
-					// Set isStatic to false because pretending we're in a static constructor will just result in more errors.
-					ConstructorInitializerSyntax initializer = this.ParseConstructorInitializer(identifier.ValueText, isStatic: false);
-					initializer = this.AddErrorToFirstToken(initializer, ErrorCode.ERR_UnexpectedCharacter, colonToken.Text); //CONSIDER: better error code?
-					paramList = AddTrailingSkippedSyntax(paramList, initializer);
+				// Use else if, rather than if, because if we see both a constructor initializer and a constraint clause, we're too lost to recover.
+				var colonToken = this.CurrentToken;
+				// Set isStatic to false because pretending we're in a static constructor will just result in more errors.
+				ConstructorInitializerSyntax initializer = this.ParseConstructorInitializer(identifier.ValueText, isStatic: false);
+				initializer = this.AddErrorToFirstToken(initializer, ErrorCode.ERR_UnexpectedCharacter, colonToken.Text);
+					//CONSIDER: better error code?
+				paramList = AddTrailingSkippedSyntax(paramList, initializer);
 
-					// CONSIDER: Parsing an invalid constructor initializer could, conceivably, get us way
-					// off track.  If this becomes a problem, an alternative approach would be to generalize
-					// EatTokenWithPrejudice in such a way that we can just skip everything until we recognize
-					// our context again (perhaps an open brace).
-				}
+				// CONSIDER: Parsing an invalid constructor initializer could, conceivably, get us way
+				// off track.  If this becomes a problem, an alternative approach would be to generalize
+				// EatTokenWithPrejudice in such a way that we can just skip everything until we recognize
+				// our context again (perhaps an open brace).
+			}
 
 
-				this._termState = saveTerm;
+			this._termState = saveTerm;
 
-				BlockSyntax body;
-				SyntaxToken semicolon;
+			BlockSyntax body;
+			SyntaxToken semicolon;
 
-				this.ParseBodyOrSemicolon(out body, out semicolon);
+			this.ParseBodyOrSemicolon(out body, out semicolon);
 
-				return _syntaxFactory.MethodDeclaration(
+
+			return
+				_syntaxFactory.MethodDeclaration(isDtor ? SyntaxKind.DestructorDeclaration : SyntaxKind.MethodDeclaration,
 					attributes,
 					modifiers.ToTokenList(),
+					typeParameterList,
 					type,
 					identifier,
-					typeParameterList,
 					paramList,
 					throws,
-					constraints,
 					body,
 					semicolon);
-			}
-			finally
-			{
-				if (!constraints.IsNull)
-				{
-					this._pool.Free(constraints);
-				}
-			}
+
 		}
 
 		private JavaThrowsListClauseSyntax ParseJavaThrowsListClause(bool allowArguments)

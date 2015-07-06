@@ -136,8 +136,8 @@ namespace Microsoft.CodeAnalysis.CSharp
 				{
 					switch (parent.Kind)
 					{
-						case SyntaxKind.ImportDeclaration:
-							return ((ImportDeclarationSyntax)parent).Name == node;
+						case SyntaxKind.JavaImportDeclaration:
+							return ((JavaImportDeclarationSyntax)parent).Name == node;
 
 						case SyntaxKind.QualifiedName:
 							// left of QN is namespace or type.  Note: when you have "a.b.c()", then

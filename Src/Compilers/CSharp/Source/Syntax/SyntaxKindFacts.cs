@@ -23,6 +23,16 @@ namespace Microsoft.CodeAnalysis.CSharp
 				   (c >= 'a' && c <= 'f');
 		}
 
+		internal static bool IsOctalDigit(char c)
+		{
+			return (c >= '0' && c <= '7');
+		}
+
+		internal static bool IsZeroToThreeDigit(char c)
+		{
+			return (c >= '0' && c <= '3');
+		}
+
 		/// <summary>
 		/// Returns true if the Unicode character is a decimal digit.
 		/// </summary>

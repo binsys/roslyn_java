@@ -86,11 +86,42 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 						return true;
 					}
 
-					if (this.ScanType(out lastTokenOfList) == ScanTypeFlags.NotType)
+					var tt = this.ScanType(out lastTokenOfList);
+					if (tt == ScanTypeFlags.NotType)
 					{
 						lastTokenOfList = null;
 						return false;
 					}
+
+					//if (tt == ScanTypeFlags.JavaWildcardType)
+					//{
+					//	bool havaBound = false;
+					//	if (this.CurrentToken.Kind == SyntaxKind.ExtendsKeyword)
+					//	{
+					//		lastTokenOfList = EatToken();
+					//		havaBound = true;
+					//	}
+
+					//	if (this.CurrentToken.Kind == SyntaxKind.SuperKeyword)
+					//	{
+					//		lastTokenOfList = EatToken();
+					//		havaBound = true;
+					//	}
+
+					//	if (this.IsTrueIdentifier())
+					//	{
+					//		this.ScanType(out lastTokenOfList);
+					//	}
+
+					//	if (this.CurrentToken.Kind == SyntaxKind.GreaterThanToken)
+					//	{
+					//		lastTokenOfList = EatToken();
+					//		return true;
+					//	}
+
+					//	return true;
+					//}
+
 				}
 				while (this.CurrentToken.Kind == SyntaxKind.CommaToken);
 
@@ -99,6 +130,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 					lastTokenOfList = null;
 					return false;
 				}
+
 
 				lastTokenOfList = this.EatToken();
 			}
@@ -217,11 +249,6 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 						return ScanTypeFlags.NotType;
 					}
 
-					//if (partResult == NamedTypePart.ClassKeywordSuffix)
-					//{
-					//	return ScanTypeFlags.ClassKeywordSuffix;
-					//}
-
 					result = NamedTypePartToScanTypeFlags(partResult);
 				}
 			}
@@ -234,6 +261,24 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 			else if (this.CurrentToken.Kind == SyntaxKind.QuestionToken)
 			{
 				lastTokenOfType = this.EatToken();
+
+				bool haveBound = false;
+				if (this.CurrentToken.Kind == SyntaxKind.SuperKeyword)
+				{
+					lastTokenOfType = this.EatToken();
+					haveBound = true;
+				}
+
+				if (this.CurrentToken.Kind == SyntaxKind.ExtendsKeyword)
+				{
+					lastTokenOfType = this.EatToken();
+					haveBound = true;
+				}
+
+				if (this.IsTrueIdentifier() && haveBound)
+				{
+					this.ScanType(out lastTokenOfType);
+				}
 				result = ScanTypeFlags.JavaWildcardType;
 			}
 			else
