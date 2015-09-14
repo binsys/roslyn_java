@@ -1007,6 +1007,9 @@
 				<Field Name="ContinueKeyword" Type="SyntaxToken">
 					<Kind Name="ContinueKeyword"/>
 				</Field>
+				<Field Name="Identifier" Type="SyntaxToken" Optional="true">
+					<Kind Name="IdentifierToken"/>
+				</Field>
 				<Field Name="SemicolonToken" Type="SyntaxToken">
 					<Kind Name="SemicolonToken"/>
 				</Field>

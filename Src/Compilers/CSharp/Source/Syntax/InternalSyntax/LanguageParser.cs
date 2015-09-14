@@ -376,6 +376,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 				case SyntaxKind.IdentifierToken:
 				case SyntaxKind.OpenBracketToken:// [
 				case SyntaxKind.OpenBraceToken: // { ÊµÀý³õÊ¼»¯
+				case SyntaxKind.LessThanToken: // <
 				
 					return true;
 				default:

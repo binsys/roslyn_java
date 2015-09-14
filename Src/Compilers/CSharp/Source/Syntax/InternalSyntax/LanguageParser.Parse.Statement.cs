@@ -399,8 +399,10 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 		private ContinueStatementSyntax ParseContinueStatement()
 		{
 			var continueKeyword = this.EatToken(SyntaxKind.ContinueKeyword);
+			var id = this.EatToken(SyntaxKind.IdentifierToken);
 			var semicolon = this.EatToken(SyntaxKind.SemicolonToken);
-			return _syntaxFactory.ContinueStatement(continueKeyword, semicolon);
+			
+			return _syntaxFactory.ContinueStatement(continueKeyword,id, semicolon);
 		}
 		#endregion
 
