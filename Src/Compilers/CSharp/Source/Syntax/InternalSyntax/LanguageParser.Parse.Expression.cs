@@ -213,17 +213,21 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 							{
 								expr = ParseDeclarationExpression();
 							}
-							else if (allowDeclarationExpression && IsPossibleIdentifierDotSuffix(SyntaxKind.ClassKeyword))
+							else if (IsPossibleIdentifierDotSuffix(SyntaxKind.ClassKeyword))
 							{
 								expr = ParseClassLiteralExpression();
 							}
-							else if (allowDeclarationExpression && IsPossibleIdentifierDotSuffix(SyntaxKind.ThisKeyword))
+							else if (IsPossibleIdentifierDotSuffix(SyntaxKind.ThisKeyword))
 							{
 								expr = ParseJavaQualifiedThisExpression();
 							}
-							else if (allowDeclarationExpression && IsPossibleIdentifierDotSuffix(SyntaxKind.SuperKeyword))
+							else if (IsPossibleIdentifierDotSuffix(SyntaxKind.SuperKeyword))
 							{
 								expr = ParseJavaQualifiedSuperExpression();
+							}
+							else if (IsPossibleIdentifierDotSuffix(SyntaxKind.NewKeyword))
+							{
+								expr = this.ParseNewExpression();
 							}
 							else
 							{
@@ -453,7 +457,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
 		private ExpressionSyntax ParseNewExpression()
 		{
-			Debug.Assert(this.CurrentToken.Kind == SyntaxKind.NewKeyword);
+			Debug.Assert(this.CurrentToken.Kind == SyntaxKind.NewKeyword || this.PeekToken(1).Kind == SyntaxKind.NewKeyword);
 
 			if (this.IsAnonymousType())
 			{
@@ -468,6 +472,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
 		private ExpressionSyntax ParseArrayOrObjectCreationExpression()
 		{
+			SimpleNameSyntax name = this.CurrentToken.Kind == SyntaxKind.IdentifierToken ? this.ParseSimpleName(NameOptions.InExpression) : null;
+			SyntaxToken @dot = (name != null) ? this.EatToken(SyntaxKind.DotToken) : null;
 			SyntaxToken @new = this.EatToken(SyntaxKind.NewKeyword);
 			bool isPossibleArrayCreation = this.IsPossibleArrayCreationExpression();
 			var type = this.ParseTypeCore(parentIsParameter: false, isInstanceOfOrAs: false, expectSizes: isPossibleArrayCreation, isArrayCreation: isPossibleArrayCreation);
@@ -530,7 +536,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 						SyntaxFactory.MissingToken(SyntaxKind.CloseParenToken));
 				}
 
-				return _syntaxFactory.ObjectCreationExpression(@new, type, argumentList, initializer);
+				return _syntaxFactory.ObjectCreationExpression(name, @dot, @new, type, argumentList, initializer);
 			}
 		}
 
