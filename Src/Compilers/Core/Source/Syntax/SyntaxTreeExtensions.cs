@@ -73,7 +73,7 @@ namespace Microsoft.CodeAnalysis
                 {
                     message = "Unexpected difference past end of the file";
                 }
-                Debug.Assert(false, message);
+                //Debug.Assert(false, message);
             }
         }
 

@@ -658,7 +658,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
 					break;
 
-				//case '$':
+				case '$':
 				//	TextWindow.AdvanceChar();
 				//	info.Kind = SyntaxKind.DollarToken;
 				//	break;
@@ -1405,22 +1405,22 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 						}
 						else if (ch == '*')
 						{
-							if (!this.SuppressDocumentationCommentParse 
-								&& TextWindow.PeekChar(2) == '*' 
-								//&& TextWindow.PeekChar(3) != '*' 
-								//&& TextWindow.PeekChar(3) != '/'
-								)
-							{
-								// Doc comments should never be in trailing trivia.
-								// Stop processing so that it will be leading trivia on the next token.
-								if (isTrailing)
-								{
-									return;
-								}
+							//if (!this.SuppressDocumentationCommentParse 
+							//	&& TextWindow.PeekChar(2) == '*' 
+							//	//&& TextWindow.PeekChar(3) != '*' 
+							//	//&& TextWindow.PeekChar(3) != '/'
+							//	)
+							//{
+							//	// Doc comments should never be in trailing trivia.
+							//	// Stop processing so that it will be leading trivia on the next token.
+							//	if (isTrailing)
+							//	{
+							//		return;
+							//	}
 
-								this.AddTrivia(this.LexXmlDocComment(XmlDocCommentStyle.Delimited), ref triviaList);
-								break;
-							}
+							//	this.AddTrivia(this.LexXmlDocComment(XmlDocCommentStyle.Delimited), ref triviaList);
+							//	break;
+							//}
 
 							bool isTerminated;
 							this.ScanMultiLineComment(out isTerminated);

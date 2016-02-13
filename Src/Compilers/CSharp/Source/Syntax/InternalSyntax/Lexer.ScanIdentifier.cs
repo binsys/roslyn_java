@@ -196,6 +196,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 					case 'x':
 					case 'y':
 					case 'z':
+					case '$':
 						// All of these characters are valid inside an identifier.
 						// consume it and keep processing.
 						currentOffset++;

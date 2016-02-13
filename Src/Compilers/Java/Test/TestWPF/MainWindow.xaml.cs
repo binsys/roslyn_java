@@ -66,16 +66,16 @@ namespace TestWPF
 
 			this.txt2.TextArea.TextEntered += (sender, args) =>
 			{
-				if (this.currentTree != null)
-				{
-					this.currentTree = (CSharpSyntaxTree)this.currentTree.WithChangedText(SourceText.From(this.txt2.Text));
-					this.syntaxVisualizer.DisplaySyntaxTree(this.currentTree);
-				}
-				else
-				{
-					this.currentTree = (CSharpSyntaxTree)CSharpSyntaxTree.ParseText(this.txt2.Text, options: opt);
-					this.syntaxVisualizer.DisplaySyntaxTree(this.currentTree);
-				}
+				//if (this.currentTree != null)
+				//{
+				//	this.currentTree = (CSharpSyntaxTree)this.currentTree.WithChangedText(SourceText.From(this.txt2.Text));
+				//	this.syntaxVisualizer.DisplaySyntaxTree(this.currentTree);
+				//}
+				//else
+				//{
+				//	this.currentTree = (CSharpSyntaxTree)CSharpSyntaxTree.ParseText(this.txt2.Text, options: opt);
+				//	this.syntaxVisualizer.DisplaySyntaxTree(this.currentTree);
+				//}
 
 
 			};
